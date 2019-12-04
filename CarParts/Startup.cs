@@ -1,4 +1,5 @@
-using CarParts.Entities;
+using CarParts.DataAccess;
+using CarParts.DataAccess.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

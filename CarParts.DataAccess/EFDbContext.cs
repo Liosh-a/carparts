@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CarParts.DataAccess.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarParts.Entities
+namespace CarParts.DataAccess
 {
     public class EFDbContext : IdentityDbContext<DbUser, DbRole, int, IdentityUserClaim<int>,
-    DbUserRole, IdentityUserLogin<int>,
-    IdentityRoleClaim<int>, IdentityUserToken<int>>
+  DbUserRole, IdentityUserLogin<int>,
+  IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public EFDbContext(DbContextOptions<EFDbContext> options)
             : base(options)
