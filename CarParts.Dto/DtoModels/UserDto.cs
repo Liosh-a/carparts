@@ -1,9 +1,14 @@
-﻿namespace CarParts.Dto.DtoModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CarParts.Dto.DtoModels
 {
     public class UserDto
     {
-        public string Id { get; set; }
-        public string Username { get; set; }
+
+        [EmailAddress(ErrorMessage = "Має бути пошта!")]
+        [Required(ErrorMessage = "Поле не може бути пустим!")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Поле не може бути пустим!")]
+        public string Password { get; set; }
     }
 }
