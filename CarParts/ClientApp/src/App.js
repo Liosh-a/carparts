@@ -5,9 +5,10 @@ import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import ProductPage from './components/products/list';
-import Login from './components/Login';
-import Registration from './components/Registration'
-import ForgotPassword from './components/ForgotPassword';
+import Login from './components/Auth/Login';
+import Registration from './components/Auth/Registration'
+import ForgotPassword from './components/Auth/ForgotPassword';
+import ConfirmEmailPage from './components/Auth/ConfirmEmailPage';
 
 export default () => (
   <Layout>
@@ -18,5 +19,6 @@ export default () => (
     <Route path='/login' component={Login} />
     <Route path='/registration' component={Registration} />
     <Route path='/forgot-password' component={ForgotPassword} />
+    <Route path='/confirm-email' component={ConfirmEmailPage} />
   </Layout>
 );

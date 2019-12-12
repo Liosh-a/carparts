@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import './css/Authorization.css'
+import './css/Authorization.css';
 
 const Login = props => (
     <div>
