@@ -13,6 +13,7 @@
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
   </ItemGroup>
@@ -32,6 +33,7 @@
     <ProjectReference Include="..\CarParts.DataAccess\CarParts.DataAccess.csproj" />
     <ProjectReference Include="..\CarParts.Domain\CarParts.Domain.csproj" />
     <ProjectReference Include="..\CarParts.Dto\CarParts.Dto.csproj" />
+    <ProjectReference Include="..\CarParts.Helpers\CarParts.Helpers.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
