@@ -16,7 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace CarParts.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    //[ApiController]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;

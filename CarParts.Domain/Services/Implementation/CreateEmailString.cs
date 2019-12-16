@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CarParts.Domain.Services.Implementation
 {
-    public class EmailService
+    public class CreateEmailString
     {
         public static void SendAccountConfirm(IConfiguration configuration,
             IHostingEnvironment env, string url,string useremail)
@@ -19,7 +19,7 @@ namespace CarParts.Domain.Services.Implementation
                 string text = "Ви успішно зарееструвалися на нашому сайті. Будь ласка перейдіть за посиланням для активації вашого аккаунта.";
                 string title = "Реестрація";
                 string fileDestDir = env.ContentRootPath;
-                fileDestDir = Path.Combine(fileDestDir, "EmailForms");
+                fileDestDir = Path.Combine(fileDestDir, "EmailForm");
                 string fileName = Path.Combine(fileDestDir, "AccountConfirm.html");
                 string body = string.Empty;
                 using (StreamReader reader = new StreamReader(fileName))

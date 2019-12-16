@@ -26,7 +26,6 @@ namespace CarParts.Domain.Services.Implementation
         private readonly EFDbContext _context;
         private readonly UserManager<DbUser> _userManager;
         private readonly SignInManager<DbUser> _signInManager;
-        private readonly EmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _env;
 
@@ -34,13 +33,11 @@ namespace CarParts.Domain.Services.Implementation
             UserManager<DbUser> userManager,
             SignInManager<DbUser> signInManager,
             IConfiguration configuration,
-            EmailService emailService, 
             IHostingEnvironment env)
         {
             _userManager = userManager;
             _context = context;
             _signInManager = signInManager;
-            _emailService = emailService;
             _configuration = configuration;
             _env = env;
         }
@@ -155,7 +152,7 @@ namespace CarParts.Domain.Services.Implementation
             var callbackUrl =
                 $"{frontEndURL}/confirmemail?userId={user.Id}&" +
                 $"code={WebUtility.UrlEncode(code)}";
-            EmailService.SendAccountConfirm(_configuration,_env,frontEndURL,user.Email);
+            CreateEmailString.SendAccountConfirm(_configuration,_env,frontEndURL,user.Email);
             return new ResultDto
             {
                 IsSuccessful = true,
