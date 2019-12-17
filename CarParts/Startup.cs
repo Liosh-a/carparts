@@ -1,5 +1,7 @@
 using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
+using CarParts.Domain.Services.Abstraction;
+using CarParts.Domain.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +31,7 @@ namespace CarParts
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddScoped<IAccountService, AccountService>();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -113,6 +115,8 @@ namespace CarParts
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+            CreateEmailString.SendAccountConfirm(Configuration, env, "koparts.dp.ua", "leshalebedich25@gmail.com");
+            
         }
     }
 }
