@@ -6,9 +6,9 @@ import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import ProductPage from './components/products/list';
 import Login from './components/Auth/Login';
-import Registration from './components/Auth/Registration'
+import Registration from './components/Auth/Register/Registration'
 import ForgotPassword from './components/Auth/ForgotPassword';
-import ConfirmEmailPage from './components/Auth/ConfirmEmailPage';
+import ConfirmEmailPage from './components/Auth/ConfirmEmail/ConfirmEmailPage';
 
 export default () => (
   <Layout>

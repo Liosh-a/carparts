@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import classnames from "classnames";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {confirmEmailUser} from './reducer';
-import EclipseWidget from '../../Eclipse/EclipseWidget';
+import {confirmEmailUser} from './ConfirmEmailReducer';
 import qs from 'qs';
 
 const propTypes = {
@@ -54,7 +52,5 @@ const mapState = (state) => {
 }
 
 ConfirmEmailPage.propTypes = propTypes;
-
-
  
 export default connect(mapState, {confirmEmail: confirmEmailUser})(ConfirmEmailPage);

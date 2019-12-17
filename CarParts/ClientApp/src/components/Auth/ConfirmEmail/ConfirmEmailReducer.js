@@ -1,4 +1,4 @@
-import ConfirmEmailService from '../components/Auth/confirmEmailService';
+import ConfirmEmailService from './confirmEmailService';
 import { push } from 'connected-react-router';
 
 export const CONFIRMEMAIL_STARTED = "user/CONFIRMEMAIL_STARTED";
