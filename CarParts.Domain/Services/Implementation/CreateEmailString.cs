@@ -35,9 +35,9 @@ namespace CarParts.Domain.Services.Implementation
                 }
                 body = body.Replace("{UserName}", name);
                 body = body.Replace("{Title}", "Сайт koparts.dp.ua");
-                body = body.Replace("{Url}", url);
+                body = body.Replace("{Url}", "hello");
                 body = body.Replace("{Description}", text);
-                string command = $"echo '{body}' | " +
+                string command = $"echo 'zator' | " +
                     $"mail " +
                     $"-a \"Content-type: text/html;\" " +
                     $"-s \"{title} - https://koparts.dp.ua/\" " +
