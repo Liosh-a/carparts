@@ -33,15 +33,15 @@ namespace CarParts.Domain.Services.Implementation
                     while (str != null);
                     //body = reader.ReadToEnd();
                 }
-                body = body.Replace("{UserName}", name);
-                body = body.Replace("{Title}", "Сайт koparts.dp.ua");
+                body = body.Replace("{UserName}","Vasya" );
+                body = body.Replace("{Title}", "koparts.dp.ua");
                 body = body.Replace("{Url}", "hello");
-                body = body.Replace("{Description}", text);
+                body = body.Replace("{Description}", "text");
                 string command = $"echo 'zator' | " +
                     $"mail " +
                     $"-a \"Content-type: text/html;\" " +
                     $"-s \"{title} - https://koparts.dp.ua/\" " +
-                    $"{useremail}  -aFrom:root@koparts.dp.ua";
+                    $"{useremail}  -aFrom:noreply@koparts.dp.ua";
                 Console.WriteLine($"Send email to User {command}");
                 File.WriteAllLines("message.txt", new string[] { command });
                 var output = command.Bash();
