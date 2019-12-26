@@ -41,7 +41,7 @@ namespace CarParts.Domain.Services.Implementation
                     $"mail " +
                     $"-a \"Content-type: text/html;\" " +
                     $"-s \"{title} - https://koparts.dp.ua/\" " +
-                    $"{useremail}  -aFrom:noreply@koparts.dp.ua";
+                    $"{useremail}  -aFrom:root@koparts.dp.ua";
                 Console.WriteLine($"Send email to User {command}");
                 File.WriteAllLines("message.txt", new string[] { command });
                 var output = command.Bash();
