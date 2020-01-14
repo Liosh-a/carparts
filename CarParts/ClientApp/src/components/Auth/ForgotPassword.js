@@ -17,7 +17,7 @@ const ForgotPassword = props => (
                     <a className="underlineHover" href="/login">Вернутся к входу</a>
                 </div>
                 <div id="formFooter">
-                    <a className="underlineHover" href="/registration">Еще не зарегимтрированы?</a>
+                    <a className="underlineHover" href="/registration">Еще не зарегиcтрированы?</a>
                 </div>
             </div>
         </div>
