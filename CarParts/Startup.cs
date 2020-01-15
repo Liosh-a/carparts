@@ -115,7 +115,7 @@ namespace CarParts
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-            CreateEmailString.SendAccountConfirm(Configuration, env, "koparts.dp.ua", "leshalebedich@gmail.com");
+            CreateEmailString.SendAccountConfirm(Configuration, env, "koparts.dp.ua", "leshalebedich25@gmail.com");
 
 
         }
