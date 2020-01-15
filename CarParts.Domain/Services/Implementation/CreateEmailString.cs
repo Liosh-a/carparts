@@ -23,7 +23,7 @@ namespace CarParts.Domain.Services.Implementation
                 string fileName;
                 if (useremail.Split("@")[1] == "ukr.net") {
                     fileName = Path.Combine(fileDestDir, "AccountConfirmUkrNet.html");
-                    title = "Registration";
+                    title = "Реестрація";
                 }
                 else
                 {
