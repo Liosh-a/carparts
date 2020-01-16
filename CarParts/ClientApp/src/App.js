@@ -13,9 +13,6 @@ import ConfirmEmailPage from './components/Auth/ConfirmEmail/ConfirmEmailPage';
 export default () => (
   <Layout>
     <Route exact path='/' component={Home} />
-    <Route path='/counter' component={Counter} />
-    <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
-    <Route path='/products' component={ProductPage} />
     <Route path='/login' component={Login} />
     <Route path='/registration' component={Registration} />
     <Route path='/forgot-password' component={ForgotPassword} />

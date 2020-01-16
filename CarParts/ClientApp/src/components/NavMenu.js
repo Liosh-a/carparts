@@ -26,20 +26,17 @@ export default class NavMenu extends React.Component {
             <NavbarToggler onClick={this.toggle} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
               <ul className="navbar-nav flex-grow">
+                <li className="nav-li">
+                  <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                </li>
+                <li>
+                  <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </li>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                </NavItem>
+                  <NavLink tag={Link} className="txt-dark" to="/">Home</NavLink>
+                </NavItem>  
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/products">Products</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">Вход</NavLink>
+                  <NavLink tag={Link} className="txt-dark" to="/login">Вход</NavLink>
                 </NavItem>
               </ul>
             </Collapse>
