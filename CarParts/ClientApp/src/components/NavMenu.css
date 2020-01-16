@@ -17,4 +17,12 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+.txt-dark {
+  font-size: 17px;
+  color: red;
+}
+
+.txt-dark:hover {
+ font-size: 18px;
+}
 
