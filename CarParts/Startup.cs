@@ -116,7 +116,8 @@ namespace CarParts
                 }
             });
             CreateEmailString.SendAccountConfirm(Configuration, env, "koparts.dp.ua", "leshalebedich25@gmail.com");
-            
+
+
         }
     }
 }

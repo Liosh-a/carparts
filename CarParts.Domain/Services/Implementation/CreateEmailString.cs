@@ -14,14 +14,23 @@ namespace CarParts.Domain.Services.Implementation
         {
             try
             {
-                string adminEmail = configuration.GetValue<string>("AdminEmail");
+                string Email = configuration.GetValue<string>("AdminEmail");
                 string name = configuration.GetValue<string>("AdminName");
-                string text = "Ви успішно зарееструвалися на нашому сайті. Будь ласка перейдіть за посиланням для активації вашого аккаунта.";
-                string title = "Реестрація";
+                string title;
                 string fileDestDir = env.ContentRootPath;
                 fileDestDir = Path.Combine(fileDestDir, "EmailForm");
-                string fileName = Path.Combine(fileDestDir, "AccountConfirm.html");
                 string body = string.Empty;
+                string fileName;
+                if (useremail.Split("@")[1] == "ukr.net") {
+                    fileName = Path.Combine(fileDestDir, "AccountConfirmUkrNet.html");
+                    title = "Реестрація";
+                }
+                else
+                {
+                    fileName = Path.Combine(fileDestDir, "AccountConfirmGmail.html");
+                    title = "Реестрація";
+                }
+
                 using (StreamReader reader = new StreamReader(fileName))
                 {
                     var str = string.Empty;
@@ -33,10 +42,11 @@ namespace CarParts.Domain.Services.Implementation
                     while (str != null);
                     //body = reader.ReadToEnd();
                 }
-                body = body.Replace("{UserName}", name);
-                body = body.Replace("{Title}", "Сайт koparts.dp.ua");
+                
+                body = body.Replace("{UserName}","Vasya" );
+                body = body.Replace("{Title}", "koparts.dp.ua");
                 body = body.Replace("{Url}", url);
-                body = body.Replace("{Description}", text);
+                body = body.Replace("{Description}", "text");
                 string command = $"echo '{body}' | " +
                     $"mail " +
                     $"-a \"Content-type: text/html;\" " +
