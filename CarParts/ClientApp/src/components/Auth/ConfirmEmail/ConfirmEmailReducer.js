@@ -26,7 +26,7 @@ export const confirmEmailReducer = (state = initialState, action) => {
             break;
         }
         case CONFIRMEMAIL_FAILED: {
-            console.log('-----Filed confirmEmail User--------');
+            console.log('-----Failed confirmEmail User--------');
             newState = {
                 ...state, 
                 loading: false, 
@@ -57,8 +57,8 @@ export const confirmEmailUser = (model) => {
             .catch(err=> {
                 console.log('Global Server problen in controler message', err);
             });
-        // setTimeout(()=> {
-        //     dispatch({type: CONFIRMEMAIL_SUCCESS});
-        // }, 2000);
+        setTimeout(()=> {
+            dispatch({type: CONFIRMEMAIL_SUCCESS});
+        }, 2000);
     };
 }

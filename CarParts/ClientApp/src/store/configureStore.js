@@ -1,8 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import * as Counter from './Counter';
-import * as WeatherForecasts from './WeatherForecasts';
 import { createBrowserHistory } from 'history';
 import {registerReducer} from '../components/Auth/Register/RegisterReducer';
 import {confirmEmailReducer} from '../components/Auth/ConfirmEmail/ConfirmEmailReducer';
@@ -13,8 +11,6 @@ export const history = createBrowserHistory({ basename: baseUrl });
 
 export default function configureStore(history, initialState) {
   const reducers = {
-    counter: Counter.reducer,
-    weatherForecasts: WeatherForecasts.reducer,
     register: registerReducer,
     confirmEmail: confirmEmailReducer
   };
