@@ -2,9 +2,6 @@ import React from 'react';
 import { Route } from 'react-router';
 import Layout from './components/Layout';
 import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
-import ProductPage from './components/products/list';
 import Login from './components/Auth/Login';
 import Registration from './components/Auth/Register/Registration'
 import ForgotPassword from './components/Auth/ForgotPassword';
