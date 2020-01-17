@@ -152,7 +152,7 @@ namespace CarParts.Domain.Services.Implementation
             var callbackUrl =
                 $"{frontEndURL}/confirmemail?userId={user.Id}&" +
                 $"code={WebUtility.UrlEncode(code)}";
-            CreateEmailString.SendAccountConfirm(_configuration,_env,frontEndURL,user.Email);
+            CreateEmailString.SendAccountConfirm(_configuration,_env,callbackUrl,user.Email);
             return new ResultDto
             {
                 IsSuccessful = true,
