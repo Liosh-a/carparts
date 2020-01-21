@@ -13,6 +13,6 @@ export default () => (
     <Route path='/login' component={Login} />
     <Route path='/registration' component={Registration} />
     <Route path='/forgot-password' component={ForgotPassword} />
-    <Route path='/confirm-email' component={ConfirmEmailPage} />
+    <Route path='/confirmemail' component={ConfirmEmailPage} />
   </Layout>
 );
