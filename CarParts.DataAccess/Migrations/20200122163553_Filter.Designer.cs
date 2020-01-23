@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarParts.DataAccess.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20191204154323_first")]
-    partial class first
+    [Migration("20200122163553_Filter")]
+    partial class Filter
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,27 @@ namespace CarParts.DataAccess.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Car", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<string>("UniqueName")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblCars");
+                });
 
             modelBuilder.Entity("CarParts.DataAccess.Entities.DbRole", b =>
                 {
@@ -107,6 +128,66 @@ namespace CarParts.DataAccess.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Filter", b =>
+                {
+                    b.Property<int>("CarId");
+
+                    b.Property<int>("FilterValueId");
+
+                    b.Property<int>("FilterNameId");
+
+                    b.HasKey("CarId", "FilterValueId", "FilterNameId");
+
+                    b.HasAlternateKey("CarId", "FilterNameId", "FilterValueId");
+
+                    b.HasIndex("FilterNameId");
+
+                    b.HasIndex("FilterValueId");
+
+                    b.ToTable("tblFilters");
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.FilterName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblFilterNames");
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.FilterNameGroup", b =>
+                {
+                    b.Property<int>("FilterValueId");
+
+                    b.Property<int>("FilterNameId");
+
+                    b.HasKey("FilterValueId", "FilterNameId");
+
+                    b.HasAlternateKey("FilterNameId", "FilterValueId");
+
+                    b.ToTable("tblFilterNameGroups");
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.FilterValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblFilterValues");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -189,6 +270,37 @@ namespace CarParts.DataAccess.Migrations
                     b.HasOne("CarParts.DataAccess.Entities.DbUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Filter", b =>
+                {
+                    b.HasOne("CarParts.DataAccess.Entities.Car", "CarOf")
+                        .WithMany("Filtres")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CarParts.DataAccess.Entities.FilterName", "FilterNameOf")
+                        .WithMany("Filtres")
+                        .HasForeignKey("FilterNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CarParts.DataAccess.Entities.FilterValue", "FilterValueOf")
+                        .WithMany("Filtres")
+                        .HasForeignKey("FilterValueId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.FilterNameGroup", b =>
+                {
+                    b.HasOne("CarParts.DataAccess.Entities.FilterName", "FilterNameOf")
+                        .WithMany("FilterNameGroups")
+                        .HasForeignKey("FilterNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CarParts.DataAccess.Entities.FilterValue", "FilterValueOf")
+                        .WithMany("FilterNameGroups")
+                        .HasForeignKey("FilterValueId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
