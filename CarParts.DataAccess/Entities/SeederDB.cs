@@ -168,6 +168,8 @@ namespace CarParts.DataAccess.Entities
             {
                 carid.Add(el.Id);
             }
+            int a = 0;
+            a++;
 //            #region tblFilters -Фільтри
             //List<Filter> filters = new List<Filter>();
             //foreach(var car in context.Cars){
