@@ -60,6 +60,13 @@ namespace CarParts.DataAccess.Entities
         private static void SeedFilters(EFDbContext context, IHostingEnvironment _env,
            IConfiguration _config)
         {
+            List<int> carid = new List<int>();
+            foreach (var el in context.Cars)
+            {
+                carid.Add(el.Id);
+            }
+            int a = 0;
+            a++;
             //            #region tblFilterNames - Назви фільтрів
             //            string[] filterNames = { "Тип кузова", "Топливо", "КПП", "Тип привода" };
             //            foreach (var type in filterNames)
@@ -138,7 +145,7 @@ namespace CarParts.DataAccess.Entities
             //            #endregion
 
             //            #region tblCars - Автомобілі
-            //            var faker = new Faker();
+                       var faker = new Faker();
             //            List<string> cars = new List<string>();
             //            for (int i = 0; i < 10000; i++)
             //            {
@@ -163,33 +170,32 @@ namespace CarParts.DataAccess.Entities
             //                }
             //            }
             //#endregion
-            List<int> carid = new List<int>();
-            foreach(var el in context.Cars)
+
+            #region tblFilters -Фільтри
+            List<Filter> filters = new List<Filter>();
+            foreach (var el in carid)
             {
-                carid.Add(el.Id);
+
+                filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1, 13), CarId = el });
+                filters.Add(new Filter { FilterNameId = 2, FilterValueId = faker.Random.Int(14, 22), CarId = el });
+                filters.Add(new Filter { FilterNameId = 3, FilterValueId = faker.Random.Int(23, 27), CarId = el });
+                filters.Add(new Filter { FilterNameId = 4, FilterValueId = faker.Random.Int(28, 30), CarId = el });
+
             }
-            int a = 0;
-            a++;
-//            #region tblFilters -Фільтри
-            //List<Filter> filters = new List<Filter>();
-            //foreach(var car in context.Cars){
 
-            //    filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1,13), CarId = car.Id });
-            //    filters.Add(new Filter { FilterNameId = 2, FilterValueId = faker.Random.Int(14, 22), CarId = car.Id });
-            //    filters.Add(new Filter { FilterNameId = 3, FilterValueId = faker.Random.Int(23, 27), CarId = car.Id });
-            //    filters.Add(new Filter { FilterNameId = 4, FilterValueId = faker.Random.Int(28, 30), CarId = car.Id });
 
-            //}
-            //foreach (var item in filters)
-            //{
-            //    var f = context.Filters.SingleOrDefault(p => p == item);
-            //    if (f == null)
-            //    {
-            //        context.Filters.Add(new Filter { FilterNameId = item.FilterNameId, FilterValueId = item.FilterValueId, CarId = item.CarId });
-            //        context.SaveChanges();
-            //    }
-            //}
-            //#endregion
+            
+            foreach (var item in filters)
+            {
+                var f = context.Filters.SingleOrDefault(p => p == item);
+                if (f == null)
+                {
+                    context.Filters.Add(new Filter { FilterNameId = item.FilterNameId, FilterValueId = item.FilterValueId, CarId = item.CarId });
+                    context.SaveChanges();
+                }
+            }
+            
+            #endregion
 
 
 
@@ -197,48 +203,50 @@ namespace CarParts.DataAccess.Entities
         public static void SeedData(IServiceProvider services, IHostingEnvironment env,
             IConfiguration config)
         {
+            
             using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var managerUser = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
-                var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
+            //    var managerUser = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
+            //    var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
 
                 var context = scope.ServiceProvider.GetRequiredService<EFDbContext>();
-
+                context.ChangeTracker.AutoDetectChangesEnabled = false;
                 SeedFilters(context, env, config);
+                context.ChangeTracker.AutoDetectChangesEnabled = true;
 
 
-                SeedUsers(managerUser, managerRole);
+                //    SeedUsers(managerUser, managerRole);
             }
         }
-        public static void SeedUsers(UserManager<DbUser> userManager, RoleManager<DbRole> roleManager)
-        {
-            string roleName = "Admin";
-            var role = roleManager.FindByNameAsync(roleName).Result;
-            if (role == null)
-            {
-                role = new DbRole
-                {
-                    Name = roleName
-                };
-                var addRoleResult = roleManager.CreateAsync(role).Result;
-            }
+        //public static void SeedUsers(UserManager<DbUser> userManager, RoleManager<DbRole> roleManager)
+        //{
+        //    string roleName = "Admin";
+        //    var role = roleManager.FindByNameAsync(roleName).Result;
+        //    if (role == null)
+        //    {
+        //        role = new DbRole
+        //        {
+        //            Name = roleName
+        //        };
+        //        var addRoleResult = roleManager.CreateAsync(role).Result;
+        //    }
 
-            var userEmail = "admin@gmail.com";
-            var user = userManager.FindByEmailAsync(userEmail).Result;
-            if (user == null)
-            {
-                user = new DbUser
-                {
-                    Email = userEmail,
-                    UserName = "Yura"
-                };
-                var result = userManager.CreateAsync(user, "Qwerty1-").Result;
-                if (result.Succeeded)
-                {
-                    result = userManager.AddToRoleAsync(user, "Admin").Result;
-                }
-            }
+        //    var userEmail = "admin@gmail.com";
+        //    var user = userManager.FindByEmailAsync(userEmail).Result;
+        //    if (user == null)
+        //    {
+        //        user = new DbUser
+        //        {
+        //            Email = userEmail,
+        //            UserName = "Yura"
+        //        };
+        //        var result = userManager.CreateAsync(user, "Qwerty1-").Result;
+        //        if (result.Succeeded)
+        //        {
+        //            result = userManager.AddToRoleAsync(user, "Admin").Result;
+        //        }
+        //    }
 
-        }
+        //}
     }
 }

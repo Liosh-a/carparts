@@ -12,7 +12,7 @@ namespace CarParts.DataAccess
         public EFDbContext(DbContextOptions<EFDbContext> options)
             : base(options)
         {
-
+            
         }
         public virtual DbSet<Car> Cars { get; set; }
 
