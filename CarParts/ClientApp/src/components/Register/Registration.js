@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {registerUser} from './RegisterReducer';
-import EclipseWidget from '../../Eclipse';
+import EclipseWidget from '../Eclipse';
 import classnames from 'classnames';
 import '../css/Authorization.css';
 
@@ -19,8 +19,6 @@ class Registration extends Component {
         passwordConfirm: '',
         loading: this.props.loading,
         errors: {
-            // email: 'Invalid',
-            // password: 'Invalid'
         }
     }
 

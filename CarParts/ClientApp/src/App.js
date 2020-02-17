@@ -3,9 +3,9 @@ import { Route } from 'react-router';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Login from './components/Auth/Login';
-import Registration from './components/Auth/Register/Registration'
-import ForgotPassword from './components/Auth/ForgotPassword';
-import ConfirmEmailPage from './components/Auth/ConfirmEmail/ConfirmEmailPage';
+import Registration from './components/Register/Registration'
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import ConfirmEmailPage from './components/ConfirmEmail/ConfirmEmailPage';
 
 export default () => (
   <Layout>

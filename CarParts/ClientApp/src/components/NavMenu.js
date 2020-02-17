@@ -20,8 +20,7 @@ export default class NavMenu extends React.Component {
   render () {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light >
-          <Container>
+        <Navbar className="nav-container navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light >       
             <NavbarBrand tag={Link} to="/">TheBestCRUD</NavbarBrand>
             <NavbarToggler onClick={this.toggle} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
@@ -40,7 +39,6 @@ export default class NavMenu extends React.Component {
                 </NavItem>
               </ul>
             </Collapse>
-          </Container>
         </Navbar>
       </header>
     );
