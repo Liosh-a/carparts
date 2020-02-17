@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
 using CarParts.Dto;
+using CarParts.Dto.ViewModels;
 using CarParts.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +19,6 @@ namespace CarParts.Controllers
     public class FilterTestController : ControllerBase
     {
         private readonly EFDbContext _context;
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private readonly ILogger<FilterTestController> _logger;
 
@@ -31,16 +29,17 @@ namespace CarParts.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult Get( )
         {
             var filtersList = GetListFilters(_context);
-            long[] filterValueSearchList = {1, 14, 24, 28 }; //масив ID вибраних фільтрів
+            long[] filterValueSearchList = {1}; //масив ID вибраних фільтрів
             var query = _context
                 .Cars
+                .Include(f => f.Filtres)
                 .AsQueryable();
             foreach (var fName in filtersList)
             {
-                int countFilter = 0; //Кількість співпадінь у даній групі фільтрів
+                int countFilter = 0; //Кількість співпадінь у даній групі фільрів
                 var predicate = PredicateBuilder.False<Car>();
                 foreach (var fValue in fName.Children)
                 {
@@ -51,6 +50,7 @@ namespace CarParts.Controllers
                         {
                             predicate = predicate
                                 .Or(p => p.Filtres
+
                                     .Any(f => f.FilterValueId == idV));
                             countFilter++;
                         }
@@ -60,15 +60,26 @@ namespace CarParts.Controllers
                     query = query.Where(predicate);
             }
             int count = query.Count();
-            var res = query.ToList();
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+
+            var res = query
+                .Select(p => new
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Filters = p.Filtres
+                        .Select(f => new
+                        {
+                            Filter = f.FilterNameOf.Name,
+                            ValueId = f.FilterValueId,
+                            Value = f.FilterValueOf.Name
+                        })
+
+                })
+                .ToList();
+
+            return Ok(res);
+
         }
 
         private List<FNameViewModel> GetListFilters(EFDbContext context)

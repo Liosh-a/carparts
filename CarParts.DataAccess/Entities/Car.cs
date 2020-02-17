@@ -24,6 +24,9 @@ namespace CarParts.DataAccess.Entities
         //[Column]
         //public int Mileage { get; set; }
 
+        //[Column]
+        //public DateTime ProductionYear { get; set; }
+
         [Required, StringLength(maximumLength: 250)]
         public string UniqueName { get; set; }
 
