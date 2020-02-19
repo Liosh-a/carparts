@@ -2,14 +2,14 @@ import LoginService from './LoginService';
 import * as types from './types';
 
 import { push } from 'connected-react-router';
-import jwt from 'jsonwebtoken';
-import setAuthorisationToken from '../../../utils/setAuthorisationToken';
-
+import jwt from '../../../node_modules/jsonwebtoken';
+import setAuthorisationToken from '../../utils/setAuthorisationToken';
+ 
 export const loginActions = {
     started: () => {
         return {
             type: types.LOGIN_STARTED
-        }
+        } 
     },
 
     success: () => {
@@ -67,9 +67,9 @@ export const loginUser = (model) => {
 export const loginByJWT = (tokens, dispatch) => {
     const { token, refreshToken }=tokens;
     var user = jwt.decode(token);
-    if (!Array.isArray(user.roles)) {
-        user.roles = Array.of(user.roles);
-    }
+    // if (!Array.isArray(user.roles)) {
+    //     user.roles = Array.of(user.roles);
+    // }
     //console.log('Hello app', user);
     localStorage.setItem('authToken', token);
     localStorage.setItem('refreshToken', refreshToken);

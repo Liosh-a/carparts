@@ -5,15 +5,14 @@ import isEmpty from 'lodash/isEmpty';
 const initialState = {
     user: {
       id: '',
-      name: '',
-      roles: []
+      name: ''
     },
     isAuthenticated: false,
     loading: false,
     success: false,
     failed: false,
     errors: {
-        showCaptcha:false
+    
     },
 }
 

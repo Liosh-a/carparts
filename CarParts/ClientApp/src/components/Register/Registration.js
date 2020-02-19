@@ -102,7 +102,20 @@ class Registration extends Component {
                                 }
                             </div>
                           
-                            <input type="submit" className="fadeIn fourth" value="Зарегистрироватся" />
+                          <div>
+                            <button
+                                    disabled={
+                                        loading ||
+                                        email.trim() === "" ||
+                                        password.trim() === "" ||
+                                        passwordConfirm.trim() === ""
+                                    }
+                                    className="btn btn-primary fadeIn fourth"
+                                >
+                                    {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                                    Регистрация
+                                </button>                                                  
+                            </div>
                         </form>
                         {loading && <EclipseWidget/>}
                         <div id="formFooter">

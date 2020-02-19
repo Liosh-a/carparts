@@ -1,13 +1,13 @@
 import Login from './Login';
-import { loginUser, setErrors } from '../actions';
+import { loginUser, setErrors } from './actions';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const mapState = (state) => {
     return {
-        loading: state.auth.loading,
-        errors: state.auth.errors,
+        loading: state.login.loading,
+        errors: state.login.errors,
     }
 }
 

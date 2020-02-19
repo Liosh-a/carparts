@@ -15,12 +15,12 @@ export class Login extends Component {
 
     };
 
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     return {
-    //         loading: nextProps.loading,
-    //         errors: nextProps.errors,
-    //     };
-    // }
+    static getDerivedStateFromProps(nextProps, prevState) {
+        return {
+            loading: nextProps.loading,
+            errors: nextProps.errors,
+        };
+    }
 
     setStateByErrors = (name, value) => {
         if (!!this.state.errors[name]) {
@@ -45,7 +45,7 @@ export class Login extends Component {
         let errors = validateFields(fields);
 
         const isValid = Object.keys(errors).length === 0;
-
+        console.log(this.props);
         if (isValid) {
             this.props.loginUser(fields);
         } else {
@@ -103,7 +103,7 @@ export class Login extends Component {
                                 >
                                     {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
                                     Вход
-                                </button>                                                  
+                                </button>
                             </div>
                         </form>
                         <div id="formFooter">
