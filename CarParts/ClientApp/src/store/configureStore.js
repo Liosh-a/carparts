@@ -2,8 +2,9 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import {registerReducer} from '../components/Auth/Register/RegisterReducer';
-import {confirmEmailReducer} from '../components/Auth/ConfirmEmail/ConfirmEmailReducer';
+import {registerReducer} from '../components/Register/RegisterReducer';
+import {confirmEmailReducer} from '../components/ConfirmEmail/ConfirmEmailReducer';
+import {loginReducer} from '../components/Auth/LoginReducer';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
@@ -12,7 +13,8 @@ export const history = createBrowserHistory({ basename: baseUrl });
 export default function configureStore(history, initialState) {
   const reducers = {
     register: registerReducer,
-    confirmEmail: confirmEmailReducer
+    confirmEmail: confirmEmailReducer,
+    login: loginReducer
   };
 
   const middleware = [
