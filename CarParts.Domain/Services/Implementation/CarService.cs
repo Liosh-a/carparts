@@ -1,39 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using CarParts.DataAccess;
+﻿using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
+using CarParts.Domain.Services.Abstraction;
 using CarParts.Dto;
 using CarParts.Dto.DtoModels;
-using CarParts.Dto.ViewModels;
-using CarParts.Helpers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using CarParts.Dto.DtoResult;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CarParts.Controllers
+namespace CarParts.Domain.Services.Implementation
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class FilterTestController : ControllerBase
+    public class CarService : ICarService
     {
-        private readonly EFDbContext _context;
-
-        private readonly ILogger<FilterTestController> _logger;
-
-        public FilterTestController(ILogger<FilterTestController> logger, EFDbContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
-
-        [HttpPost]
-        public IActionResult Get([FromBody] GerCarDto getCar )
+        public Task<CollectionResultDto<Car>> GetCarsByFilters(GerCarDto carDto)
         {
             var filtersList = GetListFilters(_context);
-            long[] filterValueSearchList = {1}; //масив ID вибраних фільтрів
+            long[] filterValueSearchList = { 1 }; //масив ID вибраних фільтрів
             var query = _context
                 .Cars
                 .Include(f => f.Filtres)
@@ -80,10 +64,9 @@ namespace CarParts.Controllers
                 .ToList();
 
             return Ok(res);
-
         }
 
-        private List<FNameViewModel> GetListFilters(EFDbContext context)
+        Task<CollectionResultDto<FNameViewModel>> GetListFilters(EFDbContext context)
         {
             var queryName = from f in context.FilterNames.AsQueryable()
                             select f;
@@ -135,8 +118,13 @@ namespace CarParts.Controllers
                                          .OrderBy(l => l.Value).ToList()
                          };
 
-            return result.ToList();
+            return new CollectionResultDto<FNameViewModel>
+            {
+                Data=result.ToList(),
+                IsSuccessful=true,
+                Count=result.Count()
+            };
         }
-
+    }
     }
 }
