@@ -66,7 +66,7 @@ namespace CarParts.Domain.Services.Implementation
             return Ok(res);
         }
 
-        Task<CollectionResultDto<FNameViewModel>> GetListFilters(EFDbContext context)
+        List<FNameViewModel> GetListFilters(EFDbContext context)
         {
             var queryName = from f in context.FilterNames.AsQueryable()
                             select f;
@@ -117,14 +117,13 @@ namespace CarParts.Domain.Services.Implementation
                                          select g.Key)
                                          .OrderBy(l => l.Value).ToList()
                          };
+            return new List<FNameViewModel>(result);
+        }
 
-            return new CollectionResultDto<FNameViewModel>
-            {
-                Data=result.ToList(),
-                IsSuccessful=true,
-                Count=result.Count()
-            };
+        List<FNameViewModel> ICarService.GetListFilters(EFDbContext context)
+        {
+            throw new NotImplementedException();
         }
     }
-    }
+    
 }

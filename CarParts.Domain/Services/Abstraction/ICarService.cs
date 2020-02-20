@@ -13,6 +13,6 @@ namespace CarParts.Domain.Services.Abstraction
     public interface ICarService
     {
         Task<CollectionResultDto<Car>> GetCarsByFilters(GerCarDto carDto);
-        Task<CollectionResultDto<FNameViewModel>> GetListFilters(EFDbContext context);
+        List<FNameViewModel> GetListFilters(EFDbContext context);
     }
 }
