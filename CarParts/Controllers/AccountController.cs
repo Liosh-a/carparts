@@ -29,7 +29,7 @@ namespace CarParts.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]LoginDto model)
         {
-            var result = await _accountService.Login(model);
+                var result = await _accountService.Login(model);
             if (result.IsSuccessful == false)
             {
                 return BadRequest(new { invalid = "Не правильно введені дані!" });
