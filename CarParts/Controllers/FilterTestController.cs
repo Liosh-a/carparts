@@ -15,8 +15,9 @@ using Microsoft.Extensions.Logging;
 
 namespace CarParts.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
-    [ApiController]
+    //[ApiController]
     public class FilterTestController : ControllerBase
     {
         private readonly EFDbContext _context;
@@ -29,11 +30,11 @@ namespace CarParts.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public IActionResult Get([FromBody] GerCarDto getCar )
+        [HttpPost("car")]
+        public IActionResult Get([FromBody] GetCarDto getCar)
         {
             var filtersList = GetListFilters(_context);
-            long[] filterValueSearchList = {1}; //масив ID вибраних фільтрів
+            long[] filterValueSearchList = getCar.FilterList.ToArray(); //масив ID вибраних фільтрів
             var query = _context
                 .Cars
                 .Include(f => f.Filtres)
@@ -76,9 +77,7 @@ namespace CarParts.Controllers
                             Value = f.FilterValueOf.Name
                         })
 
-                })
-                .ToList();
-
+                }).OrderBy(x=>x.Name).Skip(getCar.pageIndex-1*10).Take(getCar.pageIndex*10).ToList();
             return Ok(res);
 
         }

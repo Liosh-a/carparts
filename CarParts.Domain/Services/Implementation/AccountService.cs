@@ -87,7 +87,7 @@ namespace CarParts.Domain.Services.Implementation
             foreach (var role in roles)
             {
                 claims.Add(new Claim("roles", role));
-            }
+            };
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("11-sdfasdf-22233222222"));
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);

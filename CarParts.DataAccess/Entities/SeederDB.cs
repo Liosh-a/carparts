@@ -143,7 +143,7 @@ namespace CarParts.DataAccess.Entities
             //            #endregion
 
             //            #region tblCars - Автомобілі
-                       var faker = new Faker();
+            var faker = new Faker();
             //            List<string> cars = new List<string>();
             //            for (int i = 0; i < 10000; i++)
             //            {
@@ -214,6 +214,7 @@ namespace CarParts.DataAccess.Entities
 
                         };
 
+
             foreach (var items in filterValues)
             {
                 foreach (var value in items)
@@ -256,6 +257,7 @@ namespace CarParts.DataAccess.Entities
                     }
                 }
             }
+            #endregion
 
             //#region tblFilters -Фільтри
             //List<Filter> filters = new List<Filter>();
@@ -270,7 +272,7 @@ namespace CarParts.DataAccess.Entities
             //}
 
 
-            
+
             //foreach (var item in filters)
             //{
             //    var f = context.Filters.SingleOrDefault(p => p == item);
@@ -280,7 +282,7 @@ namespace CarParts.DataAccess.Entities
             //        context.SaveChanges();
             //    }
             //}
-            
+
             //#endregion
 
 
@@ -289,11 +291,11 @@ namespace CarParts.DataAccess.Entities
         public static void SeedData(IServiceProvider services, IHostingEnvironment env,
             IConfiguration config)
         {
-            
+
             using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-            //    var managerUser = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
-            //    var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
+                //    var managerUser = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
+                //    var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
 
                 var context = scope.ServiceProvider.GetRequiredService<EFDbContext>();
                 context.ChangeTracker.AutoDetectChangesEnabled = false;
