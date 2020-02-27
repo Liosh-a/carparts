@@ -121,6 +121,14 @@ namespace CarParts.Domain.Services.Implementation
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user.EmailConfirmed == false)
+            {
+                return new ResultDto
+                {
+                    IsSuccessful = false,
+                    collectionResult = null,
+                };
+            }
             await _signInManager.SignInAsync(user, isPersistent: false);
             dictionaryResult.Add("token", CreateJwtTocken(user));
             return new ResultDto

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {registerUser} from './RegisterReducer';
-import EclipseWidget from '../../Eclipse';
+import EclipseWidget from '../Eclipse';
 import classnames from 'classnames';
 import '../css/Authorization.css';
 
@@ -19,8 +19,6 @@ class Registration extends Component {
         passwordConfirm: '',
         loading: this.props.loading,
         errors: {
-            // email: 'Invalid',
-            // password: 'Invalid'
         }
     }
 
@@ -104,7 +102,20 @@ class Registration extends Component {
                                 }
                             </div>
                           
-                            <input type="submit" className="fadeIn fourth" value="Зарегистрироватся" />
+                          <div>
+                            <button
+                                    disabled={
+                                        loading ||
+                                        email.trim() === "" ||
+                                        password.trim() === "" ||
+                                        passwordConfirm.trim() === ""
+                                    }
+                                    className="btn btn-primary fadeIn fourth"
+                                >
+                                    {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                                    Регистрация
+                                </button>                                                  
+                            </div>
                         </form>
                         {loading && <EclipseWidget/>}
                         <div id="formFooter">
