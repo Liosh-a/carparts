@@ -60,15 +60,12 @@ export class Login extends Component {
             <div>
                 <div className="wrapper fadeInDown">
                     <div id="formContent">
-
                         <div className="fadeIn first">
                             <h1>Вход</h1>
                         </div>
-
                         {errors.invalid && (
                             <AlertGroup title={errors.invalid} alertColor="alert-danger" />
                         )}
-
                         <form name="form" onSubmit={this.handleSubmit}>
                         <TextFieldGroup
                                 field="email"
@@ -94,11 +91,6 @@ export class Login extends Component {
 
                             <div className="form-group">
                                 <button
-                                    disabled={
-                                        loading ||
-                                        email.trim() === "" ||
-                                        password.trim() === ""
-                                    }
                                     className="btn btn-primary fadeIn fourth"
                                 >
                                     {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
@@ -120,3 +112,4 @@ export class Login extends Component {
 }
 
 export default Login;
+

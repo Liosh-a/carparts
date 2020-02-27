@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router';
 import Layout from './components/Layout';
-import Home from './components/Home';
+import Home from './components/Home/Home';
 import Login from './components/Auth';
-import Registration from './components/Register/Registration'
+import Registration from './components/Register';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ConfirmEmailPage from './components/ConfirmEmail/ConfirmEmailPage';
 

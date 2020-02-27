@@ -12,6 +12,12 @@ function validateFields(items){
             password:"Пароль є обов'язковим!"
         }
     }
+    if(items.passwordConfirm.trim() === ''){
+        errors={
+            ...errors,
+            passwordConfirm:"Подтвердите пароль!"
+        }
+    }
     return errors;
 }
 

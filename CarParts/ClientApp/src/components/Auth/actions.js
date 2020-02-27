@@ -59,7 +59,7 @@ export const loginUser = (model) => {
                 dispatch(loginActions.failed(err.response));
             })
             .catch(err=> {
-                console.log('Global Server problen in controler message', err);
+                console.log('Global Server problem in controler message', err);
             });
     };
 }
