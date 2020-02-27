@@ -30,6 +30,30 @@ namespace CarParts.Controllers
             _context = context;
         }
 
+        [HttpPost("filteravalibal")]
+        public IActionResult GetAvalibalFilters([FromBody]FilterOnUse filteronuse)
+        {
+            var filteronu = filteronuse.filters;
+            var filtersList = GetListFilters(_context);
+            List<FilterDto> filters = new List<FilterDto>();
+            foreach(var FName in filtersList)
+            {
+                foreach (var FValue in FName.Children) {
+                    if (filteronu.Contains(FValue.Id) == false)
+                    {
+                        filteronu.Add(FValue.Id);
+                        var r = CheakForFilter(filteronu);
+                        filters.Add(new FilterDto { filterCount = r, filterId = FValue.Id });
+                        filteronu.Remove(FValue.Id);
+                    }
+                }
+            }
+            var res=filters.OrderBy(x=>x.filterId);
+
+            return Ok(res);
+        }
+
+
         [HttpPost("car")]
         public IActionResult Get([FromBody] GetCarDto getCar)
         {
@@ -77,7 +101,7 @@ namespace CarParts.Controllers
                             Value = f.FilterValueOf.Name
                         })
 
-                }).OrderBy(x=>x.Name).Skip(getCar.pageIndex-1*10).Take(getCar.pageIndex*10).ToList();
+                }).OrderBy(x=>x.Name).Skip((getCar.pageIndex-1)*10).Take(10).ToList();
             return Ok(res);
 
         }
@@ -136,6 +160,39 @@ namespace CarParts.Controllers
 
             return result.ToList();
         }
+        private long CheakForFilter(List<long> filtertouse)
+        {
+            var filtersList = GetListFilters(_context);
+            long[] filterValueSearchList = filtertouse.ToArray(); //масив ID вибраних фільтрів
+            var query = _context
+                .Cars
+                .Include(f => f.Filtres)
+                .AsQueryable();
+            foreach (var fName in filtersList)
+            {
+                int countFilter = 0; //Кількість співпадінь у даній групі фільрів
+                var predicate = PredicateBuilder.False<Car>();
+                foreach (var fValue in fName.Children)
+                {
+                    for (int i = 0; i < filterValueSearchList.Length; i++)
+                    {
+                        var idV = fValue.Id;
+                        if (filterValueSearchList[i] == idV)
+                        {
+                            predicate = predicate
+                                .Or(p => p.Filtres
 
+                                    .Any(f => f.FilterValueId == idV));
+                            countFilter++;
+                        }
+                    }
+                }
+                if (countFilter != 0)
+                    query = query.Where(predicate);
+            }
+            int count = query.Count();
+
+            return count;
+        }
     }
 }
