@@ -1,24 +1,24 @@
-function validateFields(items){
-    let errors={};
-    if(items.email.trim() === ''){
-        errors={
+function validateFields(items) {
+    let errors = {};
+    if (items.email.trim() === '') {
+        errors = {
             ...errors,
-            email:"Пошта є обов'язковою!"
+            email: "Введите электронную почту !"
         }
     }
-    if(items.password.trim() === ''){
-        errors={
+    if (items.password.trim() === '') {
+        errors = {
             ...errors,
-            password:"Пароль є обов'язковим!"
+            password: "Введите пароль !"
         }
     }
-    if(items.passwordConfirm.trim() === ''){
-        errors={
+    if (items.passwordConfirm.trim() === '') {
+        errors = {
             ...errors,
-            passwordConfirm:"Подтвердите пароль!"
+            passwordConfirm: "Введите пароль !"
         }
     }
     return errors;
 }
 
-export {validateFields};
+export { validateFields };

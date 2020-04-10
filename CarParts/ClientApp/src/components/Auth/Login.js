@@ -74,7 +74,7 @@ export class Login extends Component {
                                 error={errors.email}
                                 onChange={this.handleChange}
                                 type="text"
-                                placeholder="email"
+                                placeholder="Электронная пошта"
                                 isShowLabel={false}
                             />
 

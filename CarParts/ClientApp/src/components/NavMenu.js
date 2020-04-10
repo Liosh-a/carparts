@@ -3,8 +3,9 @@ import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from '
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
+
 export default class NavMenu extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
@@ -12,35 +13,30 @@ export default class NavMenu extends React.Component {
       isOpen: false
     };
   }
-  toggle () {
+  toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-  render () {
+  render() {
     return (
-      <header>
-        <Navbar className="nav-container navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light >       
-            <NavbarBrand tag={Link} to="/">Koparts</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
-              <ul className="navbar-nav flex-grow">
-                <li className="nav-li">
-                  <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                </li>
-                <li>
-                  <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </li>
-                <NavItem>
-                  <NavLink tag={Link} className="txt-dark" to="/">Home</NavLink>
-                </NavItem>  
-                <NavItem>
-                  <NavLink tag={Link} className="txt-dark" to="/login">Вход</NavLink>
-                </NavItem>
-              </ul>
-            </Collapse>
-        </Navbar>
-      </header>
+      <Navbar className="nav-container navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
+        <NavbarBrand tag={Link} to="/">Koparts</NavbarBrand>
+        <NavbarToggler onClick={this.toggle} className="mr-2" />
+        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
+          <ul className="navbar-nav flex-grow">
+            <NavItem>
+              <NavLink tag={Link} className="txt-dark" to="/">Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} className="txt-dark" to="/login">Вход</NavLink>
+            </NavItem>
+          </ul>
+        </Collapse>
+      </Navbar>
     );
   }
 }
+
+
+

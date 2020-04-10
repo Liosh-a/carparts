@@ -1,4 +1,8 @@
-﻿a.navbar-brand {
+﻿header{
+  background-color: #ffffff;
+}
+
+a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
@@ -19,11 +23,6 @@ html {
 
 .txt-dark {
   font-size: 17px;
-  color: red;
-}
-
-.txt-dark:hover {
- font-size: 18px;
 }
 
 ul li {

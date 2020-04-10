@@ -6,6 +6,8 @@ import Login from './components/Auth';
 import Registration from './components/Register';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ConfirmEmailPage from './components/ConfirmEmail/ConfirmEmailPage';
+import UserPage from './components/UserPage/UserPage';
+import PartsList from './components/Parts/PartsList';
 
 export default () => (
   <Layout>
@@ -14,5 +16,7 @@ export default () => (
     <Route path='/registration' component={Registration} />
     <Route path='/forgot-password' component={ForgotPassword} />
     <Route path='/confirm-email' component={ConfirmEmailPage} />
+    <Route path='/user-page' component={UserPage} />
+    <Route path='/parts-list' component={PartsList}/>
   </Layout>
 );

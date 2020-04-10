@@ -3,13 +3,13 @@ function validateFields(items){
     if(items.email.trim() === ''){
         errors={
             ...errors,
-            email:"Пошта є обов'язковою!"
+            email:"Введите электронную почту !"
         }
     }
     if(items.password.trim() === ''){
         errors={
             ...errors,
-            password:"Пароль є обов'язковим!"
+            password:"Введите пароль !"
         }
     }
     return errors;

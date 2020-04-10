@@ -5,7 +5,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import '../css/Authorization.css';
 
 class Registration extends Component {
-    
+
     state = {
         email: '',
         password: '',
@@ -47,7 +47,7 @@ class Registration extends Component {
 
         const isValid = Object.keys(errors).length === 0;
         if (isValid) {
-            this.props.registerUser(fields); 
+            this.props.registerUser(fields);
         } else {
             this.props.setErrors(errors);
         }
@@ -55,61 +55,61 @@ class Registration extends Component {
 
     render() {
         const { email, loading, password, passwordConfirm, errors } = this.state;
+
         return (
-            <div>
-                <div className="wrapper fadeInDown">
-                    <div id="formContent">
-                        <div className="fadeIn first">
-                            <h1>Регистрация</h1>
-                        </div>
-                        {errors.invalid && (
-                            <AlertGroup title={errors.invalid} alertColor="alert-danger" />
-                        )}
-                        <form name="form" onSubmit={this.handleSubmit}>
-                            {/* <input type="text" id="name" class="fadeIn second" name="name" placeholder="name" /> */}
-                            <TextFieldGroup
-                                field="email"
-                                label="Електронна пошта"
-                                value={email}
-                                error={errors.email}
-                                onChange={this.handleChange}
-                                type="text"
-                                placeholder="Электронная почта"
-                                isShowLabel={false}
-                            />
+            <div className="wrapper fadeInDown">
+                <div className="fadeIn first" id="formHeader">
+                    <h2>Регистрация</h2>
+                </div>
+                <div id="formContent">
 
-                            <TextFieldGroup
-                                field="password"
-                                label="Пароль"
-                                value={password}
-                                error={errors.password}
-                                onChange={this.handleChange}
-                                type="text"
-                                placeholder="Пароль"
-                                isShowLabel={false}
-                            />
+                    {errors.invalid && (
+                        <AlertGroup title={errors.invalid} alertColor="alert-danger" />
+                    )}
+                    <form className="mt-3" name="form" onSubmit={this.handleSubmit}>
+                        {/* <input type="text" id="name" class="fadeIn second" name="name" placeholder="name" /> */}
+                        <TextFieldGroup
+                            field="email"
+                            label="Електронна пошта"
+                            value={email}
+                            error={errors.email}
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Электронная почта"
+                            isShowLabel={false}
+                        />
 
-                            <TextFieldGroup
-                                field="passwordConfirm"
-                                label="Подтверждение пароля"
-                                value={passwordConfirm}
-                                error={errors.passwordConfirm}
-                                onChange={this.handleChange}
-                                type="text"
-                                placeholder="Подтверждение пароля"
-                                isShowLabel={false}
-                            />
+                        <TextFieldGroup
+                            field="password"
+                            label="Пароль"
+                            value={password}
+                            error={errors.password}
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Пароль"
+                            isShowLabel={false}
+                        />
 
-                            <div>
-                                <button className="btn btn-primary fadeIn fourth">
-                                    {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
-                                    Регистрация
+                        <TextFieldGroup
+                            field="passwordConfirm"
+                            label="Подтверждение пароля"
+                            value={passwordConfirm}
+                            error={errors.passwordConfirm}
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Подтверждение пароля"
+                            isShowLabel={false}
+                        />
+
+                        <div>
+                            <button className="btn btn-primary fadeIn fourth">
+                                {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                                Регистрация
                                 </button>
-                            </div>
-                        </form>
-                        <div id="formFooter">
-                            <a className="underlineHover" href="/login">Вернутся к входу</a>
                         </div>
+                    </form>
+                    <div id="formFooter">
+                        <a className="underlineHover" href="/login">Вернутся к входу</a>
                     </div>
                 </div>
             </div>
