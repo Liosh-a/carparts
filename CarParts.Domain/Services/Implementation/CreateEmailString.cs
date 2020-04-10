@@ -44,7 +44,7 @@ namespace CarParts.Domain.Services.Implementation
                 }
                 
                 body = body.Replace("{UserName}","Vasya" );
-                body = body.Replace("{Title}", "koparts.dp.ua");
+                body = body.Replace("{Title}", "KOPARTS");
                 body = body.Replace("{Url}", url);
                 body = body.Replace("{Description}", "text");
                 string command = $"echo '{body}' | " +

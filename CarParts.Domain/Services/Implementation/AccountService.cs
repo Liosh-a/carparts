@@ -18,6 +18,8 @@ using System.Web.Http.ModelBinding;
 using CarParts.Helpers;
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
+using System.Net.Mail;
+using System.Diagnostics;
 
 namespace CarParts.Domain.Services.Implementation
 {
@@ -119,6 +121,14 @@ namespace CarParts.Domain.Services.Implementation
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user.EmailConfirmed == false)
+            {
+                return new ResultDto
+                {
+                    IsSuccessful = false,
+                    collectionResult = null,
+                };
+            }
             await _signInManager.SignInAsync(user, isPersistent: false);
             dictionaryResult.Add("token", CreateJwtTocken(user));
             return new ResultDto
@@ -147,17 +157,58 @@ namespace CarParts.Domain.Services.Implementation
             }
             string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            var frontEndURL = _configuration.GetValue<string>("FrontEndURL");
+            var frontEndURL = _configuration.GetValue<string>("FrontEndURL");//"https://localhost:44339/";
 
             var callbackUrl =
-                $"{frontEndURL}/confirmemail?userId={user.Id}&" +
+                $"{frontEndURL}confirmemail?userId={user.Id}&" +
                 $"code={WebUtility.UrlEncode(code)}";
-            CreateEmailString.SendAccountConfirm(_configuration,_env,frontEndURL,user.Email);
+            Debug.WriteLine(callbackUrl);
+            //IEmailSender emailServer = new EmailSender(this._configuration);
+            //await emailServer.SendEmailAsync(model.Email, "Confirm Email",
+            //   $"Please confirm your email by clicking here: " +
+            //   $"<a href='{callbackUrl}'>link</a>");
+            CreateEmailString.SendAccountConfirm(_configuration,_env,callbackUrl,user.Email);
             return new ResultDto
             {
                 IsSuccessful = true,
                 collectionResult = null,
             };
         }
+
+        //public class EmailSender : IEmailSender
+        //{
+        //    private readonly IConfiguration _configuration;
+        //    public EmailSender(IConfiguration configuration)
+        //    {
+        //        _configuration = configuration;
+        //    }
+        //    public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        //    {
+        //        return Execute(subject, htmlMessage, email);
+        //    }
+
+        //    public Task Execute(string subject, string body, string email)
+        //    {
+        //        string emailOwner = "semenplujara@gmail.com";
+        //        string passwordOwner = "Qwerty1-";
+        //        int portOwner = 587;
+        //        string hostOwner = "smtp.gmail.com";
+        //        using (MailMessage mm = new MailMessage(emailOwner, email))
+        //        {
+        //            mm.Subject = subject;
+        //            mm.Body = body;
+        //            mm.IsBodyHtml = true;
+        //            SmtpClient smtp = new SmtpClient();
+        //            smtp.Host = hostOwner;
+        //            smtp.EnableSsl = true;
+        //            NetworkCredential NetworkCred = new NetworkCredential(emailOwner, passwordOwner);
+        //            smtp.UseDefaultCredentials = true;
+        //            smtp.Credentials = NetworkCred;
+        //            smtp.Port = portOwner;
+        //            smtp.Send(mm);
+        //            return Task.FromResult(0);
+        //        }
+        //    }
+        //}
     }
 }
