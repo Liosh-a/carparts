@@ -61,7 +61,7 @@ namespace CarParts.DataAccess.Entities
            IConfiguration _config)
         {
             List<int> carid = new List<int>();
-            foreach (var el in context.Cars)
+            foreach (var el in context.Products)
             {
                 carid.Add(el.Id);
             }

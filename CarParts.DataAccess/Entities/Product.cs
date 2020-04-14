@@ -6,8 +6,8 @@ using System.Text;
 
 namespace CarParts.DataAccess.Entities
 {
-    [Table("tblCars")]
-    public class Car
+    [Table("tblProducts")]
+    public class Product
     {
         [Key]
         public int Id { get; set; }
@@ -16,16 +16,10 @@ namespace CarParts.DataAccess.Entities
         public string Name { get; set; }
 
         [Column(TypeName = "decimal(7,2)")]
-        public Decimal Price { get; set; }
+        public Decimal PurchasePrice { get; set; }
 
-        //[Column]
-        //public int HorsePower { get; set; }
-
-        //[Column]
-        //public int Mileage { get; set; }
-
-        //[Column]
-        //public DateTime ProductionYear { get; set; }
+        [Column(TypeName = "decimal(7,2)")]
+        public Decimal SellingPrice { get; set; }
 
         [Required, StringLength(maximumLength: 250)]
         public string UniqueName { get; set; }

@@ -14,15 +14,24 @@ namespace CarParts.DataAccess
         {
             
         }
-        public virtual DbSet<Car> Cars { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+
+        public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<FilterNameCategory> FilterNameCategories { get; set; }
 
         // <summary>
         /// Filter tables
         /// </summary>
+        /// 
         public DbSet<FilterName> FilterNames { get; set; }
+
         public DbSet<FilterValue> FilterValues { get; set; }
+
         public DbSet<FilterNameGroup> FilterNameGroups { get; set; }
+
         public DbSet<Filter> Filters { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -78,7 +87,23 @@ namespace CarParts.DataAccess
                     .HasForeignKey(ur => ur.FilterValueId)
                     .IsRequired();
             });
-        }
+          
+            builder.Entity<FilterNameCategory>(filterNC=>
+            {
+                filterNC.HasKey(f => new { f.FilterNameId, f.CategoryId });
+
+                filterNC.HasOne(ur => ur.FilterNameOf)
+                    .WithMany(r => r.FilterNameCategories)
+                    .HasForeignKey(ur => ur.FilterNameId)
+                    .IsRequired();
+
+                filterNC.HasOne(ur => ur.CategoryOf)
+                    .WithMany(r => r.FilterNameCategories)
+                    .HasForeignKey(ur => ur.CategoryId)
+                    .IsRequired();
+            });
+        
+    }
 
         //public virtual DbSet<UserProfile> UserProfiles { get; set; }
 

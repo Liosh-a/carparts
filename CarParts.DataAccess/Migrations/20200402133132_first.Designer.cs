@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarParts.DataAccess.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20200122163553_Filter")]
-    partial class Filter
+    [Migration("20200402133132_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,25 +21,35 @@ namespace CarParts.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("CarParts.DataAccess.Entities.Car", b =>
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("IsArchive");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(250);
+                        .HasMaxLength(255);
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(7,2)");
+                    b.Property<int?>("ParentId");
 
-                    b.Property<string>("UniqueName")
+                    b.Property<string>("UrlSlug")
                         .IsRequired()
-                        .HasMaxLength(250);
+                        .HasMaxLength(128);
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblCars");
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("tblCategories");
                 });
 
             modelBuilder.Entity("CarParts.DataAccess.Entities.DbRole", b =>
@@ -161,6 +171,19 @@ namespace CarParts.DataAccess.Migrations
                     b.ToTable("tblFilterNames");
                 });
 
+            modelBuilder.Entity("CarParts.DataAccess.Entities.FilterNameCategory", b =>
+                {
+                    b.Property<int>("FilterNameId");
+
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("FilterNameId", "CategoryId");
+
+                    b.HasAlternateKey("CategoryId", "FilterNameId");
+
+                    b.ToTable("tblFilterNameCategories");
+                });
+
             modelBuilder.Entity("CarParts.DataAccess.Entities.FilterNameGroup", b =>
                 {
                     b.Property<int>("FilterValueId");
@@ -186,6 +209,34 @@ namespace CarParts.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tblFilterValues");
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CategoryId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<decimal>("PurchasePrice")
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<decimal>("SellingPrice")
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<string>("UniqueName")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("tblProducts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -260,6 +311,13 @@ namespace CarParts.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Category", b =>
+                {
+                    b.HasOne("CarParts.DataAccess.Entities.Category", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+                });
+
             modelBuilder.Entity("CarParts.DataAccess.Entities.DbUserRole", b =>
                 {
                     b.HasOne("CarParts.DataAccess.Entities.DbRole", "Role")
@@ -275,7 +333,7 @@ namespace CarParts.DataAccess.Migrations
 
             modelBuilder.Entity("CarParts.DataAccess.Entities.Filter", b =>
                 {
-                    b.HasOne("CarParts.DataAccess.Entities.Car", "CarOf")
+                    b.HasOne("CarParts.DataAccess.Entities.Product", "CarOf")
                         .WithMany("Filtres")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -291,6 +349,19 @@ namespace CarParts.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("CarParts.DataAccess.Entities.FilterNameCategory", b =>
+                {
+                    b.HasOne("CarParts.DataAccess.Entities.Category", "CategoryOf")
+                        .WithMany("FilterNameCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CarParts.DataAccess.Entities.FilterName", "FilterNameOf")
+                        .WithMany("FilterNameCategories")
+                        .HasForeignKey("FilterNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("CarParts.DataAccess.Entities.FilterNameGroup", b =>
                 {
                     b.HasOne("CarParts.DataAccess.Entities.FilterName", "FilterNameOf")
@@ -302,6 +373,13 @@ namespace CarParts.DataAccess.Migrations
                         .WithMany("FilterNameGroups")
                         .HasForeignKey("FilterValueId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Product", b =>
+                {
+                    b.HasOne("CarParts.DataAccess.Entities.Category")
+                        .WithMany("Cars")
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

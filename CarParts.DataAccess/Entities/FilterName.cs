@@ -16,5 +16,6 @@ namespace CarParts.DataAccess.Entities
         public string Name { get; set; }
         public virtual ICollection<Filter> Filtres { get; set; }
         public virtual ICollection<FilterNameGroup> FilterNameGroups { get; set; }
+        public virtual ICollection<FilterNameCategory> FilterNameCategories { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using CarParts.DataAccess;
@@ -11,6 +10,7 @@ using CarParts.Dto.ViewModels;
 using CarParts.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace CarParts.Controllers
@@ -60,13 +60,13 @@ namespace CarParts.Controllers
             var filtersList = GetListFilters(_context);
             long[] filterValueSearchList = getCar.FilterList.ToArray(); //масив ID вибраних фільтрів
             var query = _context
-                .Cars
+                .Products
                 .Include(f => f.Filtres)
                 .AsQueryable();
             foreach (var fName in filtersList)
             {
                 int countFilter = 0; //Кількість співпадінь у даній групі фільрів
-                var predicate = PredicateBuilder.False<Car>();
+                var predicate = PredicateBuilder.False<Product>();
                 foreach (var fValue in fName.Children)
                 {
                     for (int i = 0; i < filterValueSearchList.Length; i++)
@@ -92,7 +92,8 @@ namespace CarParts.Controllers
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    Price = p.Price,
+                    PurchasePrice = p.PurchasePrice,
+                    SellingPrice = p.SellingPrice,
                     Filters = p.Filtres
                         .Select(f => new
                         {
@@ -165,13 +166,13 @@ namespace CarParts.Controllers
             var filtersList = GetListFilters(_context);
             long[] filterValueSearchList = filtertouse.ToArray(); //масив ID вибраних фільтрів
             var query = _context
-                .Cars
+                .Products
                 .Include(f => f.Filtres)
                 .AsQueryable();
             foreach (var fName in filtersList)
             {
                 int countFilter = 0; //Кількість співпадінь у даній групі фільрів
-                var predicate = PredicateBuilder.False<Car>();
+                var predicate = PredicateBuilder.False<Product>();
                 foreach (var fValue in fName.Children)
                 {
                     for (int i = 0; i < filterValueSearchList.Length; i++)
