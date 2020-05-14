@@ -1,4 +1,4 @@
-FROM http://mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
 
 #install application for get HW info
 RUN apt-get update
@@ -38,7 +38,7 @@ EXPOSE 80
 RUN curl -sL https://deb.nodesource.com/setup_12.x |  bash -
 RUN apt-get install -y nodejs
 
-FROM http://mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch AS build
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch AS build
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x |  bash -
 RUN apt-get install -y nodejs
