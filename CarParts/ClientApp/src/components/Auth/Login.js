@@ -93,7 +93,7 @@ export class Login extends Component {
                                 <button
                                     className="btn btn-primary fadeIn fourth"
                                 >
-                                    {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                                    {loading && <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>}
                                     Вход
                                 </button>
                             </div>

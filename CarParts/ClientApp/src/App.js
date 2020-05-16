@@ -8,6 +8,8 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ConfirmEmailPage from './components/ConfirmEmail/ConfirmEmailPage';
 import UserPage from './components/UserPage/UserPage';
 import PartsList from './components/Parts/PartsList';
+import Category from './components/Categories/Category';
+
 
 export default () => (
   <Layout>

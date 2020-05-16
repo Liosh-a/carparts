@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PartItem from './PartItem';
+import Category from '../Categories/Category';
 import '../css/styles.css';
 
 class PartsList extends Component {
@@ -12,14 +13,17 @@ class PartsList extends Component {
         const { name, price } = this.state;
 
         return (
-            <div className="grid">
-                <PartItem name={name} price={price} />
-                <PartItem name={name} price={price} />
-                <PartItem name={name} price={price} />
-                <PartItem name={name} price={price} />
-                <PartItem name={name} price={price} />
-                <PartItem name={name} price={price} />
-                <PartItem name={name} price={price} />
+            <div>
+                <Category/>
+                <div className="grid">
+                    <PartItem name={name} price={price} />
+                    <PartItem name={name} price={price} />
+                    <PartItem name={name} price={price} />
+                    <PartItem name={name} price={price} />
+                    <PartItem name={name} price={price} />
+                    <PartItem name={name} price={price} />
+                    <PartItem name={name} price={price} />
+                </div>
             </div>
         );
     }

@@ -1,6 +1,5 @@
 import LoginService from './LoginService';
 import * as types from './types';
-
 import { push } from 'connected-react-router';
 import jwt from '../../../node_modules/jsonwebtoken';
 import setAuthorisationToken from '../../utils/setAuthorisationToken';
