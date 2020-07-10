@@ -55,7 +55,7 @@ namespace CarParts.DataAccess
             /////////
             builder.Entity<Filter>(filter =>
             {
-                filter.HasKey(f => new { f.CarId, f.FilterValueId, f.FilterNameId });
+                filter.HasKey(f => new { f.ProductId, f.FilterValueId, f.FilterNameId });
 
                 filter.HasOne(ur => ur.FilterNameOf)
                     .WithMany(r => r.Filtres)
@@ -67,9 +67,9 @@ namespace CarParts.DataAccess
                     .HasForeignKey(ur => ur.FilterValueId)
                     .IsRequired();
 
-                filter.HasOne(ur => ur.CarOf)
+                filter.HasOne(ur => ur.ProductOf)
                     .WithMany(r => r.Filtres)
-                    .HasForeignKey(ur => ur.CarId)
+                    .HasForeignKey(ur => ur.ProductId)
                     .IsRequired();
             });
 

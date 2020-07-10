@@ -16,9 +16,9 @@ namespace CarParts.DataAccess.Entities
         [ForeignKey("FilterValueOf"), Key, Column(Order = 1)]
         public int FilterValueId { get; set; }
         public virtual FilterValue FilterValueOf { get; set; }
-        [ForeignKey("CarOf"), Key, Column(Order = 2)]
-        public int CarId { get; set; }
-        public virtual Product CarOf { get; set; }
+        [ForeignKey("ProductOf"), Key, Column(Order = 2)]
+        public int ProductId { get; set; }
+        public virtual Product ProductOf { get; set; }
     }
 }
 

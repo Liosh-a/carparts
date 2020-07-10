@@ -60,10 +60,10 @@ namespace CarParts.DataAccess.Entities
         private static void SeedFilters(EFDbContext context, IHostingEnvironment _env,
            IConfiguration _config)
         {
-            List<int> carid = new List<int>();
+            List<int> productid = new List<int>();
             foreach (var el in context.Products)
             {
-                carid.Add(el.Id);
+                productid.Add(el.Id);
             }
             //            #region tblFilterNames - Назви фільтрів
             //            string[] filterNames = { "Тип кузова", "Топливо", "КПП", "Тип привода" };
