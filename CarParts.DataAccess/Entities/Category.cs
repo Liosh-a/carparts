@@ -25,6 +25,6 @@ namespace CarParts.DataAccess.Entities
         public Category Parent { get; set; }
 
         public virtual ICollection<FilterNameCategory> FilterNameCategories { get; set; }
-        public virtual ICollection<Product> Cars { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
