@@ -31,7 +31,7 @@ export class NavMenu extends React.Component {
           {this.props.isAuthenticated ?
             <ul className="android-navigation mdl-navigation navbar-nav navbar-dark flex-grow">
               <NavItem>
-                <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/">Home</NavLink>
+                <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/parts-list">Home</NavLink>
               </NavItem>
               <NavItem className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" onClick={() => this.props.logout()}>
                 Выход
@@ -43,11 +43,11 @@ export class NavMenu extends React.Component {
             :
             <ul className="android-navigation mdl-navigation navbar-nav flex-grow">
               <NavItem>
-                <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0 txt-dark" to="/">Home</NavLink>
+                <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0 txt-dark" to="/parts-list">Home</NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/login">Вход</NavLink>
-              </NavItem>
+              </NavItem> */}
               <NavItem>
                 <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/">Корзина</NavLink>
               </NavItem>

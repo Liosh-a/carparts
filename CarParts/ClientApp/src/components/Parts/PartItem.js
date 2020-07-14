@@ -7,7 +7,7 @@ const PartItem = ({
     price
 }) => {
     return (
-        <div className="item_single">
+        <div className="item_single" key={id}>
             <img src="http://img.tjskl.org.cn/pic/z2577d9d-200x200-1/pinarello_lungavita_2010_single_speed_bike.jpg" alt="item" />
             <h2 className="name_cart">{name}</h2>
 

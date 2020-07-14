@@ -11,17 +11,14 @@ export const registerReducer = (state = initialState, action) => {
     let newState = state;
     switch (action.type) {
         case types.REGISTER_STARTED: {
-            console.log('-----Begin register User--------');
             newState = {...state, loading: true};
             break;
         }
         case types.REGISTER_SUCCESS: {
-            console.log('-----Success register User--------');
             newState = {...state, loading: false};
             break;
         }
         case types.REGISTER_FAILED: {
-            console.log('-----Failed register User--------');
             newState = {
                 ...state, 
                 loading: false, 
