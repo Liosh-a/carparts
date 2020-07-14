@@ -138,17 +138,15 @@ namespace CarParts.DataAccess.Migrations
 
             modelBuilder.Entity("CarParts.DataAccess.Entities.Filter", b =>
                 {
-                    b.Property<int>("CarId");
+                    b.Property<int>("ProductId");
 
                     b.Property<int>("FilterValueId");
 
                     b.Property<int>("FilterNameId");
 
-                    b.HasKey("CarId", "FilterValueId", "FilterNameId");
+                    b.HasKey("ProductId", "FilterValueId", "FilterNameId");
 
-                    b.HasAlternateKey("CarId", "FilterNameId", "FilterValueId");
-
-                    b.HasIndex("FilterNameId");
+                    b.HasAlternateKey("FilterNameId", "FilterValueId", "ProductId");
 
                     b.HasIndex("FilterValueId");
 
@@ -219,6 +217,10 @@ namespace CarParts.DataAccess.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(250);
+
+                    b.Property<DateTime>("ProductionStart");
+
+                    b.Property<DateTime>("ProductionStop");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(7,2)");
@@ -331,11 +333,6 @@ namespace CarParts.DataAccess.Migrations
 
             modelBuilder.Entity("CarParts.DataAccess.Entities.Filter", b =>
                 {
-                    b.HasOne("CarParts.DataAccess.Entities.Product", "CarOf")
-                        .WithMany("Filtres")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("CarParts.DataAccess.Entities.FilterName", "FilterNameOf")
                         .WithMany("Filtres")
                         .HasForeignKey("FilterNameId")
@@ -344,6 +341,11 @@ namespace CarParts.DataAccess.Migrations
                     b.HasOne("CarParts.DataAccess.Entities.FilterValue", "FilterValueOf")
                         .WithMany("Filtres")
                         .HasForeignKey("FilterValueId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CarParts.DataAccess.Entities.Product", "ProductOf")
+                        .WithMany("Filtres")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -376,7 +378,7 @@ namespace CarParts.DataAccess.Migrations
             modelBuilder.Entity("CarParts.DataAccess.Entities.Product", b =>
                 {
                     b.HasOne("CarParts.DataAccess.Entities.Category")
-                        .WithMany("Cars")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId");
                 });
 
