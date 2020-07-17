@@ -15,6 +15,10 @@ namespace CarParts.DataAccess.Entities
         [Required, StringLength(maximumLength: 250)]
         public string Name { get; set; }
 
+        public DateTime ProductionStart { get; set; }
+
+        public DateTime ProductionStop { get; set; }
+
         [Column(TypeName = "decimal(7,2)")]
         public Decimal PurchasePrice { get; set; }
 
@@ -25,5 +29,7 @@ namespace CarParts.DataAccess.Entities
         public string UniqueName { get; set; }
 
         public virtual ICollection<Filter> Filtres { get; set; }
+
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

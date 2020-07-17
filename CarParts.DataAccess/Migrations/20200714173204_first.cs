@@ -212,6 +212,8 @@ namespace CarParts.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(maxLength: 250, nullable: false),
+                    ProductionStart = table.Column<DateTime>(nullable: false),
+                    ProductionStop = table.Column<DateTime>(nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     SellingPrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     UniqueName = table.Column<string>(maxLength: 250, nullable: false),
@@ -284,18 +286,12 @@ namespace CarParts.DataAccess.Migrations
                 {
                     FilterNameId = table.Column<int>(nullable: false),
                     FilterValueId = table.Column<int>(nullable: false),
-                    CarId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tblFilters", x => new { x.CarId, x.FilterValueId, x.FilterNameId });
-                    table.UniqueConstraint("AK_tblFilters_CarId_FilterNameId_FilterValueId", x => new { x.CarId, x.FilterNameId, x.FilterValueId });
-                    table.ForeignKey(
-                        name: "FK_tblFilters_tblProducts_CarId",
-                        column: x => x.CarId,
-                        principalTable: "tblProducts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_tblFilters", x => new { x.ProductId, x.FilterValueId, x.FilterNameId });
+                    table.UniqueConstraint("AK_tblFilters_FilterNameId_FilterValueId_ProductId", x => new { x.FilterNameId, x.FilterValueId, x.ProductId });
                     table.ForeignKey(
                         name: "FK_tblFilters_tblFilterNames_FilterNameId",
                         column: x => x.FilterNameId,
@@ -306,6 +302,33 @@ namespace CarParts.DataAccess.Migrations
                         name: "FK_tblFilters_tblFilterValues_FilterValueId",
                         column: x => x.FilterValueId,
                         principalTable: "tblFilterValues",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tblFilters_tblProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "tblProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblImage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Path = table.Column<string>(maxLength: 250, nullable: false),
+                    ProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblImage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tblImage_tblProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "tblProducts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -353,14 +376,14 @@ namespace CarParts.DataAccess.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblFilters_FilterNameId",
-                table: "tblFilters",
-                column: "FilterNameId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_tblFilters_FilterValueId",
                 table: "tblFilters",
                 column: "FilterValueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblImage_ProductId",
+                table: "tblImage",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblProducts_CategoryId",
@@ -395,19 +418,22 @@ namespace CarParts.DataAccess.Migrations
                 name: "tblFilters");
 
             migrationBuilder.DropTable(
+                name: "tblImage");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "tblProducts");
-
-            migrationBuilder.DropTable(
                 name: "tblFilterNames");
 
             migrationBuilder.DropTable(
                 name: "tblFilterValues");
+
+            migrationBuilder.DropTable(
+                name: "tblProducts");
 
             migrationBuilder.DropTable(
                 name: "tblCategories");
