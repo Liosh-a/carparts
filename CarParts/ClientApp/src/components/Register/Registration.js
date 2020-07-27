@@ -1,15 +1,8 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import {registerUser} from './RegisterReducer';
-import EclipseWidget from '../Eclipse';
-import classnames from 'classnames';
+import React, { Component } from 'react';
+import AlertGroup from "../common/AlertGroup";
+import { validateFields } from "./validate";
+import TextFieldGroup from "../common/TextFieldGroup";
 import '../css/Authorization.css';
-
-const propTypes = {
-        register: PropTypes.func.isRequired,
-        loading: PropTypes.bool.isRequired
-    };
 
 class Registration extends Component {
 
@@ -17,110 +10,106 @@ class Registration extends Component {
         email: '',
         password: '',
         passwordConfirm: '',
-        loading: this.props.loading,
+        loading: false,
         errors: {
         }
     }
 
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        return {
+            loading: nextProps.loading,
+            errors: nextProps.errors,
+        };
+    }
+
+    setStateByErrors = (name, value) => {
+        if (!!this.state.errors[name]) {
+            let errors = Object.assign({}, this.state.errors);
+            delete errors[name];
+            this.setState({
+                [name]: value,
+                errors
+            });
+        } else {
+            this.setState({ [name]: value });
+        }
+    };
+
+    handleChange = e => {
+        this.setStateByErrors(e.target.name, e.target.value);
+    };
+
     handleSubmit = (e) => {
-                e.preventDefault();
-                console.log('--register submit--');
-                const {email, password, passwordConfirm} = this.state;
-                this.props.register({
-                    email: email, 
-                    password: password, 
-                    passwordConfirm: passwordConfirm}
-                );
-            }
-        
-            setStateByErrors = (name, value) => {
-                if (!!this.state.errors[name]) {
-                    let errors = Object.assign({}, this.state.errors);
-                    delete errors[name];
-                    this.setState({
-                        [name]: value,
-                        errors
-                    });
-                } else {
-                    this.setState({ [name]: value });
-                }
-            };
-        
-            handleChange = e => {
-                this.setStateByErrors(e.target.name, e.target.value);
-            };
+        e.preventDefault();
+        const fields = this.state;
+        let errors = validateFields(fields);
+
+        const isValid = Object.keys(errors).length === 0;
+        if (isValid) {
+            this.props.registerUser(fields);
+        } else {
+            this.props.setErrors(errors);
+        }
+    }
 
     render() {
-        const {email, loading, password, passwordConfirm, errors} = this.state;
+        const { email, loading, password, passwordConfirm, errors } = this.state;
+
         return (
-            <div>
-                <div className="wrapper fadeInDown">
-                    <div id="formContent">
-                        <div className="fadeIn first">
-                            <h1>Регистрация</h1>
+            <div className="wrapper fadeInDown">
+                <div className="fadeIn first" id="formHeader">
+                    <h2>Регистрация</h2>
+                </div>
+                <div id="formContent">
+
+                    {errors.invalid && (
+                        <AlertGroup title={errors.invalid} alertColor="alert-danger" />
+                    )}
+                    <form className="mt-3" name="form" onSubmit={this.handleSubmit}>
+                        {/* <input type="text" id="name" class="fadeIn second" name="name" placeholder="name" /> */}
+                        <TextFieldGroup
+                            field="email"
+                            label="Електронна пошта"
+                            value={email}
+                            error={errors.email}
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Электронная почта"
+                            isShowLabel={false}
+                        />
+
+                        <TextFieldGroup
+                            field="password"
+                            label="Пароль"
+                            value={password}
+                            error={errors.password}
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Пароль"
+                            isShowLabel={false}
+                        />
+
+                        <TextFieldGroup
+                            field="passwordConfirm"
+                            label="Подтверждение пароля"
+                            value={passwordConfirm}
+                            error={errors.passwordConfirm}
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Подтверждение пароля"
+                            isShowLabel={false}
+                        />
+
+                        <div>
+                            <button className="btn btn-primary fadeIn fourth">
+                                {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                                Регистрация
+                                </button>
                         </div>
-                        <form name="form" onSubmit={this.handleSubmit}>
-                            {/* <input type="text" id="name" class="fadeIn second" name="name" placeholder="name" /> */}
-                            <div>
-                                <input 
-                                    type="text"
-                                    id="email"
-                                    className={classnames('form-control', { 'is-invalid': !!errors.email })}
-                                    name="email"
-                                    value={email}
-                                    onChange={this.handleChange}
-                                    placeholder="Электронная почта" />
-                                {!!errors.email &&
-                                    <div className="help-block">{errors.email}</div>
-                                }
-                            </div>
-                            
-                            <div>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    className={classnames('form-control', { 'is-invalid': !!errors.password })}
-                                    name="password"
-                                    value={password}
-                                    placeholder="Пароль"
-                                    onChange={this.handleChange} />
-                                {!!errors.password &&
-                                    <div className="help-block">{errors.password}</div>
-                                }
-                            </div>
-                            <div>
-                                <input
-                                    type="password"
-                                    id="passwordConfirm"
-                                    className={classnames('form-control', { 'is-invalid': !!errors.password })}
-                                    name="passwordConfirm"
-                                    value={passwordConfirm}
-                                    placeholder="Подтверждение пароля"
-                                    onChange={this.handleChange} />
-                                {!!errors.passwordConfirm &&
-                                    <div className="help-block">{errors.password}</div>
-                                }
-                            </div>
-                          
-                          <div>
-                            <button
-                                    disabled={
-                                        loading ||
-                                        email.trim() === "" ||
-                                        password.trim() === "" ||
-                                        passwordConfirm.trim() === ""
-                                    }
-                                    className="btn btn-primary fadeIn fourth"
-                                >
-                                    {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
-                                    Регистрация
-                                </button>                                                  
-                            </div>
-                        </form>
-                        {loading && <EclipseWidget/>}
-                        <div id="formFooter">
-                            <a className="underlineHover" href="/login">Вернутся к входу</a>
-                        </div>
+                    </form>
+                    <div id="formFooter">
+                        <a className="underlineHover" href="/login">Вернутся к входу</a>
                     </div>
                 </div>
             </div>
@@ -128,15 +117,6 @@ class Registration extends Component {
     }
 }
 
-const mapState = (state) => {
-    return {
-        loading: state.register.loading,
-        errors: state.register.errors,
-    }
-}
-
-Registration.propTypes = propTypes;
- 
-export default connect(mapState, {register: registerUser})(Registration);
+export default Registration;
 
 
