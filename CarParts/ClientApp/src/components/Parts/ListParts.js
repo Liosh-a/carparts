@@ -9,7 +9,6 @@ import { get } from 'lodash';
 
 const propTypes = {
     getParts: PropTypes.func.isRequired,
-
     parts: PropTypes.array.isRequired
 }
 
@@ -54,7 +53,7 @@ class ListParts extends Component {
 
     callBackParams = (page) => {
         //console.log('props', this.props);
-        this.props.push(`/products/${page}`);
+        this.props.push(`/parts/${page}`);
     }
 
 

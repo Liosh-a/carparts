@@ -9,6 +9,7 @@ import ConfirmEmailPage from './components/ConfirmEmail/ConfirmEmailPage';
 import UserPage from './components/UserPage/UserPage';
 import ListParts from './components/Parts/ListParts';
 import Category from './components/Categories/Category';
+import Cart from './components/Cart/Cart';
 
 
 export default () => (
@@ -20,5 +21,6 @@ export default () => (
     <Route path='/confirm-email' component={ConfirmEmailPage} />
     <Route path='/user-page' component={UserPage} />
     <Route path='/parts-list' component={ListParts}/>
+    <Route path='/cart' component={Cart}/>
   </Layout>
 );

@@ -1,5 +1,4 @@
 import PartsService from './PartsService';
-import update from '../helpers/update';
 
 export const FETCH_PARTS_STARTED = "parts/FETCH_PARTS_STARTED";
 export const FETCH_PARTS_SUCCESS = "parts/FETCH_PARTS_SUCCESS";
@@ -11,44 +10,6 @@ const initialState = {
     loading: false,
     success: false
 }
-
-// export const partsReducer = (state = initialState, action) => {
-//     let newState = state;
-
-//     switch (action.type) {
-
-//         case FETCH_PARTS_STARTED: {
-//             newState = update.set(state, 'list.loading', true);
-//             newState = update.set(newState, 'list.success', false);
-//             newState = update.set(newState, 'lsit.failed', false);
-//             break;
-//         }
-
-//         case FETCH_PARTS_SUCCESS: {
-//             newState = update.set(state, 'list',
-//                 {
-//                     ...state.list,
-//                     loading: false,
-//                     success: true,
-//                     ...action.payload.data
-//                 });
-//             break;
-//         }
-
-//         case FETCH_PARTS_FAILED: {
-//             newState = update.set(state, 'list.loading', false);
-//             newState = update.set(newState, 'list.data', []);
-//             newState = update.set(newState, 'list.failed', true);
-//             break;
-//         }
-
-//         default: {
-//             return newState;
-//         }
-//     }
-//     return newState;
-// }
-
 
 export const partsReducer = (state = initialState, action) => {
     let newState = state;
@@ -110,7 +71,8 @@ export const partsGetActions = {
     },
     failed: (error) => {
         return {
-            type: FETCH_PARTS_FAILED
+            type: FETCH_PARTS_FAILED,
+            error
         }
     }
 }

@@ -28,7 +28,7 @@ export class NavMenu extends React.Component {
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} className="mr-2" />
         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
-          {this.props.isAuthenticated ?
+          {/* {this.props.isAuthenticated ?
             <ul className="android-navigation mdl-navigation navbar-nav navbar-dark flex-grow">
               <NavItem>
                 <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/parts-list">Home</NavLink>
@@ -40,7 +40,7 @@ export class NavMenu extends React.Component {
                 <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/">Корзина</NavLink>
               </NavItem>
             </ul>
-            :
+            : */}
             <ul className="android-navigation mdl-navigation navbar-nav flex-grow">
               <NavItem>
                 <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0 txt-dark" to="/parts-list">Home</NavLink>
@@ -49,10 +49,10 @@ export class NavMenu extends React.Component {
                 <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/login">Вход</NavLink>
               </NavItem> */}
               <NavItem>
-                <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/">Корзина</NavLink>
+                <NavLink tag={Link} className="mdl-navigation__link mdl-typography--text-uppercase mb-2 pt-0" to="/cart">Корзина</NavLink>
               </NavItem>
             </ul>
-          }
+          {/* } */}
         </Collapse>
       </Navbar>
     );

@@ -4,7 +4,8 @@ import propTypes from "prop-types";
 const PartItem = ({
     id,
     name,
-    price
+    price,
+    onClick
 }) => {
     return (
         <div className="item_single" key={id}>
@@ -12,7 +13,7 @@ const PartItem = ({
             <h2 className="name_cart">{name}</h2>
 
             <p>Price: {price}$</p>
-            <button className="add-to-cart" type="button">Add to cart</button>
+            <button className="add-to-cart" type="button" onClick={onClick}>Add to cart</button>
         </div>
     )
 };
