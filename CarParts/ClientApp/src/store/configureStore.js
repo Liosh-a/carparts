@@ -5,8 +5,6 @@ import { createBrowserHistory } from 'history';
 import {registerReducer} from '../components/Register/RegisterReducer';
 import {confirmEmailReducer} from '../components/ConfirmEmail/ConfirmEmailReducer';
 import {loginReducer} from '../components/Auth/LoginReducer';
-import {partsReducer} from '../components/Parts/reducer';
-import {cartReducer} from '../components/Cart/reducer';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
@@ -16,9 +14,7 @@ export default function configureStore(history, initialState) {
   const reducers = {
     register: registerReducer,
     confirmEmail: confirmEmailReducer,
-    login: loginReducer,
-    parts: partsReducer,
-    cart: cartReducer
+    login: loginReducer
   };
 
   const middleware = [

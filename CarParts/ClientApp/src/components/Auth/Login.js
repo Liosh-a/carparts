@@ -60,12 +60,15 @@ export class Login extends Component {
             <div>
                 <div className="wrapper fadeInDown">
                     <div id="formContent">
+
                         <div className="fadeIn first">
                             <h1>Вход</h1>
                         </div>
+
                         {errors.invalid && (
                             <AlertGroup title={errors.invalid} alertColor="alert-danger" />
                         )}
+
                         <form name="form" onSubmit={this.handleSubmit}>
                         <TextFieldGroup
                                 field="email"
@@ -74,7 +77,7 @@ export class Login extends Component {
                                 error={errors.email}
                                 onChange={this.handleChange}
                                 type="text"
-                                placeholder="Электронная пошта"
+                                placeholder="email"
                                 isShowLabel={false}
                             />
 
@@ -91,9 +94,14 @@ export class Login extends Component {
 
                             <div className="form-group">
                                 <button
+                                    disabled={
+                                        loading ||
+                                        email.trim() === "" ||
+                                        password.trim() === ""
+                                    }
                                     className="btn btn-primary fadeIn fourth"
                                 >
-                                    {loading && <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>}
+                                    {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
                                     Вход
                                 </button>
                             </div>
@@ -112,4 +120,3 @@ export class Login extends Component {
 }
 
 export default Login;
-

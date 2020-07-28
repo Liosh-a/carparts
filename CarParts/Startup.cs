@@ -86,7 +86,7 @@ namespace CarParts
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-                
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
