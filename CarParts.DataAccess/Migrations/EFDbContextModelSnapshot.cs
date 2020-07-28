@@ -240,9 +240,11 @@ namespace CarParts.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<DateTime>("ProductionStart");
+                    b.Property<DateTime>("ProductionStart")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("ProductionStop");
+                    b.Property<DateTime>("ProductionStop")
+                        .HasColumnType("date");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(7,2)");
