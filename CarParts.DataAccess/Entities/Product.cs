@@ -15,8 +15,10 @@ namespace CarParts.DataAccess.Entities
         [Required, StringLength(maximumLength: 250)]
         public string Name { get; set; }
 
+        [Column(TypeName= "date")]
         public DateTime ProductionStart { get; set; }
-
+        
+        [Column(TypeName = "date")]
         public DateTime ProductionStop { get; set; }
 
         [Column(TypeName = "decimal(7,2)")]

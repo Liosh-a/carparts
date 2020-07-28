@@ -144,6 +144,7 @@ namespace CarParts.DataAccess.Entities
             foreach (var item in product)
             {
                 int count = 0;
+                count++;
 
                 if (context.Products.SingleOrDefault(f => f.UniqueName == item) == null)
                 {
@@ -153,7 +154,10 @@ namespace CarParts.DataAccess.Entities
                         {
                             UniqueName = item,
                             SellingPrice = faker.Random.Int(1000, 100000),
-                            Name = "Product #" + count++.ToString(),
+                            Name = "Product #" + count.ToString(),
+                            ProductionStart = new DateTime(1995,01,01),
+                            ProductionStop =  new DateTime(2020,01,01),
+
                         }); ;
 
                     context.SaveChanges();
@@ -360,7 +364,7 @@ namespace CarParts.DataAccess.Entities
             foreach (var el in productid)
             {
 
-                filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1, 8), CarId = el });
+                filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1, 8), ProductId = el });
 
             }
 
@@ -371,7 +375,7 @@ namespace CarParts.DataAccess.Entities
                 var f = context.Filters.SingleOrDefault(p => p == item);
                 if (f == null)
                 {
-                    context.Filters.Add(new Filter { FilterNameId = item.FilterNameId, FilterValueId = item.FilterValueId, CarId = item.CarId });
+                    context.Filters.Add(new Filter { FilterNameId = item.FilterNameId, FilterValueId = item.FilterValueId, ProductId = item.ProductId });
                     context.SaveChanges();
                 }
             }

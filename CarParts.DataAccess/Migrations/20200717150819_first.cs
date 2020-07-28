@@ -212,8 +212,8 @@ namespace CarParts.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(maxLength: 250, nullable: false),
-                    ProductionStart = table.Column<DateTime>(nullable: false),
-                    ProductionStop = table.Column<DateTime>(nullable: false),
+                    ProductionStart = table.Column<DateTime>(type: "date", nullable: false),
+                    ProductionStop = table.Column<DateTime>(type: "date", nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     SellingPrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     UniqueName = table.Column<string>(maxLength: 250, nullable: false),
