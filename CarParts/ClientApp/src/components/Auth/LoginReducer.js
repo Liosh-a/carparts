@@ -4,15 +4,15 @@ import isEmpty from 'lodash/isEmpty';
 
 const initialState = {
     user: {
-      id: '',
-      name: ''
+        id: '',
+        name: ''
     },
     isAuthenticated: false,
     loading: false,
     success: false,
     failed: false,
     errors: {
-    
+
     },
 }
 
@@ -21,36 +21,36 @@ export const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LOGIN_STARTED: {
             newState = {
-                ...state, 
+                ...state,
                 loading: true,
                 errors: {}
             };
             break;
         }
         case types.LOGIN_SUCCESS: {
-            newState = {...state, loading: false};
+            newState = { ...state, loading: false };
             break;
         }
         case types.LOGIN_FAILED: {
             newState = {
-                ...state, 
-                loading: false, 
+                ...state,
+                loading: false,
                 errors: action.errors
             };
             break;
         }
-        case types.LOGIN_SET_CURRENT_USER:{
+        case types.LOGIN_SET_CURRENT_USER: {
             newState = {
-                ...state, 
+                ...state,
                 user: action.user,
                 isAuthenticated: !isEmpty(action.user),
             };
             break;
         }
-        case types.LOGIN_SET_ERRORS:{
+        case types.LOGIN_SET_ERRORS: {
             newState = {
-                ...state, 
-                errors: !!!action.errors ? {} : {...state.errors, ...action.errors },
+                ...state,
+                errors: !!!action.errors ? {} : { ...state.errors, ...action.errors },
             };
             break;
         }
