@@ -1,6 +1,5 @@
 import LoginService from './LoginService';
 import * as types from './types';
-
 import { push } from 'connected-react-router';
 import jwt from '../../../node_modules/jsonwebtoken';
 import setAuthorisationToken from '../../utils/setAuthorisationToken';
@@ -59,7 +58,7 @@ export const loginUser = (model) => {
                 dispatch(loginActions.failed(err.response));
             })
             .catch(err=> {
-                console.log('Global Server problen in controler message', err);
+                console.log('Global Server problem in controler message', err);
             });
     };
 }

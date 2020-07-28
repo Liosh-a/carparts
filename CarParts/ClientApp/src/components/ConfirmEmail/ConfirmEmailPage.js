@@ -14,13 +14,10 @@ class ConfirmEmailPage extends Component {
         code: '',
         userId: 0,
         loading: this.props.loading,
-        errors: {
-            //email: 'Invalid'
-        }
+        errors: { }
     }
 
     componentDidMount() {
-        //const {userId, code}= this.state;
         const {location} = this.props;
         var result=qs.parse(location.search, { ignoreQueryPrefix: true });
         console.log('-----parse url-----', result);
