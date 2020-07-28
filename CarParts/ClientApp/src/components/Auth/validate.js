@@ -1,15 +1,15 @@
 function validateFields(items){
     let errors={};
-    if(items.email.trim() === ''){
+    if(items.email.trim()===''){
         errors={
             ...errors,
-            email:"Введите электронную почту !"
+            email:"Пошта є обов'язковою!"
         }
     }
-    if(items.password.trim() === ''){
+    if(items.password.trim()===''){
         errors={
             ...errors,
-            password:"Введите пароль !"
+            password:"Пароль є обов'язковим!"
         }
     }
     return errors;

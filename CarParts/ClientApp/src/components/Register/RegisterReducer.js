@@ -1,4 +1,9 @@
-import * as types from './types';
+import registerService from './registerService';
+import { push } from 'connected-react-router';
+
+export const REGISTER_STARTED = "user/REGISTER_STARTED";
+export const REGISTER_SUCCESS = "user/REGISTER_SUCCESS";
+export const REGISTER_FAILED = "user/REGISTER_FAILED";
 
 const initialState = {
     loading: false,
@@ -10,26 +15,22 @@ const initialState = {
 export const registerReducer = (state = initialState, action) => {
     let newState = state;
     switch (action.type) {
-        case types.REGISTER_STARTED: {
+        case REGISTER_STARTED: {
+            console.log('-----Begin register User--------');
             newState = {...state, loading: true};
             break;
         }
-        case types.REGISTER_SUCCESS: {
+        case REGISTER_SUCCESS: {
+            console.log('-----Success register User--------');
             newState = {...state, loading: false};
             break;
         }
-        case types.REGISTER_FAILED: {
+        case REGISTER_FAILED: {
+            console.log('-----Failed register User--------');
             newState = {
                 ...state, 
                 loading: false, 
                 errors: action.servErrors
-            };
-            break;
-        }
-        case types.REGISTER_SET_ERRORS:{
-            newState = {
-                ...state, 
-                errors: !!!action.errors ? {} : {...state.errors, ...action.errors },
             };
             break;
         }
@@ -38,4 +39,26 @@ export const registerReducer = (state = initialState, action) => {
         }
     }
     return newState;
+}
+
+export const registerUser = (model) => {
+    return (dispatch) => {
+        dispatch({type: REGISTER_STARTED});
+        registerService.registerUser(model)
+            .then((response)=>
+            {
+                console.log('Server message', response.data);
+                dispatch({type: REGISTER_SUCCESS});
+                dispatch(push('/'));
+            }, err => {
+                dispatch({type: REGISTER_FAILED, servErrors: err.response.data});
+                console.log('Server problem in controler message', err.response.data);
+            })
+            .catch(err=> {
+                console.log('Global Server problem in controler message', err);
+            });
+        // setTimeout(()=> {
+        //     dispatch({type: REGISTER_SUCCESS});
+        // }, 2000);
+    };
 }

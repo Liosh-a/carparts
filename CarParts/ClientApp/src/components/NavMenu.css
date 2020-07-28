@@ -1,0 +1,40 @@
+﻿a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.txt-dark {
+  font-size: 17px;
+  color: red;
+}
+
+.txt-dark:hover {
+ font-size: 18px;
+}
+
+ul li {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.nav-container{
+  width: 100%;
+  padding-right:25px;
+  padding-left: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
