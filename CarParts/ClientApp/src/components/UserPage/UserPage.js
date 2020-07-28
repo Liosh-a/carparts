@@ -6,6 +6,7 @@ class UserPage extends Component {
         return ( 
             <div>
                 Hello, UserPage!
+                Лох
             </div>
          );
     }
