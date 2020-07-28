@@ -155,8 +155,8 @@ namespace CarParts.DataAccess.Entities
                             UniqueName = item,
                             SellingPrice = faker.Random.Int(1000, 100000),
                             Name = "Product #" + count.ToString(),
-                            ProductionStart = new DateTime(1995,01,01),
-                            ProductionStop =  new DateTime(2020,01,01),
+                            ProductionStart = new DateTime(1995, 01, 01),
+                            ProductionStop = new DateTime(2020, 01, 01),
 
                         }); ;
 
