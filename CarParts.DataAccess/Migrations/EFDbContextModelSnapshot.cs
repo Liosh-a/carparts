@@ -207,6 +207,28 @@ namespace CarParts.DataAccess.Migrations
                     b.ToTable("tblFilterValues");
                 });
 
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<int>("ProductId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("tblImage");
+                });
+
             modelBuilder.Entity("CarParts.DataAccess.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -218,9 +240,11 @@ namespace CarParts.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<DateTime>("ProductionStart");
+                    b.Property<DateTime>("ProductionStart")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("ProductionStop");
+                    b.Property<DateTime>("ProductionStop")
+                        .HasColumnType("date");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(7,2)");
@@ -372,6 +396,14 @@ namespace CarParts.DataAccess.Migrations
                     b.HasOne("CarParts.DataAccess.Entities.FilterValue", "FilterValueOf")
                         .WithMany("FilterNameGroups")
                         .HasForeignKey("FilterValueId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CarParts.DataAccess.Entities.Image", b =>
+                {
+                    b.HasOne("CarParts.DataAccess.Entities.Product", "ProductOf")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

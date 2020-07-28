@@ -212,8 +212,8 @@ namespace CarParts.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(maxLength: 250, nullable: false),
-                    ProductionStart = table.Column<DateTime>(nullable: false),
-                    ProductionStop = table.Column<DateTime>(nullable: false),
+                    ProductionStart = table.Column<DateTime>(type: "date", nullable: false),
+                    ProductionStop = table.Column<DateTime>(type: "date", nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     SellingPrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     UniqueName = table.Column<string>(maxLength: 250, nullable: false),
@@ -312,6 +312,27 @@ namespace CarParts.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "tblImage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Path = table.Column<string>(maxLength: 250, nullable: false),
+                    ProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblImage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tblImage_tblProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "tblProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -360,6 +381,11 @@ namespace CarParts.DataAccess.Migrations
                 column: "FilterValueId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tblImage_ProductId",
+                table: "tblImage",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tblProducts_CategoryId",
                 table: "tblProducts",
                 column: "CategoryId");
@@ -390,6 +416,9 @@ namespace CarParts.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "tblFilters");
+
+            migrationBuilder.DropTable(
+                name: "tblImage");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

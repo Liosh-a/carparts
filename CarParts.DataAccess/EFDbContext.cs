@@ -20,6 +20,8 @@ namespace CarParts.DataAccess
 
         public virtual DbSet<FilterNameCategory> FilterNameCategories { get; set; }
 
+        public virtual DbSet<Image> Images { get; set; }
+
         // <summary>
         /// Filter tables
         /// </summary>
