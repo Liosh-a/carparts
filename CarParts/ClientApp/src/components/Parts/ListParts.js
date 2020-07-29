@@ -32,29 +32,29 @@ class ListParts extends Component {
         }
     }
 
-    componentDidMount() {
-        const page = parseInt(this.props.match.params.page, 10) || 1;
-        // This method is called when the component is first added to the document
-        this.searchDataFetched(page);
-    }
+    // componentDidMount() {
+    //     const page = parseInt(this.props.match.params.page, 10) || 1;
+    //     // This method is called when the component is first added to the document
+    //     this.searchDataFetched(page);
+    // }
 
-    componentDidUpdate() {
-        const page = parseInt(this.props.match.params.page, 10) || 1;
-        if (this.props.currentPage !== page) {
-            this.searchDataFetched(page);
-        }
-        // This method is called when the route parameters change
-    }
+    // componentDidUpdate() {
+    //     const page = parseInt(this.props.match.params.page, 10) || 1;
+    //     if (this.props.currentPage !== page) {
+    //         this.searchDataFetched(page);
+    //     }
+    //     // This method is called when the route parameters change
+    // }
 
-    searchDataFetched(page) {
-        this.props.getParts(page);
-    }
+    // searchDataFetched(page) {
+    //     this.props.getParts(page);
+    // }
 
 
-    callBackParams = (page) => {
-        //console.log('props', this.props);
-        this.props.push(`/parts/${page}`);
-    }
+    // callBackParams = (page) => {
+    //     //console.log('props', this.props);
+    //     this.props.push(`/parts/${page}`);
+    // }
 
 
     render() {
