@@ -9,7 +9,7 @@ class Cart extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {};
     }
     render() {
         // let addedItems = this.props.items.length ?(
