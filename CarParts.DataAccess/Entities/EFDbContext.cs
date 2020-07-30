@@ -22,6 +22,8 @@ namespace CarParts.DataAccess
 
         public virtual DbSet<Image> Images { get; set; }
 
+        public virtual DbSet<AllCar> AllCars { get; set; }
+
         // <summary>
         /// Filter tables
         /// </summary>
