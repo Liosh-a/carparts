@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CarParts.DataAccess.Entities.Seeder
 {
-    public class CategortySeeder
+    public class CategorySeeder
     {
         public static void SeedCategories(EFDbContext context)
         {
