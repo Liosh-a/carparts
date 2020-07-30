@@ -3,14 +3,14 @@ import * as types from './types';
 export const addToCart = (key) => {
     return {
         type: types.ADD_TO_CART,
-        obj
+        key
     }
 }
 
 export const removeFromCart = (key) => {
     return {
         type: types.REMOVE_FROM_CART,
-        id
+        key
     }
 }
 

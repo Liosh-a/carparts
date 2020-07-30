@@ -1,5 +1,5 @@
 import * as types from './types';
-import cookie from 'react-cookie';
+
 
 const initState = {
     items: [],
