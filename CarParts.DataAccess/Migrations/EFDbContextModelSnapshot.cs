@@ -19,6 +19,32 @@ namespace CarParts.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("CarParts.DataAccess.Entities.AllCar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ProductionStartYear")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ProductionStopYear")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblAllCars");
+                });
+
             modelBuilder.Entity("CarParts.DataAccess.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -234,17 +260,13 @@ namespace CarParts.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CarId");
+
                     b.Property<int?>("CategoryId");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(250);
-
-                    b.Property<DateTime>("ProductionStart")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("ProductionStop")
-                        .HasColumnType("date");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(7,2)");
@@ -257,6 +279,8 @@ namespace CarParts.DataAccess.Migrations
                         .HasMaxLength(250);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarId");
 
                     b.HasIndex("CategoryId");
 
@@ -409,6 +433,11 @@ namespace CarParts.DataAccess.Migrations
 
             modelBuilder.Entity("CarParts.DataAccess.Entities.Product", b =>
                 {
+                    b.HasOne("CarParts.DataAccess.Entities.AllCar", "allcar")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("CarParts.DataAccess.Entities.Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
