@@ -32,6 +32,8 @@ namespace CarParts
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IAccountService, AccountService>();
+            services.AddTransient<IProductService, ProductService>();
+            //services.AddScoped<IProductService, ProductService>();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
