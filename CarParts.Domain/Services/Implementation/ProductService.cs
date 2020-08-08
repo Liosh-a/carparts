@@ -44,7 +44,7 @@ namespace CarParts.Domain.Services.Implementation
 
         public ResultDto GetMark(int year)
         {
-            var cat = _context.Model.
+            var cat = _context.Model;
             var categories = _context.Categories.ToList();
             var res = new CollectionResultDto<Category>();
             res.Data = categories;
