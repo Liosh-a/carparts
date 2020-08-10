@@ -14,6 +14,7 @@ namespace CarParts.DataAccess.Entities
 
         [Required, StringLength(maximumLength: 250)]
         public string Name { get; set; }
+
         public virtual ICollection<Filter> Filtres { get; set; }
         public virtual ICollection<FilterNameGroup> FilterNameGroups { get; set; }
         public virtual ICollection<FilterNameCategory> FilterNameCategories { get; set; }

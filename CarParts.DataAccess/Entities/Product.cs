@@ -15,12 +15,6 @@ namespace CarParts.DataAccess.Entities
         [Required, StringLength(maximumLength: 250)]
         public string Name { get; set; }
 
-        [Column(TypeName= "date")]
-        public DateTime ProductionStart { get; set; }
-        
-        [Column(TypeName = "date")]
-        public DateTime ProductionStop { get; set; }
-
         [Column(TypeName = "decimal(7,2)")]
         public Decimal PurchasePrice { get; set; }
 
@@ -28,7 +22,18 @@ namespace CarParts.DataAccess.Entities
         public Decimal SellingPrice { get; set; }
 
         [Required, StringLength(maximumLength: 250)]
+        public string ProductionStartYear { get; set; }
+
+        [Required, StringLength(maximumLength: 250)]
+        public string ProductionStopYear { get; set; }
+
+        [Required, StringLength(maximumLength: 250)]
         public string UniqueName { get; set; }
+
+        [ForeignKey("allcar")]
+        public int CarId { get; set; }
+
+        public AllCar allcar { get; set; }
 
         public virtual ICollection<Filter> Filtres { get; set; }
 

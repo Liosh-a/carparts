@@ -76,7 +76,6 @@ namespace CarParts.Controllers
                         {
                             predicate = predicate
                                 .Or(p => p.Filtres
-
                                     .Any(f => f.FilterValueId == idV));
                             countFilter++;
                         }
