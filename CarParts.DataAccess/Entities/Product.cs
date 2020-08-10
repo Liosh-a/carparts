@@ -28,6 +28,12 @@ namespace CarParts.DataAccess.Entities
         public Decimal SellingPrice { get; set; }
 
         [Required, StringLength(maximumLength: 250)]
+        public string ProductionStartYear { get; set; }
+
+        [Required, StringLength(maximumLength: 250)]
+        public string ProductionStopYear { get; set; }
+
+        [Required, StringLength(maximumLength: 250)]
         public string UniqueName { get; set; }
 
         public virtual ICollection<Filter> Filtres { get; set; }
