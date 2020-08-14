@@ -12,6 +12,12 @@ namespace CarParts.Domain.Mapping
         public MapperProfile()
         {
             CreateMap<DbUser, UserDto>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<Category, CategoryDto>();
+            //.AfterMap((s, d) => {
+            //     foreach (var c in d.Children)
+            //         c.Parent = d;
+            // })
         }
     }
 }

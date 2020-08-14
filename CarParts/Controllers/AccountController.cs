@@ -40,7 +40,6 @@ namespace CarParts.Controllers
                 token = result.collectionResult.FirstOrDefault(t => t.Key == "token")
             });
         }
-
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterDto model)
         {
