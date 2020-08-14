@@ -1,4 +1,5 @@
 ﻿using CarParts.DataAccess.Entities;
+using CarParts.Dto.DtoModels;
 using CarParts.Dto.DtoResult;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,11 @@ namespace CarParts.Domain.Services.Abstraction
 {
     public interface IProductService
     {
-        ResultDto GetCategory();
-        ResultDto GetMark(int year);
-        ResultDto GetModel(int mark);
-        Task<ResultDto> GetYear();
+        Task<CollectionResultDto<CategoryDto>> GetCategory();
+        Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid);
+        Task<CollectionResultDto<ModelDto>> GetModel(List<int> id);
+        Task<CollectionResultDto<BrandDto>> GetMark(int year);
+        Task<SingleResultDto<List<int>>> GetYear();
 
 
     }
