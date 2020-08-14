@@ -32,14 +32,6 @@ namespace CarParts.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<string>("ProductionStartYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<string>("ProductionStopYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
                     b.HasKey("Id");
 
                     b.ToTable("tblAllCars");
@@ -268,13 +260,9 @@ namespace CarParts.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<string>("ProductionStartYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
+                    b.Property<int>("ProductionStartYear");
 
-                    b.Property<string>("ProductionStopYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
+                    b.Property<int>("ProductionStopYear");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(7,2)");

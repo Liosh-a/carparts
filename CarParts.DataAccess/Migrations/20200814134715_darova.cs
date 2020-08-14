@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarParts.DataAccess.Migrations
 {
-    public partial class first : Migration
+    public partial class darova : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,9 +56,7 @@ namespace CarParts.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Brand = table.Column<string>(maxLength: 250, nullable: false),
-                    Model = table.Column<string>(maxLength: 250, nullable: false),
-                    ProductionStartYear = table.Column<string>(maxLength: 250, nullable: false),
-                    ProductionStopYear = table.Column<string>(maxLength: 250, nullable: false)
+                    Model = table.Column<string>(maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -230,6 +228,8 @@ namespace CarParts.DataAccess.Migrations
                     Name = table.Column<string>(maxLength: 250, nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     SellingPrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
+                    ProductionStartYear = table.Column<int>(nullable: false),
+                    ProductionStopYear = table.Column<int>(nullable: false),
                     UniqueName = table.Column<string>(maxLength: 250, nullable: false),
                     CarId = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: true)

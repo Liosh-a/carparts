@@ -13,6 +13,7 @@ namespace CarParts.Domain.Services.Abstraction
         ResultDto GetCategory();
         ResultDto GetMark(int year);
         ResultDto GetModel(int mark);
+        Task<ResultDto> GetYear();
 
 
     }

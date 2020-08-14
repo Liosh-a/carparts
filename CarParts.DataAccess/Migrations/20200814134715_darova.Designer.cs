@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarParts.DataAccess.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20200730114500_second")]
-    partial class second
+    [Migration("20200814134715_darova")]
+    partial class darova
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,14 +31,6 @@ namespace CarParts.DataAccess.Migrations
                         .HasMaxLength(250);
 
                     b.Property<string>("Model")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<string>("ProductionStartYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<string>("ProductionStopYear")
                         .IsRequired()
                         .HasMaxLength(250);
 
@@ -270,13 +262,9 @@ namespace CarParts.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<string>("ProductionStartYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
+                    b.Property<int>("ProductionStartYear");
 
-                    b.Property<string>("ProductionStopYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
+                    b.Property<int>("ProductionStopYear");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(7,2)");

@@ -46,11 +46,11 @@ namespace CarParts.Domain.Services.Implementation
         public ResultDto GetMark(int year)
         {
 
-            var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
+            //var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
 
-            var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
+            //var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
             var res = new CollectionResultDto<BrandDto>();
-            res.Data = cat;
+            //res.Data = cat;
             return res;
         }
 
@@ -61,6 +61,16 @@ namespace CarParts.Domain.Services.Implementation
             var res = new CollectionResultDto<Category>();
             res.Data = categories;
             return res;
+        }
+
+        public async Task<ResultDto> GetYear()
+        {
+            List<int> yearList = new List<int>();
+            var productstart = _context.Products.Select(c => c.ProductionStartYear).ToList();
+            var productstop = _context.Products.Select(c => c.ProductionStopYear).ToList();
+            var res = yearList;
+
+            return new ResultDto();
         }
     }
 }
