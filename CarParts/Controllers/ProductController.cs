@@ -34,5 +34,19 @@ namespace CarParts.Controllers
 
             return Ok(category);
         }
+        [HttpPost("getmark")]
+        public async Task<IActionResult> getMark(int year)
+        {
+            var category = _productService.GetMark(year);
+
+            return Ok(category);
+        }
+        [HttpPost("getmodel")]
+        public async Task<IActionResult> getModel(int model)
+        {
+            var category = _productService.GetModel(model);
+
+            return Ok(category);
+        }
     }
 }

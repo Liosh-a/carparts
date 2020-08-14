@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using CarParts.Helpers;
+//using AutoMapper.Configuration;
 using Microsoft.Extensions.Configuration;
 
 
@@ -44,10 +45,12 @@ namespace CarParts.Domain.Services.Implementation
 
         public ResultDto GetMark(int year)
         {
-            var cat = _context.Model;
-            var categories = _context.Categories.ToList();
-            var res = new CollectionResultDto<Category>();
-            res.Data = categories;
+
+            var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
+
+            var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
+            var res = new CollectionResultDto<BrandDto>();
+            res.Data = cat;
             return res;
         }
 
