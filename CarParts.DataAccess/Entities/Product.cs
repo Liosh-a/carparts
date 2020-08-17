@@ -31,7 +31,12 @@ namespace CarParts.DataAccess.Entities
         [ForeignKey("allcar")]
         public int CarId { get; set; }
 
+        [ForeignKey("category")]
+        public int CategoryId { get; set; }
+
         public AllCar allcar { get; set; }
+
+        public Category category { get; set; }
 
         public virtual ICollection<Filter> Filtres { get; set; }
 

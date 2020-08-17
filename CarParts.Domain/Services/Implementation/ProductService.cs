@@ -54,24 +54,37 @@ namespace CarParts.Domain.Services.Implementation
             return res;
         }
 
-        public Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid)
+        public async Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid)
         {
-            var cat = _context.Categories.Count();
+           // var cat = _context.Categories.Count();
             var categories = _context.Categories.ToList();
             var res = new CollectionResultDto<CategoryDto>();
-            var IsActive = false;
             foreach (var el in categories)
             {
-                if(_context.Products.FirstOrDefault(c=>c.CarId==carid&&c.))
-                res.Data.Add(new CategoryDto
+                if (_context.Products.FirstOrDefault(c => c.CarId == carid && c.CategoryId == el.Id)!=null)
                 {
-                    Id = el.Id,
-                    Name = el.Name,
-                    ParentId = el.ParentId ?? default(int),
-                    UrlSlug = el.UrlSlug,
-                    Description = el.Description,
-                    IsActive = true
-                });
+                    res.Data.Add(new CategoryDto
+                    {
+                        Id = el.Id,
+                        Name = el.Name,
+                        ParentId = el.ParentId ?? default(int),
+                        UrlSlug = el.UrlSlug,
+                        Description = el.Description,
+                        IsActive = true
+                    });
+                }
+                else
+                {
+                    res.Data.Add(new CategoryDto
+                    {
+                        Id = el.Id,
+                        Name = el.Name,
+                        ParentId = el.ParentId ?? default(int),
+                        UrlSlug = el.UrlSlug,
+                        Description = el.Description,
+                        IsActive = false
+                    });
+                }
             }
             res.Count = categories.Count;
             return res;
@@ -81,7 +94,7 @@ namespace CarParts.Domain.Services.Implementation
         {
             //var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
             //var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
-            var cars = _context.AllCars.Select(c=>c).Where(c => c.Id.Equals(_context.Products.Select(t=>t).Where(y => y.ProductionStartYear >= year && y.ProductionStopYear <= year)));
+            var cars = _context.AllCars.Select(c=>c).Where(c => c.Id.Equals(_context.Products.Select(t=>t).Where(a => a.ProductionStartYear >= year && a.ProductionStopYear <= year)));
             cars.OrderBy(c => c.Brand);
             var res = new CollectionResultDto<BrandDto>();
 

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarParts.DataAccess.Migrations
 {
-    public partial class darova : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -232,7 +232,7 @@ namespace CarParts.DataAccess.Migrations
                     ProductionStopYear = table.Column<int>(nullable: false),
                     UniqueName = table.Column<string>(maxLength: 250, nullable: false),
                     CarId = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: true)
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -248,7 +248,7 @@ namespace CarParts.DataAccess.Migrations
                         column: x => x.CategoryId,
                         principalTable: "tblCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

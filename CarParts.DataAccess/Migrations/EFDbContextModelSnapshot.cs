@@ -254,7 +254,7 @@ namespace CarParts.DataAccess.Migrations
 
                     b.Property<int>("CarId");
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -434,9 +434,10 @@ namespace CarParts.DataAccess.Migrations
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CarParts.DataAccess.Entities.Category")
+                    b.HasOne("CarParts.DataAccess.Entities.Category", "category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
