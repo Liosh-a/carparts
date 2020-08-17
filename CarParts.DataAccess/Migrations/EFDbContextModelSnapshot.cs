@@ -32,14 +32,6 @@ namespace CarParts.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<string>("ProductionStartYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<string>("ProductionStopYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
                     b.HasKey("Id");
 
                     b.ToTable("tblAllCars");
@@ -262,19 +254,15 @@ namespace CarParts.DataAccess.Migrations
 
                     b.Property<int>("CarId");
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<string>("ProductionStartYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
+                    b.Property<int>("ProductionStartYear");
 
-                    b.Property<string>("ProductionStopYear")
-                        .IsRequired()
-                        .HasMaxLength(250);
+                    b.Property<int>("ProductionStopYear");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(7,2)");
@@ -446,9 +434,10 @@ namespace CarParts.DataAccess.Migrations
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CarParts.DataAccess.Entities.Category")
+                    b.HasOne("CarParts.DataAccess.Entities.Category", "category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

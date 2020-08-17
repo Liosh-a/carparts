@@ -17,13 +17,5 @@ namespace CarParts.DataAccess.Entities
 
         [Required, StringLength(maximumLength: 250)]
         public string Model { get; set; }
-
-        [Required, StringLength(maximumLength: 250)]
-        public string ProductionStartYear { get; set; }
-
-        [Required, StringLength(maximumLength: 250)]
-        public string ProductionStopYear { get; set; }
-        
-        
     }
 }
