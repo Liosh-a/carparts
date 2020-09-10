@@ -50,6 +50,20 @@ namespace CarParts.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tblAllCars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Brand = table.Column<string>(maxLength: 250, nullable: false),
+                    Model = table.Column<string>(maxLength: 250, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblAllCars", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tblCategories",
                 columns: table => new
                 {
@@ -212,22 +226,29 @@ namespace CarParts.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(maxLength: 250, nullable: false),
-                    ProductionStart = table.Column<DateTime>(type: "date", nullable: false),
-                    ProductionStop = table.Column<DateTime>(type: "date", nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     SellingPrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
+                    ProductionStartYear = table.Column<int>(nullable: false),
+                    ProductionStopYear = table.Column<int>(nullable: false),
                     UniqueName = table.Column<string>(maxLength: 250, nullable: false),
-                    CategoryId = table.Column<int>(nullable: true)
+                    CarId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblProducts", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_tblProducts_tblAllCars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "tblAllCars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_tblProducts_tblCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "tblCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -386,6 +407,11 @@ namespace CarParts.DataAccess.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tblProducts_CarId",
+                table: "tblProducts",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tblProducts_CategoryId",
                 table: "tblProducts",
                 column: "CategoryId");
@@ -434,6 +460,9 @@ namespace CarParts.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "tblProducts");
+
+            migrationBuilder.DropTable(
+                name: "tblAllCars");
 
             migrationBuilder.DropTable(
                 name: "tblCategories");
