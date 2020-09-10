@@ -2,62 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CarParts.Domain.Services.Abstraction;
-using CarParts.DataAccess;
-using CarParts.DataAccess.Entities.Seeder;
 
 namespace CarParts.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
-        private readonly EFDbContext _context;
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "Id,Name,Description,Price,CategoryId")] Product product)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Products.Add(product);
+        //        _context.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-        public ProductController(IProductService productService, EFDbContext context)
-        {
-            _productService = productService;
-            _context = context;
+        //    ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+        //    return View(product);
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Add(ProductAddViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        using (TransactionScope scope = new TransactionScope())
+        //        {
+        //            Product product = new Product()
+        //            {
+        //                Name = model.Name,
+        //                Price = model.Price,
+        //                Description = model.Description,
+        //                CategoryId = model.CategoryId
+        //            };
+        //            _context.Products.Add(product);
+        //            for (int i = 0; i < model.DescriptionImages.Count(); i++)
+        //            {
+        //                var temp = model.DescriptionImages[i];
+        //                if (temp != null)
+        //                {
+        //                    _context.ProductDescriptionImages
+        //                        .FirstOrDefault(t => t.Name == temp)
+        //                        .ProductId = product.Id;
+        //                }
 
-        }
+        //            }
+        //            _context.SaveChanges();
+        //            scope.Complete();
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
 
-        [HttpGet("getcategory")]
-        public async Task<IActionResult> getCategory()
-        {
-            var category = await _productService.GetCategory();
-
-            return Ok(category);
-        }
-
-        [HttpGet("getyears")]
-        public async Task<IActionResult> getYears()
-        {
-            var years = await _productService.GetYear();
-            return Ok(years);
-        }
-
-        [HttpPost("getmark")]
-        public async Task<IActionResult> getMark(int year)
-        {
-            var mark = await _productService.GetMark(year);
-
-            return Ok(mark);
-        }
-
-        [HttpPost("getmodel")]
-        public async Task<IActionResult> getModel(List<int> markid)
-        {
-            var model = await _productService.GetModel(markid);
-
-            return Ok(model);
-        }
-
-        [HttpPost("getcategorybycar")]
-        public async Task<IActionResult> getCategoryByCar(int carid)
-        {
-            var category = await _productService.GetCategoryByCar(carid);
-            return Ok(category);
-        }
+        //    ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name", model.CategoryId);
+        //    return View(model);
+        //}
     }
 }
