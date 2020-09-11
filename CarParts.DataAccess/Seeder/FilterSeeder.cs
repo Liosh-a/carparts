@@ -44,7 +44,7 @@ namespace CarParts.DataAccess.Entities.Seeder
                                             "Хромовый", "Черно-Серый", "Чорный"},
                             new string [] { "Верхняя часть", "Внешняя часть", "Внутренняя часть", //Bamper
                                             "Нижняя часть", "Средняя часть"},
-                            new string [] {  }
+                            new string [] { "Слева", "Спереди", "Спарва" } //Bumper Krulla
                         };
 
             foreach (var items in filterValues)

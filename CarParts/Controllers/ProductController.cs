@@ -11,41 +11,52 @@ namespace CarParts.Controllers
 {
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
-    { 
+    {
         private readonly IProductService _productService;
         private readonly EFDbContext _context;
 
-        public ProductController(IProductService productService, EFDbContext context
-            )
+        public ProductController(IProductService productService, EFDbContext context)
         {
             _productService = productService;
             _context = context;
 
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-        [HttpPost("getcategory")]
+        [HttpGet("getcategory")]
         public async Task<IActionResult> getCategory()
         {
-            var category = _productService.GetCategory();
+            var category = await _productService.GetCategory();
 
             return Ok(category);
         }
+
+        [HttpGet("getyears")]
+        public async Task<IActionResult> getYears()
+        {
+            var years = await _productService.GetYear();
+            return Ok(years);
+        }
+
         [HttpPost("getmark")]
         public async Task<IActionResult> getMark(int year)
         {
-            var category = _productService.GetMark(year);
+            var mark = await _productService.GetMark(year);
 
-            return Ok(category);
+            return Ok(mark);
         }
-        [HttpPost("getmodel")]
-        public async Task<IActionResult> getModel(int model)
-        {
-            var category = _productService.GetModel(model);
 
+        [HttpPost("getmodel")]
+        public async Task<IActionResult> getModel(List<int> markid)
+        {
+            var model = await _productService.GetModel(markid);
+
+            return Ok(model);
+        }
+
+        [HttpPost("getcategorybycar")]
+        public async Task<IActionResult> getCategoryByCar(int carid)
+        {
+            var category = await _productService.GetCategoryByCar(carid);
             return Ok(category);
         }
     }
