@@ -17,7 +17,7 @@ export class Home extends Component {
                             <div className="sas_wrap">
                                 <div className="sas_inner">
                                     <div className="heading-title">
-                                        <h2>Найдите свою запчасть</h2>
+                                        <h2>Найдите вашу запчасть</h2>
                                     </div>
                                     <div className="sas_inner_box_search">
                                         <div className="row">
