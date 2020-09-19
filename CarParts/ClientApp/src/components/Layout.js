@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationMenu from './NavigationMenu';
+import NavigationMenu from './Navigation/NavigationMenu';
 
 export default props => (
   <div className="layout">

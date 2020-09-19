@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
-import '../Navigation.css';
+import '../Navigation/Navigation.css';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const Category = ({ categoryName = "Категория" }) => {

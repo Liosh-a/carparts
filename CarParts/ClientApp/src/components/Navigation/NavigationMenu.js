@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './Navigation.css';
-import '../../node_modules/font-awesome/css/font-awesome.min.css';
-import logo from './img/logo.png';
-import Category from './Categories/Category';
+import '../../../node_modules/font-awesome/css/font-awesome.css';
+import logo from '../img/logo.png';
+import Category from '../Categories/Category';
+import HeaderTop from'./HeaderTop';
 
 class NavigationMenu extends Component {
     state = {}
@@ -10,6 +11,7 @@ class NavigationMenu extends Component {
     render() {
         return (
             <div>
+                <HeaderTop/>
                 <div className="header-middle hidden-compact">
                     <div className="container">
                         <div className="row">
@@ -31,7 +33,7 @@ class NavigationMenu extends Component {
                             </div>
                             <div className="col-lg-4 col-md-4 col-sm-4 col-xs-3">
                                 <div className="logo">
-                                    <a href="#" className="logo-link">
+                                    <a href="/" className="logo-link">
                                         <img src={logo} className="logo-image" />
                                     </a>
                                 </div>
@@ -72,7 +74,7 @@ class NavigationMenu extends Component {
                                                 <div className="container-mega">
                                                     <ul className="megamenu" data-transiton="slide" data-animationtime="250">
                                                         <li className="home hover">
-                                                            <a className="link" href="#">Главная</a>
+                                                            <a className="link" href="/">Главная</a>
                                                         </li>
                                                         <Category/>
                                                         <Category/>
