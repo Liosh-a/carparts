@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Bogus;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -171,14 +172,32 @@ namespace CarParts.DataAccess.Entities.Seeder
                         context.SaveChanges();
                     }
                 }
+                
             }
             #endregion
 
             #region tblFilterNameCategory - Групування груп фільтрів по категоріям
-
-            foreach(var el in context.FilterNames)
+            var faker = new Faker();
+            //var lis = new List<int>();
+            var list = context.FilterNames.Select(x => x.Id).ToList();
+            var per = 0;
+            foreach (var el in context.Categories.ToList())
             {
-
+                var bob = list;
+                if (el.ParentId != null)
+                {
+                    for (int i = 0; i <= 4; i++)
+                    {
+                        per = faker.PickRandom(bob);
+                        context.FilterNameCategories.Add(new FilterNameCategory
+                        {
+                            CategoryId = el.Id,
+                            FilterNameId = per
+                        }) ;
+                        context.SaveChanges();
+                        bob.Remove(per);
+                    }
+                }
             }
 
             #endregion

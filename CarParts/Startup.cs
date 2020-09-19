@@ -133,7 +133,7 @@ namespace CarParts
                 }
             });
             //CreateEmailString.SendAccountConfirm(Configuration, env, "koparts.dp.ua", "leshalebedich25@gmail.com");
-            SeederDB.SeedData(app.ApplicationServices, env, this.Configuration);
+            //SeederDB.SeedData(app.ApplicationServices, env, this.Configuration);
 
         }
     }
