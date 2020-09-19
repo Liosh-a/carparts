@@ -18,7 +18,9 @@ namespace CarParts.DataAccess.Entities.Seeder
             }
 
             #region tblFilterNames - Назви фільтрів
-            string[] filterNames = { "Сторона", "Цвет", "Расположение", "Сторона Установки"  };
+            string[] filterNames = { "Сторона", //Dveri
+                "Цвет", //Vse
+                "Расположение", "Сторона Установки"  };
             foreach (var type in filterNames)
             {
                 if (context.FilterNames.SingleOrDefault(f => f.Name == type) == null)
