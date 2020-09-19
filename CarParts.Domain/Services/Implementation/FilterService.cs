@@ -27,14 +27,18 @@ namespace CarParts.Domain.Services.Implementation
             _env = env;
         }
 
-        public Task<SingleResultDto<string>> CreateFilterName(FilterNameViewModel filterName)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.FiltersName.Add(new FilterName { Name = filterName.Name });
-                _context.SaveChanges();
+        //public Task<SingleResultDto<string>> CreateFilterName(FilterNameViewModel filterName)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.FiltersName.Add(new FilterName { Name = filterName.Name });
+        //        _context.SaveChanges();
                
-            }
-        }
+        //    }
+        //    var res = "asd";
+        //    return new SingleResultDto<string>
+        //    { Data = res
+        //    };
+        //}
     }
 }

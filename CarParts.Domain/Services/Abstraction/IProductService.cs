@@ -12,12 +12,12 @@ namespace CarParts.Domain.Services.Abstraction
 {
     public interface IProductService
     {
-        List<FNameViewModel> GetListFilter (int categoryId);
+        Task<List<FNameViewModel>> GetListFilter (int categoryId);
 
-        Task<SingleResultDto<Product>> GetProductById(string productUnickName);
+        Task<SingleResultDto<ProductDto>> GetProductById(string productUnickName);
 
-        Task<CollectionResultDto<Product>> GetProductbyCategoryandFilters(int categoryId, FilterOnUse filterOnUse, int page);
+        Task<CollectionResultDto<ProductDto>> GetProductbyCategoryandFilters(int categoryId, FilterOnUse filterOnUse, int pageIndex);
 
-        Task<CollectionResultDto<Product>> GetProductbyCarIdCategoryandFilteres(int carId, FilterOnUse filterOnUse, int page);
+        Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategoryandFilteres(int categoryId, int carId, FilterOnUse filterOnUse, int pageIndex);
     }
 }

@@ -49,7 +49,6 @@ namespace CarParts.Dto.ViewModels
         }
         public class HomeViewModel
         {
-
             public HomeFilterViewModel Filter { get; set; }
             public HomeProductViewModel Product { get; set; }
 

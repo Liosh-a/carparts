@@ -1,5 +1,7 @@
+using AutoMapper;
 using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
+using CarParts.Domain.Mapping;
 using CarParts.Domain.Services.Abstraction;
 using CarParts.Domain.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -39,6 +41,16 @@ namespace CarParts
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
 
             //services.AddDbContext<EFDbContext>(opt =>
             //    opt.UseSqlServer(Configuration

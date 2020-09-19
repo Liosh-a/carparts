@@ -9,8 +9,7 @@ namespace CarParts.DataAccess.Entities.Seeder
 {
     public class FilterSeeder
     {
-        private static void SeedFilters(EFDbContext context, IHostingEnvironment _env,
-           IConfiguration _config)
+        public static void SeedFilters(EFDbContext context)
         {
             List<int> productid = new List<int>();
             foreach (var el in context.Products)

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using CarParts.Helpers;
 //using AutoMapper.Configuration;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace CarParts.Domain.Services.Implementation
 {
@@ -57,7 +57,7 @@ namespace CarParts.Domain.Services.Implementation
         public async Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid)
         {
            // var cat = _context.Categories.Count();
-            var categories =  _context.Categories.ToList();
+            var categories =await  _context.Categories.ToListAsync();
             var res = new CollectionResultDto<CategoryDto>();
             foreach (var el in categories)
             {
@@ -124,7 +124,7 @@ namespace CarParts.Domain.Services.Implementation
             var res = new CollectionResultDto<ModelDto>();
             foreach(var el in id)
             {
-                res.Data.Add(new ModelDto { Model = _context.AllCars.FirstOrDefault(c => c.Id == el).Model, Id = el });
+                 res.Data.Add(new ModelDto { Model = _context.AllCars.FirstOrDefault(c => c.Id == el).Model, Id = el });
             }
 
 

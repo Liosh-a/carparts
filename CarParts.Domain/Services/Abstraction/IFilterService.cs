@@ -6,5 +6,6 @@ namespace CarParts.Domain.Services.Abstraction
 {
     interface IFilterService
     {
+
     }
 }
