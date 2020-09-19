@@ -153,6 +153,15 @@ namespace CarParts.DataAccess.Entities.Seeder
                 }
             }
             #endregion
+
+            #region tblFilterNameCategory - Групування груп фільтрів по категоріям
+
+            foreach(var el in context.FilterNames)
+            {
+
+            }
+
+            #endregion
         }
     }
 }
