@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import './components/css/styles.css';
 // import 'material/dist/material.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,6 +8,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import configureStore, {history} from './store/configureStore';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import 'semantic-ui-css/semantic.min.css'
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
 const initialState = window.initialReduxState;

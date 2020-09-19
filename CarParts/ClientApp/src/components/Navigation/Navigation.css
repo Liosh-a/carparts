@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,400i,500,600,700');
+
+body{
+    font-family: 'Rubik', sans-serif;
+}
+
+
+#sosearchpro{
+	width: 100%;
+}
+
+#sosearchpro .autosearch-input {
+    height: 42px;
+    line-height: 20px;
+    padding: 0 10px;
+	box-shadow: none;
+	background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+            appearance: none;
+}
+#sosearchpro .button-search{
+	border:none;
+}
+#sosearchpro .select_category{
+	position:relative;
+	display: table-cell;
+	vertical-align: top;
+	border:1px solid #e5e5e5;
+	background: white;
+}
+#sosearchpro .select_category select{
+	height: 40px;
+	width: 100%;
+    line-height: 100%;
+    padding: 0 5px;
+	border: none;
+	float: left;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+#sosearchpro .dropdown-menu li > a:hover{
+	background: transparent;
+}
+#sosearchpro .icon-select::after {
+	content: "\f107";
+	color: black;
+	font-family: "FontAwesome";
+	right: 0px;
+	top: 0px;
+	position: absolute;
+	pointer-events: none;
+	background: white;
+	line-height: 36px;
+	width: 30px;
+	height: 100%;
+	text-align: center;
+}
+
+@media (max-width: 479px) {
+	#sosearchpro .media-body {
+		padding: 0px 15px;
+	}
+	#sosearchpro{
+		width: 100%;
+	}
+	#sosearchpro .select_category select {
+		width: auto;
+	}
+	#sosearchpro .dropdown-menu{
+		left: 0px !important;
+	}
+}
+#sosearchpro .dropdown-menu .media{
+	margin:0px;
+	border-bottom: 1px solid #e5e5e5;
+}
+#sosearchpro .dropdown-menu {
+	padding:0px;
+	max-height: 300px;
+    overflow-y: scroll;
+}
+#sosearchpro .dropdown-menu .media:hover{
+	background-color:#e5e5e5;
+}
+#sosearchpro .dropdown-menu .media-left{
+	float:left;
+	padding: 5px;	
+}
+#sosearchpro .dropdown-menu .media-body{
+	padding: 10px;
+}
+#sosearchpro .dropdown-menu .media-body a{
+	float:left;
+} 
+#sosearchpro .dropdown-menu .media-body .box-price{
+	float: right;
+	width:100%;
+} 
+#sosearchpro .dropdown-menu .media-body .box-price span{
+	padding-right:10px;
+	float:left;
+} 
+
+.header-middle{
+    clear: both;
+    padding: 15px 0;
+}
+
+.search{
+    position: relative;
+    margin: 30px 0;
+    border: 2px solid #e5e5e5;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.input-group{
+    display: table;
+    border-collapse: separate;
+}
+
+.autosearch-input{
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 0;
+    height: 40px;
+    padding-left: 15px;
+    width: 200px;
+    color: #ccc;
+    font-size: 12px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.search-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    height: 42px;
+    text-align: center;
+    line-height: 42px;
+    padding: 0 10px;
+    font-size: 14px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: table;
+}
+
+.search-input{
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 0;
+    height: 40px;
+    padding-left: 15px;
+    width: 200px;
+    color: #ccc;
+    font-size: 12px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.search-button:hover{
+    color: #3F6075;
+}
+
+.logo{
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.logo-link{
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.logo-image{
+    text-align: center;
+    max-width: 160px;
+}
+
+.row{
+    width: 100%;
+}
+
+.header-middle{
+    border: 1px solid white;
+}
+
+.shopping-cart{
+    float: right;
+    position: relative;
+    margin: 30px 0;
+}
+
+.shopcart{
+    height: 44px;
+}
+
+.icon-c{
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    float: left;
+    text-align: center;
+    border-right: 2px solid #e5e5e5;
+    position: relative;
+    border-radius: 5px;
+    color: black;
+}
+
+.top-cart{
+    position: relative;
+    border: 2px solid #e5e5e5;
+    border-radius: 5px;
+}
+
+.shopcart, .icon-c:hover{
+    color: #3F6075;
+}
+
+.shopcart-inner{
+    float: left;
+    color: #282828;
+    margin: 13px 15px 15px 10px;
+}
+
+.text-shopping-cart{
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0;
+    line-height: 100%;
+    text-transform: capitalize;
+    float: left;
+    padding-right: 5px;
+}
+
+.items-cart{
+    background-color: rgb(63 96 117);
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    text-align: center;
+    border-radius: 100%;
+    position: absolute;
+    top: -12px;
+    left: 32px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.header-bottom{
+    background-color: rgb(63 96 117);
+}
+
+.home{
+    float: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.megamenu{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    position: relative;
+    text-align: center;
+}
+
+.home{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: transparent;
+    position: relative;
+    padding: 0px 20px;
+    line-height: 55px;
+    border-radius: 0;
+}
+
+.home:hover{
+    background-color: #365264;
+    color: white;
+    text-decoration: none;
+}
+
+.link{
+    color: #fff;
+}
+
+.link:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
+.common-home .container-megamenu.horizontal ul.megamenu > li.home > a {
+    background-color: rgb(63 96 117);
+    color: #fff;
+}
+
+ul.megamenu > li > a{
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: transparent;
+    position: relative;
+    padding: 0px 20px;
+    line-height: 55px;
+    border-radius: 0;
+}
+
+.drop-down-style{
+    background-color: #3f6075;
+    border: none;
+    display: inline-block;
+    line-height: 43px;
+    font-size: 14px;
+}
+
+.drop-down-style:hover{
+    background-color: #365264;
+    color: white;
+    text-decoration: none;
+}
+
+.drop-down-style:active{
+    background-color: #365264;
+    color: white;
+    text-decoration: none;
+}
+
+
+.drop-down-style:focus{
+    background-color: #365264;
+    color: white;
+    text-decoration: none;
+}
+
+.clearfix{
+    font-family: "FontAwesome";
+    content: "\f107";
+    font-size: 14px;
+    color: #fff;
+    top: 0;
+    right: 0;
+    line-height: 25px;
+}
+
+.category-link{
+    display: inline-block;
+}
+
+.dropdown-category{
+    height: 56px;
+    width: 133px;
+    background-color: #3F6075;
+    border: none;
+}
+
+.dropdown-category:hover{
+    background-color: #365264;
+}
+
+.dropdown-category:focus{
+    background-color: #365264;
+}

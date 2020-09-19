@@ -8,7 +8,6 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ConfirmEmailPage from './components/ConfirmEmail/ConfirmEmailPage';
 import UserPage from './components/UserPage/UserPage';
 import ListParts from './components/Parts/ListParts';
-import Category from './components/Categories/Category';
 import Cart from './components/Cart/Cart';
 
 
