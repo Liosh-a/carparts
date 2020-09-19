@@ -1,12 +1,11 @@
 import React from 'react';
-import { Container } from 'reactstrap';
-import NavMenu from '../NavMenu';
-import Category from '../components/Categories/Category'
+import NavigationMenu from './Navigation/NavigationMenu';
+
 export default props => (
-  <div>
-    <NavMenu />
-    <Container>
+  <div className="layout">
+    <NavigationMenu />
+    <div>
       {props.children}
-    </Container>
+    </div>
   </div>
 );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './NavMenu.css';
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, NavLink } from 'reactstrap';
 import { logout } from '../src/components/Auth/actions';
 import { connect } from 'react-redux';
+
 
 export class NavMenu extends React.Component {
   constructor(props) {
@@ -22,6 +22,7 @@ export class NavMenu extends React.Component {
 
   render() {
     return (
+      <div>
       <Navbar className="nav-container navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
         <NavbarBrand tag={Link} to="/">
           <h2 className="mt-2">Koparts</h2>
@@ -54,7 +55,8 @@ export class NavMenu extends React.Component {
             </ul>
           {/* } */}
         </Collapse>
-      </Navbar>
+        </Navbar>
+    </div>
     );
   }
 }
