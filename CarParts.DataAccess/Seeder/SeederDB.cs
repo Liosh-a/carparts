@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using CarParts.DataAccess.Entities.Seeder;
+using CarParts.DataAccess.Seeder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -443,6 +444,7 @@ namespace CarParts.DataAccess.Entities
                 //AccountSeeder.SeedUsers(manager, managerRole);
                 CategorySeeder.SeedCategories(context);
                 FilterSeeder.SeedFilters(context);
+                ProductSeeder.SeedProduct(context);
             }
         }
     }
