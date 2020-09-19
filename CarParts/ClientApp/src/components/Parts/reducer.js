@@ -4,6 +4,8 @@ import PartsService from './PartsService';
 export const FETCH_PARTS_STARTED = "parts/FETCH_PARTS_STARTED";
 export const FETCH_PARTS_SUCCESS = "parts/FETCH_PARTS_SUCCESS";
 export const FETCH_PARTS_FAILED = "parts/FETCH_PARTS_FAILED";
+export const SET_PARTS = "parts/SET_PARTS";
+
 
 const initialState = {
     data: [],
@@ -45,6 +47,14 @@ export const partsReducer = (state = initialState, action) => {
             break;
         }
 
+        case SET_PARTS: {
+            newState = {
+                ...state,
+                data: action.payload
+            };
+            break;
+        }
+
         default: {
             return newState;
         }
@@ -52,9 +62,9 @@ export const partsReducer = (state = initialState, action) => {
     return newState;
 }
 
-export const getParts = (page = 1) => {
+export const getParts = (model) => {
     return (dispatch) => {
-        AddUpdateParts(page, dispatch);
+        AddUpdateParts(model, dispatch);
     }
 }
 
@@ -75,7 +85,11 @@ export const partsGetActions = {
             type: FETCH_PARTS_FAILED,
             error
         }
-    }
+    },
+    setParts: (Parts) => ({
+        type: SET_PARTS,
+        payload: Parts
+    })
 }
 
 const AddUpdateParts = (model, dispatch) => {

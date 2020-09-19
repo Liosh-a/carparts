@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { validateFields } from "./validate";
 import TextFieldGroup from "../common/TextFieldGroup";
 import AlertGroup from "../common/AlertGroup";
-import '../css/Authorization.css';
 
 export class Login extends Component {
 
