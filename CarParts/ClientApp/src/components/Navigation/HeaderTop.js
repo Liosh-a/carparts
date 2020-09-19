@@ -14,7 +14,7 @@ class HeaderTop extends Component {
                         </li>
                         <li className="list-inline-item">
                             <i className="fa fa-lock"></i>
-                            <a className="log-nav" href="/register">Регистрация</a>
+                            <a className="log-nav" href="/registration">Регистрация</a>
                         </li>
                     </ul>
                 </div>
