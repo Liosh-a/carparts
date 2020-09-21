@@ -19,13 +19,13 @@ class HeaderBottom extends Component {
                                                         <li className="home hover">
                                                             <a className="link" href="/">Главная</a>
                                                         </li>
-                                                        <Category/>
-                                                        <Category/>
-                                                        <Category/>
-                                                        <Category/>
-                                                        <Category/>
-                                                        <Category/>
-                                                        <Category/>
+                                                        <Category categoryName="Автозапчасти"/>
+                                                        <Category categoryName="Кузовные запчасти"/>
+                                                        <Category categoryName="Освещение"/>
+                                                        <Category categoryName="Электроника"/>
+                                                        <Category categoryName="Интерьер"/>
+                                                        <Category categoryName="Экстерьер"/>
+                                                        <Category categoryName="Шины и Диски"/>
                                                     </ul>
                                                 </div>
                                             </div>

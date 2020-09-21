@@ -13,7 +13,7 @@ class HeaderMiddle extends Component {
                                     <div id="sosearchpro" className="sosearchpro-wrapper so-search ">
                                         <form>
                                             <div id="search0" className="search form-group">
-                                                <input class="autosearch-input form-control search-imput" type="text" size="50"
+                                                <input className="autosearch-input form-control search-imput" type="text" size="50"
                                                     autocomplete="off" placeholder="Поиск... " name="search" />
                                                 <button type="submit" className="btn search-button"
                                                     name="submit_search"><i className="fa fa-search"></i>
