@@ -1,5 +1,7 @@
+using AutoMapper;
 using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
+using CarParts.Domain.Mapping;
 using CarParts.Domain.Services.Abstraction;
 using CarParts.Domain.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,12 +36,23 @@ namespace CarParts
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IMainPageService, MainPageService>();
             //services.AddTransient<IProductService, ProductService>();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
 
             //services.AddDbContext<EFDbContext>(opt =>
             //    opt.UseSqlServer(Configuration

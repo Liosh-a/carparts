@@ -1,19 +1,19 @@
-﻿using CarParts.DataAccess;
+﻿ using AutoMapper.Configuration;
+using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
 using CarParts.Domain.Services.Abstraction;
 using CarParts.Dto;
 using CarParts.Dto.DtoModels;
 using CarParts.Dto.DtoResult;
+using CarParts.Helpers;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using CarParts.Helpers;
-//using AutoMapper.Configuration;
-using Microsoft.Extensions.Configuration;
-
+using AutoMapper;
 
 namespace CarParts.Domain.Services.Implementation
 {
@@ -22,142 +22,278 @@ namespace CarParts.Domain.Services.Implementation
         private readonly EFDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _env;
+        private readonly IMapper _mapper;
+
 
         public ProductService(EFDbContext context,
             IConfiguration configuration,
-            IHostingEnvironment env)
+            IHostingEnvironment env,
+            IMapper mapper)
         {
             _context = context;
             _configuration = configuration;
             _env = env;
+            _mapper = mapper;
         }
 
-
-        public async Task<CollectionResultDto<CategoryDto>> GetCategory()
+        public async Task<List<FNameViewModel>> GetListFilter(int categoryId)
         {
-            var cat = _context.Categories.Count();
-            var categories = _context.Categories.ToList();
-            var res = new CollectionResultDto<CategoryDto>();
-            foreach(var el in categories)
-            {
-                res.Data.Add(new CategoryDto
-                {
-                    Id = el.Id,
-                    Name = el.Name,
-                    ParentId = el.ParentId ?? default(int),
-                    UrlSlug = el.UrlSlug,
-                    Description = el.Description,
-                    IsActive = true
-                });
-            }
-            res.Count = categories.Count;
-            return res;
+            var queryName = from f in _context.FilterNames
+                            .Where(c=>c==_context.FilterNameCategories.Select( y=> y.CategoryId==categoryId))
+                            .AsQueryable()
+                            select f;
+            var queryGroup = from g in  _context.FilterNameGroups.AsQueryable()
+                             select g;
+
+            //Отримуємо загальну множину значень
+            var query = from u in queryName
+                        join g in queryGroup on u.Id equals g.FilterNameId  into ua
+                        from aEmp in ua.DefaultIfEmpty()
+                        select new
+                        {
+                            FNameId = u.Id,
+                            FName = u.Name,
+                            FValueId = aEmp != null ? aEmp.FilterValueId : 0,
+                            FValue = aEmp != null ? aEmp.FilterValueOf.Name : null,
+                        };
+
+            var groupNames = query
+                        .AsEnumerable()
+                        .GroupBy(f => new { Id = f.FNameId, Name = f.FName })
+                        .Select(g => g)
+                        .OrderByDescending(p => p.Key.Name);
+
+            //По групах отримуємо
+            var result = from fName in groupNames
+                         select
+                         new FNameViewModel
+                         {
+                             Id = fName.Key.Id,
+                             Name = fName.Key.Name,
+                             Children = (from v in fName
+                                         group v by new FValueViewModel
+                                         {
+                                             Id = v.FValueId,
+                                             Value = v.FValue
+                                         } into g
+                                         select g.Key)
+                                         .OrderBy(l => l.Value).ToList()
+                         };
+            return result.ToList();
+
         }
 
-        public async Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid)
+        public async Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategoryandFilteres(int categoryId, int carId, FilterOnUse filterOnUse, int pageIndex)
         {
-           // var cat = _context.Categories.Count();
-            var categories = _context.Categories.ToList();
-            var res = new CollectionResultDto<CategoryDto>();
-            foreach (var el in categories)
+            var filtersList = GetListFilters();
+            long[] filterValueSearchList = filterOnUse.filters.ToArray(); //масив ID вибраних фільтрів
+            var query = _context
+                .Products
+                .Include(f => f.Filtres)
+                .Include(y => y.CarId)
+                .Include(c => c.CategoryId)
+                .AsQueryable();
+            foreach (var fName in filtersList)
             {
-                if (_context.Products.FirstOrDefault(c => c.CarId == carid && c.CategoryId == el.Id)!=null)
+                int countFilter = 0; //Кількість співпадінь у даній групі фільрів
+                var predicate = PredicateBuilder.False<Product>();
+                foreach (var fValue in fName.Children)
                 {
-                    res.Data.Add(new CategoryDto
+                    for (int i = 0; i < filterValueSearchList.Length; i++)
                     {
-                        Id = el.Id,
-                        Name = el.Name,
-                        ParentId = el.ParentId ?? default(int),
-                        UrlSlug = el.UrlSlug,
-                        Description = el.Description,
-                        IsActive = true
-                    });
-                }
-                else
-                {
-                    res.Data.Add(new CategoryDto
-                    {
-                        Id = el.Id,
-                        Name = el.Name,
-                        ParentId = el.ParentId ?? default(int),
-                        UrlSlug = el.UrlSlug,
-                        Description = el.Description,
-                        IsActive = false
-                    });
-                }
-            }
-            res.Count = categories.Count;
-            return res;
-        }
-
-        public async Task<CollectionResultDto<BrandDto>> GetMark(int year)
-        {
-            //var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
-            //var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
-            var cars = _context.AllCars.Select(c=>c).Where(c => c.Id.Equals(_context.Products.Select(t=>t).Where(a => a.ProductionStartYear >= year && a.ProductionStopYear <= year)));
-            cars.OrderBy(c => c.Brand);
-            var res = new CollectionResultDto<BrandDto>();
-
-            string y=null;
-            foreach(var el in cars)
-            {
-                if (el.Brand != y)
-                {
-                    if (res.Data.FirstOrDefault(c => c.Brand == y) == null)
-                    {
-                        res.Data.Add(new BrandDto { Brand = el.Brand, Id = new List<int>() {el.Id} });
+                        var idV = fValue.Id;
+                        if (filterValueSearchList[i] == idV)
+                        {
+                            predicate = predicate
+                                .Or(p => p.Filtres
+                                    .Any(f => f.FilterValueId == idV));
+                            countFilter++;
+                        }
                     }
                 }
-                else
-                {
-                    res.Data.FirstOrDefault(c => c.Brand == el.Brand).Id.Add(el.Id);
-                }
-                y = el.Brand;
+                if (countFilter != 0)
+                    query = query.Where(predicate);
             }
-            res.Count = res.Data.Count;
-            //res.Data = cat;
+            int count = query.Count();
+            var res = new CollectionResultDto<ProductDto>();
+            var result = query
+                .Select(p => new
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    PurchasePrice = p.PurchasePrice,
+                    SellingPrice = p.SellingPrice,
+                    ProductionStartYear = p.ProductionStartYear,
+                    ProductionStopYear = p.ProductionStopYear,
+                    UniqueName = p.UniqueName,
+                    CategoryId = p.CategoryId,
+                    CarId = p.CarId,
+                    Filter = p.Filtres
+                        .Select(f => new
+                        {
+                            Filter = f.FilterNameOf.Name,
+                            ValueId = f.FilterValueId,
+                            Value = f.FilterValueOf.Name
+                        })
+
+                }).Where(c=>c.CategoryId==categoryId && c.CarId==carId ).OrderBy(x => x.Name).Skip((pageIndex - 1) * 10).Take(10);
+            res.Data =  _mapper.Map<List<ProductDto>>(result);
+            res.Data.Count();
             return res;
         }
 
-        public async Task<CollectionResultDto<ModelDto>> GetModel(List<int> id)
+        public async Task<CollectionResultDto<ProductDto>> GetProductbyCategoryandFilters(int categoryId, FilterOnUse filterOnUse, int pageIndex)
         {
-            var res = new CollectionResultDto<ModelDto>();
-            foreach(var el in id)
+            var filtersList = GetListFilters();
+            long[] filterValueSearchList = filterOnUse.filters.ToArray(); //масив ID вибраних фільтрів
+            var query = _context
+                .Products
+                .Include(f => f.Filtres)
+                .Include(y => y.CarId)
+                .Include(c => c.CategoryId)
+                .AsQueryable();
+            foreach (var fName in filtersList)
             {
-                res.Data.Add(new ModelDto { Model = _context.AllCars.FirstOrDefault(c => c.Id == el).Model, Id = el });
+                int countFilter = 0; //Кількість співпадінь у даній групі фільрів
+                var predicate = PredicateBuilder.False<Product>();
+                foreach (var fValue in fName.Children)
+                {
+                    for (int i = 0; i < filterValueSearchList.Length; i++)
+                    {
+                        var idV = fValue.Id;
+                        if (filterValueSearchList[i] == idV)
+                        {
+                            predicate = predicate
+                                .Or(p => p.Filtres
+                                    .Any(f => f.FilterValueId == idV));
+                            countFilter++;
+                        }
+                    }
+                }
+                if (countFilter != 0)
+                    query = query.Where(predicate);
             }
+            int count = query.Count();
+            var res = new CollectionResultDto<ProductDto>();
+            var result = query
+                .Select(p => new
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    PurchasePrice = p.PurchasePrice,
+                    SellingPrice = p.SellingPrice,
+                    ProductionStartYear = p.ProductionStartYear,
+                    ProductionStopYear = p.ProductionStopYear,
+                    UniqueName = p.UniqueName,
+                    CategoryId = p.CategoryId,
+                    CarId = p.CarId,
+                    Filter = p.Filtres
+                        .Select(f => new
+                        {
+                            Filter = f.FilterNameOf.Name,
+                            ValueId = f.FilterValueId,
+                            Value = f.FilterValueOf.Name
+                        })
 
-
-            //var cat = _context.Categories.Count();
-            //var categories = _context.Categories.ToList();
-            //var res = new CollectionResultDto<Category>();
-            //res.Data = categories;
+                }).Where(c => c.CategoryId == categoryId).OrderBy(x => x.Name).Skip((pageIndex - 1) * 10).Take(10);
+            res.Data = _mapper.Map<List<ProductDto>>(result);
+            res.Data.Count();
             return res;
         }
 
-        public async Task<SingleResultDto<List<int>>> GetYear()
+        public async Task<SingleResultDto<ProductDto>> GetProductById(string productUnickName)
         {
-            List<int> yearList = new List<int>();
-            var product = _context.Products.Select(c => c.ProductionStartYear).ToList();
-            var productstop = _context.Products.Select(c => c.ProductionStopYear).ToList();
+            var query = _context
+                .Products
+                .Include(f => f.Filtres)
+                .Include(y => y.CarId)
+                .Include(c => c.CategoryId)
+                .AsQueryable();
 
-            product.AddRange(productstop);
-            product.OrderBy(i=>i);
-            var y = 0;
-            foreach(var el in product)
-            {
-                if(el==y)
+            var res = query
+                .Select(p => new
                 {
-                    product.Remove(el);
-                }
-                y = el;
-                
-            }
-            
-            return new SingleResultDto<List<int>>()
-            {
-                Data = product
+                    Id = p.Id,
+                    Name = p.Name,
+                    PurchasePrice = p.PurchasePrice,
+                    SellingPrice = p.SellingPrice,
+                    ProductionStartYear = p.ProductionStartYear,
+                    ProductionStopYear = p.ProductionStopYear,
+                    UniqueName = p.UniqueName,
+                    CategoryId = p.CategoryId,
+                    CarId = p.CarId,
+                    Filter = p.Filtres
+                        .Select(f => new
+                        {
+                            Filter = f.FilterNameOf.Name,
+                            ValueId = f.FilterValueId,
+                            Value = f.FilterValueOf.Name
+                        })
+
+                }).Where(c => c.UniqueName == productUnickName);
+            var result = _mapper.Map<ProductDto>(res);
+
+
+            return new SingleResultDto<ProductDto>{
+                Data = result,
+                IsSuccessful=true,
             };
+        }
+
+        /// //////////////////////////////////////////
+        private List<FNameViewModel> GetListFilters()
+        {
+            var queryName = from f in _context.FilterNames.AsQueryable()
+                            select f;
+            var queryGroup = from g in _context.FilterNameGroups.AsQueryable()
+                             select g;
+
+            //Отримуємо загальну множину значень
+            var query = from u in queryName
+                        join g in queryGroup on u.Id equals g.FilterNameId into ua
+                        from aEmp in ua.DefaultIfEmpty()
+                        select new
+                        {
+                            FNameId = u.Id,
+                            FName = u.Name,
+                            FValueId = aEmp != null ? aEmp.FilterValueId : 0,
+                            FValue = aEmp != null ? aEmp.FilterValueOf.Name : null,
+                        };
+
+            //Групуємо по іменам і сортуємо по спаданню імен
+            //var groupNames = (from f in query
+            //                  group f by new
+            //                  {
+            //                      Id = f.FNameId,
+            //                      Name = f.FName
+            //                  } into g
+            //                  //orderby g.Key.Name
+            //                  select g).OrderByDescending(g => g.Key.Name).AsEnumerable();
+
+            var groupNames = query
+                        .AsEnumerable()
+                        .GroupBy(f => new { Id = f.FNameId, Name = f.FName })
+                        .Select(g => g)
+                        .OrderByDescending(p => p.Key.Name);
+
+            //По групах отримуємо
+            var result = from fName in groupNames
+                         select
+                         new FNameViewModel
+                         {
+                             Id = fName.Key.Id,
+                             Name = fName.Key.Name,
+                             Children = (from v in fName
+                                         group v by new FValueViewModel
+                                         {
+                                             Id = v.FValueId,
+                                             Value = v.FValue
+                                         } into g
+                                         select g.Key)
+                                         .OrderBy(l => l.Value).ToList()
+                         };
+
+            return result.ToList();
         }
     }
 }
