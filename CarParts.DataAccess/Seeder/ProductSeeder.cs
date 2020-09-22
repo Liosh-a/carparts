@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Bogus;
 using CarParts.DataAccess.Entities;
@@ -31,6 +32,32 @@ namespace CarParts.DataAccess.Seeder
                 
                 
             }
+            //List<Filter> filters = new List<Filter>();
+            //var productid = _context.Products.Select(x => x.Id).ToList();
+            //var filtergroup = _context.FilterNameGroups.Select(x => x).ToList();
+            //var filterNames = _context.FilterNames.Select(x => x.Id).ToList();
+            //foreach (var el in filterNames) {
+            //    var idlist = filtergroup.Where(y => y.FilterNameId == el.Id).Select(x => x.FilterValueId)
+            //        }
+            
+            //foreach (var el in productid)
+            //{
+
+            //    filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1, 8), ProductId = el });
+
+            //}
+
+
+
+            //foreach (var item in filters)
+            //{
+            //    var f = _context.Filters.SingleOrDefault(p => p == item);
+            //    if (f == null)
+            //    {
+            //        _context.Filters.Add(new Filter { FilterNameId = item.FilterNameId, FilterValueId = item.FilterValueId, ProductId = item.ProductId });
+            //        _context.SaveChanges();
+            //    }
+            //}
         }
     }
 }

@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using CarParts.Helpers;
 //using AutoMapper.Configuration;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using CarParts.Domain.Mapping;
 
 namespace CarParts.Domain.Services.Implementation
 {
@@ -22,36 +24,77 @@ namespace CarParts.Domain.Services.Implementation
         private readonly EFDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _env;
+        private readonly IMapper _mapper;
 
         public MainPageService(EFDbContext context,
             IConfiguration configuration,
-            IHostingEnvironment env)
+            IHostingEnvironment env,
+            IMapper mapper)
         {
             _context = context;
             _configuration = configuration;
             _env = env;
+            _mapper = mapper;
         }
 
 
-        public async Task<CollectionResultDto<CategoryDto>> GetCategory()
+        public async Task<CollectionResultDto<GetCategoryDto>> GetCategory()
         {
-            var cat = _context.Categories.Count();
+            //var cat = _context.Categories.Count();
             var categories = _context.Categories.ToList();
-            var res = new CollectionResultDto<CategoryDto>();
+            var paCategories = _context.Categories.Where(x=>x.ParentId==null).Select(x => x).ToList();
+            var res = new List<GetCategoryDto>();
+            var parentId = new CategoryDto();
+
+
             foreach(var el in categories)
             {
-                res.Data.Add(new CategoryDto
+                if (paCategories.FirstOrDefault(x => x.Id == el.ParentId )!=null)
                 {
-                    Id = el.Id,
-                    Name = el.Name,
-                    ParentId = el.ParentId ?? default(int),
-                    UrlSlug = el.UrlSlug,
-                    Description = el.Description,
-                    IsActive = true
-                });
+                    var pacat = _mapper.Map<CategoryDto>(paCategories.FirstOrDefault(x => x.Id == el.ParentId));
+                    if (res.FirstOrDefault(x => x.parentCategory.Id == el.ParentId) == null)
+                    {
+                        var list = new List<CategoryDto>();
+                        list.Add(_mapper.Map<CategoryDto>(el));
+                        res.Add(new GetCategoryDto
+                        {
+                            parentCategory = pacat,
+                            childCategories = list
+
+                        }) ;
+                    }
+                    else
+                    {
+                        res.FirstOrDefault(x => x.parentCategory.UrlSlug == pacat.UrlSlug).childCategories.Add(_mapper.Map<CategoryDto>(el));
+                    }
+                    
+                    
+                }
             }
-            res.Count = categories.Count;
-            return res;
+            //foreach(var el in categories)
+            //{
+            //    if (el.ParentId == null)
+            //    {
+            //        parentId = el.Id;
+            //    }
+            //    if (el.ParentId == parentId)
+            //    {
+            //        res.Add(new CategoryDto
+            //        {
+            //            Id = el.Id,
+            //            Name = el.Name,
+            //            ParentId = el.ParentId ?? default(int),
+            //            UrlSlug = el.UrlSlug,
+            //            Description = el.Description ?? default(string),
+            //            IsActive = true
+            //        });
+            //    }
+            //}
+
+            return new CollectionResultDto<GetCategoryDto> {
+                Data = res,
+                Count = res.Count()
+            };
         }
 
         public async Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid)
@@ -137,7 +180,7 @@ namespace CarParts.Domain.Services.Implementation
 
         public async Task<SingleResultDto<List<int>>> GetYear()
         {
-            List<int> yearList = new List<int>();
+            var yearList = new List<int>();
             var product = _context.Products.Select(c => c.ProductionStartYear).ToList();
             var productstop = _context.Products.Select(c => c.ProductionStopYear).ToList();
 
