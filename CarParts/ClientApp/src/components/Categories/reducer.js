@@ -1,8 +1,9 @@
-import PartsService from './PartsService';
+import CategoryService from './categoryService';
 
-export const FETCH_PARTS_STARTED = "parts/FETCH_PARTS_STARTED";
-export const FETCH_PARTS_SUCCESS = "parts/FETCH_PARTS_SUCCESS";
-export const FETCH_PARTS_FAILED = "parts/FETCH_PARTS_FAILED";
+export const FETCH_CATEGORIES_STARTED = "categories/FETCH_CATEGORIES_STARTED";
+export const FETCH_CATEGORIES_SUCCESS = "categories/FETCH_CATEGORIES_SUCCESS";
+export const FETCH_CATEGORIES_FAILED = "categories/FETCH_CATEGORIES_FAILED";
+
 
 const initialState = {
     data: [],
@@ -11,12 +12,13 @@ const initialState = {
     success: false
 }
 
-export const partsReducer = (state = initialState, action) => {
+
+export const categoriesReducer = (state = initialState, action) => {
     let newState = state;
 
     switch (action.type) {
 
-        case FETCH_PARTS_STARTED: {
+        case FETCH_CATEGORIES_STARTED: {
             newState = {
                 ...state,
                 loading: true,
@@ -25,7 +27,7 @@ export const partsReducer = (state = initialState, action) => {
             break;
         }
 
-        case FETCH_PARTS_SUCCESS: {
+        case FETCH_CATEGORIES_SUCCESS: {
             newState = {
                 ...state,
                 loading: false,
@@ -35,7 +37,7 @@ export const partsReducer = (state = initialState, action) => {
             break;
         }
 
-        case FETCH_PARTS_FAILED: {
+        case FETCH_CATEGORIES_FAILED: {
             newState = {
                 ...state,
                 loading: false,
@@ -51,41 +53,41 @@ export const partsReducer = (state = initialState, action) => {
     return newState;
 }
 
-export const getParts = (model) => {
+export const getCategories = (model) => {
     return (dispatch) => {
-        AddUpdateParts(model, dispatch);
+        AddUpdateCategories(model, dispatch);
     }
 }
 
-export const partsGetActions = {
+export const categoriesGetActions = {
     started: () => {
         return {
-            type: FETCH_PARTS_STARTED
+            type: FETCH_CATEGORIES_STARTED
         }
     },
     success: (data) => {
         return {
-            type: FETCH_PARTS_SUCCESS,
+            type: FETCH_CATEGORIES_SUCCESS,
             payload: data
         }
     },
     failed: (error) => {
         return {
-            type: FETCH_PARTS_FAILED,
+            type: FETCH_CATEGORIES_FAILED,
             error
         }
     }
 }
 
-const AddUpdateParts = (model, dispatch) => {
+const AddUpdateCategories = (model, dispatch) => {
 
-    dispatch(partsGetActions.started());
+    dispatch(categoriesGetActions.started());
 
-    PartsService.getParts(model)
+    CategoryService.getParts(model)
         .then((response) => {
-            dispatch(partsGetActions.success(response));
+            dispatch(categoriesGetActions.success(response));
         })
         .catch(() => {
-            dispatch(partsGetActions.failed());
+            dispatch(categoriesGetActions.failed());
         });
 }

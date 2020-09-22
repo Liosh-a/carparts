@@ -3,7 +3,10 @@ import propTypes from 'prop-types';
 import '../Navigation/Navigation.css';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-const Category = ({ categoryName = "Категория" }) => {
+const Category = ({
+    id,
+    name = "Категория"
+     }) => {
 
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -12,10 +15,10 @@ const Category = ({ categoryName = "Категория" }) => {
 
 
     return (
-        <li className="category-link">
+        <li className="category-link" key={id}>
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret  className="dropdown-category">
-                {categoryName}
+                {name}
             </DropdownToggle>
                 <DropdownMenu >
                     <DropdownItem>Авто</DropdownItem>
