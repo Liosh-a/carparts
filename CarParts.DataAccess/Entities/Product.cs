@@ -42,6 +42,5 @@ namespace CarParts.DataAccess.Entities
 
         public virtual ICollection<Image> Images { get; set; }
 
-        public virtual ICollection<AllCar> Cars { get; set; }
     }
 }

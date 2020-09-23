@@ -138,9 +138,11 @@ namespace CarParts.Domain.Services.Implementation
             //var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
             //var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
             //var cars = _context.AllCars.Where(c => c.Id.Equals(_context.Products.Where(a => a.ProductionStartYear >= year && a.ProductionStopYear <= year).Select(x=>x.CarId)));
-            var cars = _context.Products.Where(el => el.ProductionStartYear >= year && el.ProductionStopYear <= year).Select(el => el.Cars).ToList();
-            cars.ToList().Sort();
+            //var cars = _context.Products.Where(el => el.ProductionStartYear >= year && el.ProductionStopYear <= year).Select(el => el.Cars).ToList();
+            var cars = _context.AllCars.Where(el=>el.Products.Where(pr=>pr.ProductionStartYear<=year&&pr.ProductionStopYear>=year).Count()>0).ToList();
+            //cars.ToList().Sort();
             var res = new CollectionResultDto<BrandDto>();
+
 
             //string y = "";
             //foreach (var el in cars)
