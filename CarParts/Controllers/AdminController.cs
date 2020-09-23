@@ -26,10 +26,9 @@ namespace CarParts.Controllers
             _adminService = adminService;
         }
 
-        [HttpPost("AddUser")]
-        public async Task<IActionResult> addUser([FromBody]CreateUser user)
+        [HttpPost("add/user")]
+        public async Task<IActionResult> addUser([FromBody]CreateUserDto user)
         {
-            var res = new ResultDto();
             if (!ModelState.IsValid)
             {
                 var errors = CustomValidator.GetErrorsByModel(ModelState);
@@ -42,6 +41,79 @@ namespace CarParts.Controllers
             }
             return Ok();
         }
+        [HttpPost("remove/user")]
+        public async Task<IActionResult> deleteUser(int id)
+        {
 
+            var result = await _adminService.deleteUser(id);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+
+        [HttpGet("user/list/{page}")]
+        public async Task<IActionResult> listuser(int page)
+        {
+            page = page < 1 ? 1 : page;
+            var result = await _adminService.listUsers(page);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("add/category")]
+        public async Task<IActionResult> addCategory([FromBody]CreateCategoryDto category)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = CustomValidator.GetErrorsByModel(ModelState);
+                return BadRequest(errors);
+            }
+            var result = await _adminService.addCategory(category);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+
+        }
+        [HttpPost("remove/category")]
+        public async Task<IActionResult> removeCategory(int id)
+        {
+            
+            var result = await _adminService.removeCategory(id);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+
+        }
+
+        [HttpPost("add/filter")]
+        public async Task<IActionResult> addFilter(string filterName,string[] filterValue)
+        {
+            var result = await _adminService.addFilterGroup(filterName,filterValue);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+
+        }
+
+
+        //[HttpPost("test/seeder")]
+        //public string productSeeder()
+        //{
+        //    _adminService.productSeeder();
+        //    return "1";
+        //}
     }
 }
+ 

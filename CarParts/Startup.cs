@@ -65,7 +65,7 @@ namespace CarParts
                 .AddEntityFrameworkStores<EFDbContext>()
                 .AddDefaultTokenProviders();
 
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("11-sdfasdf-22233222222"));
+            var signingKey = new SymmetricSecurityKey(Encoding. UTF8.GetBytes("11-sdfasdf-22233222222"));
 
             services.Configure<IdentityOptions>(options =>
             {

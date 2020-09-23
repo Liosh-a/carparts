@@ -101,12 +101,12 @@ namespace CarParts.Domain.Services.Implementation
         {
            // var cat = _context.Categories.Count();
             var categories =await  _context.Categories.ToListAsync();
-            var res = new CollectionResultDto<CategoryDto>();
+            var res = new List<CategoryDto>();
             foreach (var el in categories)
             {
                 if (_context.Products.FirstOrDefault(c => c.CarId == carid && c.CategoryId == el.Id)!=null)
                 {
-                    res.Data.Add(new CategoryDto
+                    res.Add(new CategoryDto
                     {
                         Id = el.Id,
                         Name = el.Name,
@@ -118,7 +118,7 @@ namespace CarParts.Domain.Services.Implementation
                 }
                 else
                 {
-                    res.Data.Add(new CategoryDto
+                    res.Add(new CategoryDto
                     {
                         Id = el.Id,
                         Name = el.Name,
@@ -129,45 +129,51 @@ namespace CarParts.Domain.Services.Implementation
                     });
                 }
             }
-            res.Count = categories.Count;
-            return res;
+            return new CollectionResultDto<CategoryDto>
+            {
+                Data = res,
+            };
         }
 
         public async Task<CollectionResultDto<BrandDto>> GetMark(int year)
         {
             //var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
             //var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
-            var cars = _context.AllCars.Select(c=>c).Where(c => c.Id.Equals(_context.Products.Select(t=>t).Where(a => a.ProductionStartYear >= year && a.ProductionStopYear <= year)));
-            cars.OrderBy(c => c.Brand);
-            var res = new CollectionResultDto<BrandDto>();
+            //var cars = _context.AllCars.Where(c => c.Id.Equals(_context.Products.Where(a => a.ProductionStartYear >= year && a.ProductionStopYear <= year).Select(x=>x.CarId)));
+            //var cars = _context.Products.Where(el => el.ProductionStartYear >= year && el.ProductionStopYear <= year).Select(el => el.Cars).ToList();
+            var cars = _context.AllCars.Where(el=>el.Products.Where(pr=>pr.ProductionStartYear<=year&&pr.ProductionStopYear>=year).Count()>0).ToList();
+            //cars.ToList().Sort();
+            var res = new List<BrandDto>();
 
-            string y=null;
-            foreach(var el in cars)
+
+            string y = "";
+            foreach (var el in cars)
             {
                 if (el.Brand != y)
                 {
-                    if (res.Data.FirstOrDefault(c => c.Brand == y) == null)
-                    {
-                        res.Data.Add(new BrandDto { Brand = el.Brand, Id = new List<int>() {el.Id} });
-                    }
+
+                        res.Add(new BrandDto { Brand = el.Brand, Id = new List<int>() { el.Id } });
+                    
                 }
                 else
                 {
-                    res.Data.FirstOrDefault(c => c.Brand == el.Brand).Id.Add(el.Id);
+                    res.FirstOrDefault(c => c.Brand == el.Brand).Id.Add(el.Id);
                 }
                 y = el.Brand;
             }
-            res.Count = res.Data.Count;
             //res.Data = cat;
-            return res;
+            return new CollectionResultDto<BrandDto>
+            {
+                Data=res,
+            };
         }
 
         public async Task<CollectionResultDto<ModelDto>> GetModel(List<int> id)
         {
-            var res = new CollectionResultDto<ModelDto>();
+            var res = new List<ModelDto>();
             foreach(var el in id)
             {
-                 res.Data.Add(new ModelDto { Model = _context.AllCars.FirstOrDefault(c => c.Id == el).Model, Id = el });
+                 res.Add(new ModelDto { Model = _context.AllCars.FirstOrDefault(c => c.Id == el).Model, Id = el });
             }
 
 
@@ -175,31 +181,23 @@ namespace CarParts.Domain.Services.Implementation
             //var categories = _context.Categories.ToList();
             //var res = new CollectionResultDto<Category>();
             //res.Data = categories;
-            return res;
+            return new CollectionResultDto<ModelDto>
+            {
+                Data=res,
+            };
         }
 
         public async Task<SingleResultDto<List<int>>> GetYear()
         {
             var yearList = new List<int>();
-            var product = _context.Products.Select(c => c.ProductionStartYear).ToList();
-            var productstop = _context.Products.Select(c => c.ProductionStopYear).ToList();
+            yearList.AddRange( _context.Products.Select(c => c.ProductionStartYear).ToList());
+            yearList.AddRange(_context.Products.Select(c => c.ProductionStopYear).ToList());
 
-            product.AddRange(productstop);
-            product.OrderBy(i=>i);
-            var y = 0;
-            foreach(var el in product)
-            {
-                if(el==y)
-                {
-                    product.Remove(el);
-                }
-                y = el;
-                
-            }
-            
+            yearList = yearList.Distinct().ToList();
+            yearList.Sort();
             return new SingleResultDto<List<int>>()
             {
-                Data = product
+                Data = yearList,
             };
         }
     }

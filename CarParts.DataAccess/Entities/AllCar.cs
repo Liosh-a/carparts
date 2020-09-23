@@ -17,5 +17,7 @@ namespace CarParts.DataAccess.Entities
 
         [Required, StringLength(maximumLength: 250)]
         public string Model { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
