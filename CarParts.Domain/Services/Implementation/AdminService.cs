@@ -134,13 +134,14 @@ namespace CarParts.Domain.Services.Implementation
                 collectionResult = null,
             };
         }
-        public async Task<ResultDto> removeCategory (int id)
+        public async Task<ResultDto> removeCategory(int id)
         {
             var category = _context.Categories.Find(id);
-            if (category != null)
+            if (category != null && category.Categories.Count()==0)
             {
-                //_context.Remove(category);
-                //_context.SaveChanges();
+
+                _context.Remove(category);
+                _context.SaveChanges();
                 return new ResultDto
                 {
                     IsSuccessful = true,
@@ -153,9 +154,36 @@ namespace CarParts.Domain.Services.Implementation
                 collectionResult = null,
             };
         }
-        public async Task<ResultDto> addFilterGroup(string filterName, string[] filteValue)
+        public async Task<ResultDto> addFilterGroup(string filterName, string[] filterValue)
         {
 
+            var filter = _context.FilterNames.FirstOrDefault(el => el.Name.ToUpper() == filterName.ToUpper());
+            List<FilterValue> filterValues = new List<FilterValue>();
+
+            for (int i = 0; i < filterValue.Count(); i++)
+            {
+                filterValues.Add(new FilterValue { Name = filterValue[i] });
+            }
+
+
+            if (filter != null)
+            {
+                _context.FilterValues.AddRange(filterValues);
+            }
+            else
+            {
+                filter = new FilterName { Name = filterName };
+                _context.FilterNames.Add(filter);
+                _context.FilterValues.AddRange(filterValues);
+            }
+            _context.SaveChanges();
+
+            for (int i = 0; i < filterValues.Count(); i++)
+            {
+                _context.FilterNameGroups.Add(new FilterNameGroup { FilterNameId=filter.Id , FilterValueId = filterValues[i].Id });
+            }
+
+            _context.SaveChanges();
             return new ResultDto
             {
                 IsSuccessful = true,
@@ -164,7 +192,7 @@ namespace CarParts.Domain.Services.Implementation
         }
         public string productSeeder()
         {
-           
+
             return "ok";
         }
 
