@@ -1,9 +1,10 @@
-﻿using CarParts.DataAccess.Entities;
+﻿using CarParts.DataAccess;
+using CarParts.DataAccess.Entities;
+using CarParts.Dto;
 using CarParts.Dto.DtoModels;
 using CarParts.Dto.DtoResult;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,12 +12,12 @@ namespace CarParts.Domain.Services.Abstraction
 {
     public interface IProductService
     {
-        Task<CollectionResultDto<CategoryDto>> GetCategory();
-        Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid);
-        Task<CollectionResultDto<ModelDto>> GetModel(List<int> id);
-        Task<CollectionResultDto<BrandDto>> GetMark(int year);
-        Task<SingleResultDto<List<int>>> GetYear();
+        Task<List<FNameViewModel>> GetListFilter (int categoryId);
 
+        Task<SingleResultDto<ProductDto>> GetProductById(string productUnickName);
 
+        Task<CollectionResultDto<ProductDto>> GetProductbyCategoryandFilters(int categoryId, FilterOnUse filterOnUse, int pageIndex);
+
+        Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategoryandFilteres(int categoryId, int carId, FilterOnUse filterOnUse, int pageIndex);
     }
 }

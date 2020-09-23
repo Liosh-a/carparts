@@ -1,4 +1,6 @@
 ﻿using Bogus;
+using CarParts.DataAccess.Entities.Seeder;
+using CarParts.DataAccess.Seeder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -57,110 +59,110 @@ namespace CarParts.DataAccess.Entities
 
         //    }
         //}
-        private static void SeedFilters(EFDbContext context, IHostingEnvironment _env,
-           IConfiguration _config)
-        {
-            List<int> productid = new List<int>();
-            foreach (var el in context.Products)
-            {
-                productid.Add(el.Id);
-            }
+        //private static void SeedFilters(EFDbContext context, IHostingEnvironment _env,
+        //   IConfiguration _config)
+        //{
+        //    List<int> productid = new List<int>();
+        //    foreach (var el in context.Products)
+        //    {
+        //        productid.Add(el.Id);
+        //    }
 
-            #region tblFilterNames - Назви фільтрів
-            string[] filterNames = { "Кузовные запчасти" };
-            foreach (var type in filterNames)
-            {
-                if (context.FilterNames.SingleOrDefault(f => f.Name == type) == null)
-                {
-                    context.FilterNames.Add(
-                        new FilterName
-                        {
-                            Name = type
-                        });
-                    context.SaveChanges();
-                }
-            }
-            #endregion
+            //#region tblFilterNames - Назви фільтрів
+            //string[] filterNames = { "Кузовные запчасти" };
+            //foreach (var type in filterNames)
+            //{
+            //    if (context.FilterNames.SingleOrDefault(f => f.Name == type) == null)
+            //    {
+            //        context.FilterNames.Add(
+            //            new FilterName
+            //            {
+            //                Name = type
+            //            });
+            //        context.SaveChanges();
+            //    }
+            //}
+            //#endregion
 
 
-            #region tblFilterValues - Значення фільтрів
-            List<string[]> filterValues = new List<string[]> {
-                            new string [] { "Крышка багажника", "Двери", "Передний бампер", "Капот", "Крылья",
-                                            "Зеркала", "Задние фонари", "Крыши" }
-                        };
+            //#region tblFilterValues - Значення фільтрів
+            //List<string[]> filterValues = new List<string[]> {
+            //                new string [] { "Крышка багажника", "Двери", "Передний бампер", "Капот", "Крылья",
+            //                                "Зеркала", "Задние фонари", "Крыши" }
+            //            };
 
-            foreach (var items in filterValues)
-            {
-                foreach (var value in items)
-                {
-                    if (context.FilterValues
-                        .SingleOrDefault(f => f.Name == value) == null)
-                    {
-                        context.FilterValues.Add(
-                            new FilterValue
-                            {
-                                Name = value
-                            });
-                        context.SaveChanges();
-                    }
-                }
-            }
-            #endregion
+            //foreach (var items in filterValues)
+            //{
+            //    foreach (var value in items)
+            //    {
+            //        if (context.FilterValues
+            //            .SingleOrDefault(f => f.Name == value) == null)
+            //        {
+            //            context.FilterValues.Add(
+            //                new FilterValue
+            //                {
+            //                    Name = value
+            //                });
+            //            context.SaveChanges();
+            //        }
+            //    }
+            //}
+            //#endregion
 
-            #region tblFilterNameGroups - Групування по групах фільтрів
+            //#region tblFilterNameGroups - Групування по групах фільтрів
 
-            for (int i = 0; i < filterNames.Length; i++)
-            {
-                foreach (var value in filterValues[i])
-                {
-                    var nId = context.FilterNames
-                        .SingleOrDefault(f => f.Name == filterNames[i]).Id;
-                    var vId = context.FilterValues
-                        .SingleOrDefault(f => f.Name == value).Id;
-                    if (context.FilterNameGroups
-                        .SingleOrDefault(f => f.FilterValueId == vId &&
-                        f.FilterNameId == nId) == null)
-                    {
-                        context.FilterNameGroups.Add(
-                            new FilterNameGroup
-                            {
-                                FilterNameId = nId,
-                                FilterValueId = vId
-                            });
-                        context.SaveChanges();
-                    }
-                }
-            }
-            #endregion
+            //for (int i = 0; i < filterNames.Length; i++)
+            //{
+            //    foreach (var value in filterValues[i])
+            //    {
+            //        var nId = context.FilterNames
+            //            .SingleOrDefault(f => f.Name == filterNames[i]).Id;
+            //        var vId = context.FilterValues
+            //            .SingleOrDefault(f => f.Name == value).Id;
+            //        if (context.FilterNameGroups
+            //            .SingleOrDefault(f => f.FilterValueId == vId &&
+            //            f.FilterNameId == nId) == null)
+            //        {
+            //            context.FilterNameGroups.Add(
+            //                new FilterNameGroup
+            //                {
+            //                    FilterNameId = nId,
+            //                    FilterValueId = vId
+            //                });
+            //            context.SaveChanges();
+            //        }
+            //    }
+            //}
+            //#endregion
 
-            #region tblProducts - Продуткы
-            var faker = new Faker();
-            List<string> product = new List<string>();
-            for (int i = 0; i < 100; i++)
-            {
-                product.Add(Path.GetRandomFileName());
-            }
+            //#region tblProducts - Продуткы
+            //var faker = new Faker();
+            //List<string> product = new List<string>();
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    product.Add(Path.GetRandomFileName());
+            //}
 
-            foreach (var item in product)
-            {
-                int count = 0;
-                count++;
+            //foreach (var item in product)
+            //{
+            //    int count = 0;
+            //    count++;
 
-                if (context.Products.SingleOrDefault(f => f.UniqueName == item) == null)
-                {
+            //    if (context.Products.SingleOrDefault(f => f.UniqueName == item) == null)
+            //    {
 
-                    context.Products.Add(
-                        new Product
-                        {
-                            UniqueName = item,
-                            SellingPrice = faker.Random.Int(1000, 100000),
-                            Name = "Product #" + count.ToString(),
-                        }); ;
+            //        context.Products.Add(
+            //            new Product
+            //            {
+            //                UniqueName = item,
+            //                SellingPrice = faker.Random.Int(1000, 100000),
+            //                Name = "Product #" + count.ToString(),
+            //            }); ;
 
-                    context.SaveChanges();
-                }
-            }
-            #endregion
+            //        context.SaveChanges();
+            //    }
+            //}
+            //#endregion
 
             //            #region tblFilterNames - Назви фільтрів
             //            string[] filterNames = { "Тип кузова", "Топливо", "КПП", "Тип привода" };
@@ -356,50 +358,50 @@ namespace CarParts.DataAccess.Entities
             //}
             //#endregion
 
-            #region tblFilters -Фільтри
-            List<Filter> filters = new List<Filter>();
-            foreach (var el in productid)
-            {
+        //    #region tblFilters -Фільтри
+        //    List<Filter> filters = new List<Filter>();
+        //    foreach (var el in productid)
+        //    {
 
-                filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1, 8), ProductId = el });
+        //        filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1, 8), ProductId = el });
 
-            }
-
-
-
-            foreach (var item in filters)
-            {
-                var f = context.Filters.SingleOrDefault(p => p == item);
-                if (f == null)
-                {
-                    context.Filters.Add(new Filter { FilterNameId = item.FilterNameId, FilterValueId = item.FilterValueId, ProductId = item.ProductId });
-                    context.SaveChanges();
-                }
-            }
-
-            #endregion
+        //    }
 
 
 
-        }
-        public static void SeedData(IServiceProvider services, IHostingEnvironment env,
-            IConfiguration config)
-        {
+        //    foreach (var item in filters)
+        //    {
+        //        var f = context.Filters.SingleOrDefault(p => p == item);
+        //        if (f == null)
+        //        {
+        //            context.Filters.Add(new Filter { FilterNameId = item.FilterNameId, FilterValueId = item.FilterValueId, ProductId = item.ProductId });
+        //            context.SaveChanges();
+        //        }
+        //    }
 
-            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                //    var managerUser = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
-                //    var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
-
-                var context = scope.ServiceProvider.GetRequiredService<EFDbContext>();
-                context.ChangeTracker.AutoDetectChangesEnabled = false;
-                SeedFilters(context, env, config);
-                context.ChangeTracker.AutoDetectChangesEnabled = true;
+        //    #endregion
 
 
-                //    SeedUsers(managerUser, managerRole);
-            }
-        }
+
+        //}
+        //public static void SeedData(IServiceProvider services, IHostingEnvironment env,
+        //    IConfiguration config)
+        //{
+
+        //    using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+        //    {
+        //        //    var managerUser = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
+        //        //    var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
+
+        //        var context = scope.ServiceProvider.GetRequiredService<EFDbContext>();
+        //        context.ChangeTracker.AutoDetectChangesEnabled = false;
+        //        SeedFilters(context, env, config);
+        //        context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+
+        //        //    SeedUsers(managerUser, managerRole);
+        //    }
+        //}
         //public static void SeedUsers(UserManager<DbUser> userManager, RoleManager<DbRole> roleManager)
         //{
         //    string roleName = "Admin";
@@ -430,5 +432,20 @@ namespace CarParts.DataAccess.Entities
         //    }
 
         //}
+        public static void SeedData(IServiceProvider services,
+            IHostingEnvironment env, 
+            IConfiguration config)
+        {
+            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var manager = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
+                var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
+                var context = scope.ServiceProvider.GetRequiredService<EFDbContext>();
+                //AccountSeeder.SeedUsers(manager, managerRole);
+                CategorySeeder.SeedCategories(context);
+                FilterSeeder.SeedFilters(context);
+                ProductSeeder.SeedProduct(context);
+            }
+        }
     }
 }

@@ -2,62 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarParts.Dto.DtoModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CarParts.Domain.Services.Abstraction;
-using CarParts.DataAccess;
-using CarParts.DataAccess.Entities.Seeder;
 
 namespace CarParts.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
-        private readonly EFDbContext _context;
-
-        public ProductController(IProductService productService, EFDbContext context)
+        [HttpPost("getproductbyid")]
+        public async Task<IActionResult> GetProductById(int productId)
         {
-            _productService = productService;
-            _context = context;
-
+            var res=new ProductDto();
+            return Ok(new{ });
         }
 
-        [HttpGet("getcategory")]
-        public async Task<IActionResult> getCategory()
+        [HttpPost("getFilterList")]
+        public async Task<IActionResult> GetFilterList(int categoryId)
         {
-            var category = await _productService.GetCategory();
-
-            return Ok(category);
+            var res = new ProductDto();
+            return Ok(new { });
         }
 
-        [HttpGet("getyears")]
-        public async Task<IActionResult> getYears()
+        [HttpPost("getProductbyCategoryId")]
+        public async Task<IActionResult> GetProductbyCatId(int categoryId, int paginationinfo)
         {
-            var years = await _productService.GetYear();
-            return Ok(years);
+            var res = new ProductDto();
+            return Ok(new { });
         }
 
-        [HttpPost("getmark")]
-        public async Task<IActionResult> getMark(int year)
+        [HttpPost("getProductbyCategoryIdandCar")]
+        public async Task<IActionResult> GetProductbyCatIdandCar(int categoryId, int paginationinfo, int carId)
         {
-            var mark = await _productService.GetMark(year);
-
-            return Ok(mark);
+            var res = new ProductDto();
+            return Ok(new { });
         }
 
-        [HttpPost("getmodel")]
-        public async Task<IActionResult> getModel(List<int> markid)
+        [HttpPost("getProductbyCategoryIdandCarandFilter")]
+        public async Task<IActionResult> GetProductbyCatIdandCarandFilter(int categoryId, int paginationinfo, int carId)
         {
-            var model = await _productService.GetModel(markid);
-
-            return Ok(model);
+            var res = new ProductDto();
+            return Ok(new { });
         }
 
-        [HttpPost("getcategorybycar")]
-        public async Task<IActionResult> getCategoryByCar(int carid)
-        {
-            var category = await _productService.GetCategoryByCar(carid);
-            return Ok(category);
-        }
     }
 }
