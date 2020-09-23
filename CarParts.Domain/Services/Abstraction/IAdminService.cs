@@ -13,9 +13,15 @@ namespace CarParts.Domain.Services.Abstraction
     public interface IAdminService
     {
         
-        Task<ResultDto> addUser(CreateUser user);
+        Task<ResultDto> addUser(CreateUserDto user);
      
         Task<ResultDto> deleteUser(int id);
+
+        Task<CollectionResultDto<UserDto>> listUsers(int page);
+        Task<ResultDto> addCategory(CreateCategoryDto category);
+        Task<ResultDto> removeCategory(int id);
+        Task<ResultDto> addFilterGroup()
+
         //addCategory
         //addFilter
         //Task<DTOResult> AsynkAwait

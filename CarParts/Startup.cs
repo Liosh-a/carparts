@@ -1,5 +1,7 @@
+using AutoMapper;
 using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
+using CarParts.Domain.Mapping;
 using CarParts.Domain.Services.Abstraction;
 using CarParts.Domain.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,6 +43,16 @@ namespace CarParts
                 configuration.RootPath = "ClientApp/build";
             });
 
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
+
             //services.AddDbContext<EFDbContext>(opt =>
             //    opt.UseSqlServer(Configuration
             //        .GetConnectionString("DefaultConnection")));
@@ -52,7 +64,7 @@ namespace CarParts
                 .AddEntityFrameworkStores<EFDbContext>()
                 .AddDefaultTokenProviders();
 
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("11-sdfasdf-22233222222"));
+            var signingKey = new SymmetricSecurityKey(Encoding. UTF8.GetBytes("11-sdfasdf-22233222222"));
 
             services.Configure<IdentityOptions>(options =>
             {
