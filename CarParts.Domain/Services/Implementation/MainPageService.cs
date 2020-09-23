@@ -141,6 +141,7 @@ namespace CarParts.Domain.Services.Implementation
             //var cars = _context.Products.Where(el => el.ProductionStartYear >= year && el.ProductionStopYear <= year).Select(el => el.Cars).ToList();
             var cars = _context.AllCars.Where(el=>el.Products.Where(pr=>pr.ProductionStartYear<=year&&pr.ProductionStopYear>=year).Count()>0).ToList();
             //cars.ToList().Sort();
+
             var res = new CollectionResultDto<BrandDto>();
 
             //string y = "";
