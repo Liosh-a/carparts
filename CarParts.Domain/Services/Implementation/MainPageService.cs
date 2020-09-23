@@ -185,17 +185,25 @@ namespace CarParts.Domain.Services.Implementation
             var productstop = _context.Products.Select(c => c.ProductionStopYear).ToList();
 
             product.AddRange(productstop);
-            product.OrderBy(i=>i);
+            product.Distinct().ToList();
             var y = 0;
-            foreach(var el in product)
+            for(int i = 0; i < product.Count; i++)
             {
-                if(el==y)
+                if (product[i] == y)
                 {
-                    product.Remove(el);
+                    product.Remove(product[i]);
                 }
-                y = el;
-                
+                y = product[1];
             }
+            //foreach(var el in product)
+            //{
+            //    if(el==y)
+            //    {
+            //        product.Remove(el);
+            //    }
+            //    y = el;
+                
+            //}
             
             return new SingleResultDto<List<int>>()
             {

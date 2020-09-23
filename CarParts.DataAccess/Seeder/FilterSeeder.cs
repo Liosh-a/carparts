@@ -183,7 +183,7 @@ namespace CarParts.DataAccess.Entities.Seeder
             var per = 0;
             foreach (var el in context.Categories.ToList())
             {
-                var bob = list;
+                var bob = list.ToList();
                 if (el.ParentId != null)
                 {
                     for (int i = 0; i <= 4; i++)
