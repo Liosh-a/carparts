@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {Button} from 'reactstrap';
 import HomeContainer from './HomeContainer';
 import './home.css';
 
@@ -21,13 +20,15 @@ export class Home extends Component {
                                         <h2>Найдите вашу запчасть</h2>
                                     </div>
                                     <div className="sas_inner_box_search">
-                                        <div className="row">
-                                            <SelectItem className="select-part" selectName="Год выпуска"/>
-                                            <SelectItem className="select-part" selectName="Марка"/>
-                                            <SelectItem className="select-part" selectName="Модель"/>
-                                            <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 searchButton">
-                                                <button type="button" id="sas_search_button0">Поиск</button>
-                                            </div>
+                                        <div>
+                                            <form  className="row">
+                                                <SelectItem className="select-part" selectName="Год выпуска" />
+                                                <SelectItem className="select-part" selectName="Марка" />
+                                                <SelectItem className="select-part" selectName="Модель" />
+                                                <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 searchButton">
+                                                    <button type="button" id="sas_search_button0">Поиск</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -35,7 +36,7 @@ export class Home extends Component {
                         </div>
                     </div>
                 </div>
-                <HomeContainer/>
+                <HomeContainer />
             </div>
         );
     }
@@ -43,7 +44,7 @@ export class Home extends Component {
 
 export default Home;
 
-const SelectItem = ({selectName = "Select", options}) => {
+const SelectItem = ({ selectName = "Select", options }) => {
     return (
         <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
             <select name="make" id="so_make0" className="select-part">

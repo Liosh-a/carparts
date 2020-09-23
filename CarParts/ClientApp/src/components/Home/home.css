@@ -56,12 +56,13 @@ body{
 }
 
 .extra_layout{
-    margin-top: 40px;
+    margin-top: 20px;
     display: inline-block;
     width: 100%;
 }
 
 .pre_text{
+    margin-top: 40px;
     text-align: center;
     color: rgb(63 96 117);
     font-size: 18px;
@@ -77,7 +78,6 @@ body{
     font-weight: 600;
     text-transform: capitalize;
     text-align: center;
-    margin-bottom: 5px;
     line-height: 1.5;
 }
 
@@ -89,6 +89,8 @@ h3.modtitle span{
     position: relative;
     padding: 0 15px;
     display: inline-block;
+    margin-bottom: 30px;
+
 }
 
 
@@ -119,4 +121,34 @@ h3.modtitle span::after{
 
 .container{
     text-align: center;
+}
+
+.product-grid .product-item-container {
+    background-color: #fff;
+    margin: 0 0 30px 0;
+    padding: 0;
+    position: relative;
+    border: 1px solid #e5e5e5;
+    overflow: visible;
+}
+
+.left-block {
+    position: relative;
+}
+
+.product-image-container{
+    position: relative;
+    display: block;
+}
+
+.right-block{
+    clear: both;
+    border-top: 1px solid #e5e5e5;
+    text-align: center;
+    padding: 19px
+}
+
+.img-responsive{
+    width: 148px;
+    height: 148px;
 }
