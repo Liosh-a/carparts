@@ -106,6 +106,17 @@ namespace CarParts.Controllers
             return Ok();
 
         }
+        [HttpPost("edit/filter")]
+        public async Task<IActionResult> editFilter(string filterName, string[] filterValue)
+        {
+            var result = await _adminService.addFilterGroup(filterName, filterValue);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+
+        }
 
 
         //[HttpPost("test/seeder")]
