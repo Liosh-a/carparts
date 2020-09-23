@@ -154,7 +154,11 @@ namespace CarParts.Domain.Services.Implementation
         }
         public async Task<ResultDto> addFilterGroup()
         {
-
+            return new ResultDto
+            {
+                IsSuccessful = true,
+                collectionResult = null,
+            };
         }
 
     }

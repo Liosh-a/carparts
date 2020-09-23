@@ -96,9 +96,9 @@ namespace CarParts.Controllers
         }
 
         [HttpPost("add/filter")]
-        public async Task<IActionResult> addFilter(string )
+        public async Task<IActionResult> addFilter(string group)
         {
-            var result = await _adminService.removeCategory(id);
+            var result = await _adminService.addFilterGroup();
             if (result.IsSuccessful == false)
             {
                 return BadRequest();
