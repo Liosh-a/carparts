@@ -384,7 +384,7 @@ ul.megamenu > li > a{
 
 .dropdown-category{
     height: 56px;
-    width: 133px;
+    width: initial;
     background-color: #28333d;
     border: none;
 }

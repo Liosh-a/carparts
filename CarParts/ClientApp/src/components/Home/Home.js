@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Button} from 'reactstrap';
+import HomeContainer from './HomeContainer';
 import './home.css';
 
 export class Home extends Component {
@@ -34,6 +35,7 @@ export class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <HomeContainer/>
             </div>
         );
     }
