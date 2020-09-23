@@ -15,10 +15,12 @@ namespace CarParts.DataAccess.Seeder
         {
             var faker = new Faker();
             var start = 0;
-            for (int i = 0; i <= 1000; i++)
+            List<Product> test = new List<Product>();
+            var categoryId = _context.Categories.Where(el => el.Categories.Count == 0).Select(el => el.Id).ToList();
+            for (int i = 0; i < categoryId.Count - 1; i++)
             {
                 start = faker.Random.Int(1999, 2019);
-                _context.Products.AddAsync(new Product
+                test.Add(new Product
                 {
                     Name = faker.Commerce.ProductName(),
                     PurchasePrice = faker.Random.Decimal(10, 100),
@@ -26,28 +28,38 @@ namespace CarParts.DataAccess.Seeder
                     ProductionStartYear = faker.Random.Int(1998, start),
                     ProductionStopYear = faker.Random.Int(start, 2020),
                     UniqueName = faker.UniqueIndex.ToString() + i.ToString(),
-                    CarId= faker.Random.Int(1,1109),
-                    CategoryId = faker.Random.Int(1,20),
-                }); 
-                
-                
+                    CarId = faker.Random.Int(1, 1109),
+                    CategoryId = categoryId[i],
+                });
             }
-            //List<Filter> filters = new List<Filter>();
+            _context.Products.AddRange(test);
+            _context.SaveChanges();
+
+            List<Filter> filters = new List<Filter>();
             //var productid = _context.Products.Select(x => x.Id).ToList();
-            //var filtergroup = _context.FilterNameGroups.Select(x => x).ToList();
-            //var filterNames = _context.FilterNames.Select(x => x.Id).ToList();
+            var filtergroup = _context.FilterNameGroups.ToList();
             //foreach (var el in filterNames) {
             //    var idlist = filtergroup.Where(y => y.FilterNameId == el.Id).Select(x => x.FilterValueId)
             //        }
-            
-            //foreach (var el in productid)
-            //{
 
-            //    filters.Add(new Filter { FilterNameId = 1, FilterValueId = faker.Random.Int(1, 8), ProductId = el });
+            var uniquGroupName = filtergroup.Select(el => el.FilterNameId).ToList().Distinct().ToList();
 
-            //}
+            foreach (var el in test)
+            {
+                var groupNameId = uniquGroupName.ToList();
+                for (int i = 0; i < 3; i++)
+                {
+                    var useGroupName = faker.PickRandom(groupNameId);
 
+                    filters.Add(new Filter { FilterNameId = useGroupName, FilterValueId = faker.PickRandom(filtergroup.Where(e => e.FilterNameId == useGroupName).Select(e => e.FilterValueId).ToList()), ProductId = el.Id });
 
+                    groupNameId.Remove(useGroupName);
+
+                }
+            }
+
+            _context.Filters.AddRange(filters);
+            _context.SaveChanges();
 
             //foreach (var item in filters)
             //{

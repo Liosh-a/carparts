@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarParts.Dto.DtoModels
 {
-    public class CreateUser
+    public class CreateUserDto
     {
         [checkEmailExisting(ErrorMessage = "Already exist")]
         [EmailAddress(ErrorMessage = "Має бути пошта!")]
