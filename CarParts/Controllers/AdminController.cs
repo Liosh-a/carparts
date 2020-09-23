@@ -96,7 +96,7 @@ namespace CarParts.Controllers
         }
 
         [HttpPost("add/filter")]
-        public async Task<IActionResult> addFilter(string filterName,string[]filterValue)
+        public async Task<IActionResult> addFilter(string filterName,string[] filterValue)
         {
             var result = await _adminService.addFilterGroup(filterName,filterValue);
             if (result.IsSuccessful == false)
@@ -106,13 +106,14 @@ namespace CarParts.Controllers
             return Ok();
 
         }
-        [HttpPost("test/seeder")]
 
-        public string productSeeder()
-        {
-            _adminService.productSeeder();
-            return "1";
-        }
+
+        //[HttpPost("test/seeder")]
+        //public string productSeeder()
+        //{
+        //    _adminService.productSeeder();
+        //    return "1";
+        //}
     }
 }
  
