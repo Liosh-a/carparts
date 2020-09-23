@@ -9,8 +9,4 @@ export default class PartsService {
     //     return axios.get('/api/parts/getpart', id);
     // }
 
-    // static getParts(model) {
-    //     return axios.get('/test-data.json', model);
-    // }
-
 }
