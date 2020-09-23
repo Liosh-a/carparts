@@ -56,7 +56,7 @@ export class Login extends Component {
         const { email, password, errors, loading } = this.state;
 
         return (
-            <div>
+            <div className="container">
                 <div className="wrapper fadeInDown">
                     <div id="formContent">
                         <div className="fadeIn first">

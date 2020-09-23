@@ -4,10 +4,6 @@ body{
     font-family: 'Rubik', sans-serif;
 }
 
-@media (max-width: 767px)
-.box-search {
-    padding: 20px 20px 30px 20px;
-}
 
 .row-advanced{
     background-image: url('../img/main-bg.jpg');
@@ -57,4 +53,70 @@ body{
 
 .searchButton, .search-boxes{
     padding: 0 5px;
+}
+
+.extra_layout{
+    margin-top: 40px;
+    display: inline-block;
+    width: 100%;
+}
+
+.pre_text{
+    text-align: center;
+    color: rgb(63 96 117);
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 18px;
+    font-weight: 400;
+}
+
+.modtitle{
+    font-size: 18px;
+    color: #222;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+h3.modtitle span{
+    font-size: 36px;
+    color: #282828;
+    font-weight: 700;
+    text-transform: uppercase;
+    position: relative;
+    padding: 0 15px;
+    display: inline-block;
+}
+
+
+h3.modtitle span::before{
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: rgb(63 96 117);
+    top: 50%;
+    margin-top: -4px;
+    left: 0;
+    border-radius: 100%;
+}
+
+
+h3.modtitle span::after{
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: rgb(63 96 117);
+    top: 50%;
+    margin-top: -4px;
+    right: 0;
+    border-radius: 100%;
+}
+
+.container{
+    text-align: center;
 }

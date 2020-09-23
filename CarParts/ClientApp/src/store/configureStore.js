@@ -7,7 +7,7 @@ import {confirmEmailReducer} from '../components/ConfirmEmail/ConfirmEmailReduce
 import {loginReducer} from '../components/Auth/LoginReducer';
 import {partsReducer} from '../components/Parts/reducer';
 import {cartReducer} from '../components/Cart/reducer';
-
+import {categoriesReducer} from '../components/Categories/reducer';
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 export const history = createBrowserHistory({ basename: baseUrl });
@@ -18,7 +18,8 @@ export default function configureStore(history, initialState) {
     confirmEmail: confirmEmailReducer,
     login: loginReducer,
     parts: partsReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    categories: categoriesReducer
   };
 
   const middleware = [
