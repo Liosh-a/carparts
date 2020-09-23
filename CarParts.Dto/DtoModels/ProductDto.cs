@@ -23,6 +23,6 @@ namespace CarParts.Dto.DtoModels
 
         public int CategoryId { get; set; }
 
-        public List<FilterDto> Filter { get; set; }
+        public List<GetFilterDto> Filter { get; set; }
     }
 }
