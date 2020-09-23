@@ -50,11 +50,11 @@ namespace CarParts.Controllers
             return Ok(model);
         }
 
-        [HttpPost("getcategorybycar")]
-        public async Task<IActionResult> getCategoryByCar(int carid)
-        {
-            var category = await _productService.GetCategoryByCar(carid);
-            return Ok(category);
-        }
+        //[HttpPost("getcategorybycar")]
+        //public async Task<IActionResult> getCategoryByCar(int carid)
+        //{
+        //    var category = await _productService.GetCategoryByCar(carid);
+        //    return Ok(category);
+        //}
     }
 }
