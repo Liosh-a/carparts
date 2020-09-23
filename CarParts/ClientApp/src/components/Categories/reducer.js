@@ -17,7 +17,6 @@ export const categoriesReducer = (state = initialState, action) => {
     let newState = state;
 
     switch (action.type) {
-
         case FETCH_CATEGORIES_STARTED: {
             newState = {
                 ...state,
@@ -32,7 +31,7 @@ export const categoriesReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 success: true,
-                ...action.payload.data
+                data: action.payload
             };
             break;
         }
@@ -53,9 +52,17 @@ export const categoriesReducer = (state = initialState, action) => {
     return newState;
 }
 
-export const getCategories = (model) => {
+export const getCategories = () => {
     return (dispatch) => {
-        AddUpdateCategories(model, dispatch);
+        dispatch(categoriesGetActions.started());
+
+        CategoryService.getCategories()
+            .then((response) => {
+                dispatch(categoriesGetActions.success(response.data.data));
+            })
+            .catch(() => {
+                dispatch(categoriesGetActions.failed());
+            });
     }
 }
 
@@ -77,17 +84,4 @@ export const categoriesGetActions = {
             error
         }
     }
-}
-
-const AddUpdateCategories = (model, dispatch) => {
-
-    dispatch(categoriesGetActions.started());
-
-    CategoryService.getParts(model)
-        .then((response) => {
-            dispatch(categoriesGetActions.success(response));
-        })
-        .catch(() => {
-            dispatch(categoriesGetActions.failed());
-        });
 }

@@ -4,11 +4,11 @@ import Category from '../Categories/Category';
 import * as categoriesAction from '../Categories/reducer';
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import EclipseWidget from '../Eclipse/EclipseWidget';
+
 
 const propTypes = {
     getCategories: PropTypes.func.isRequired,
-    categories: PropTypes.array.isRequired
+    categories: PropTypes.array.isRequired,
 }
 
 const defaultProps = {};
@@ -20,21 +20,23 @@ class HeaderBottom extends Component {
         super(props);
         this.state = {
             categories: [],
-            loading: false
         }
     }
 
     static getDerivedFromProps = (props, state) => {
         return {
             categories: props.categories,
-            loading: props.isLoading
         }
     }
 
+    componentDidMount() {
+        this.props.getCategories();
+    }
+
     render() {
-        const { categories } = this.state;
-        const categoriesList = categories.map((category) =>
-            <Category key={category.id}{...category} />)
+        const { categories } = this.props;
+        console.log(categories);
+        const categoriesList = categories.map((category) => (<Category key={category.parentCategory.id} name={category.parentCategory.name} childCategories={category.childCategories}/>));
         return (
             <div className="header-bottom">
                 <div className="container">
@@ -52,7 +54,6 @@ class HeaderBottom extends Component {
                                                     </li>
                                                     {categoriesList}
                                                 </ul>
-                                                {loading && <EclipseWidget />}
                                             </div>
                                         </div>
                                     </div>
@@ -70,14 +71,17 @@ const mapState = (state) => {
     return {
         IsFailed: get(state, 'categories.failed'),
         IsSuccess: get(state, 'categories.success'),
-        parts: get(state, 'categories.data'),
+        categories: get(state, 'categories.data'),
     }
 }
 
 const mapDispatch = {
-    getParts: (model) => {
-        return categoriesAction.getCategories(model);
+    getCategories: () => {
+        return categoriesAction.getCategories();
     }
 }
+
+HeaderBottom.propTypes = propTypes;
+HeaderBottom.defaultProps = defaultProps;
 
 export default connect(mapState, mapDispatch)(HeaderBottom);
