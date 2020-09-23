@@ -137,29 +137,32 @@ namespace CarParts.Domain.Services.Implementation
         {
             //var categories = _context.AllCars.Select(q=> q.ProductionStopYear).ToList();
             //var cat = _context.AllCars.Where(q=>Int64.Parse(q.ProductionStartYear)>year&&q.ProductionStopYear!="-"?Int64.Parse(q.ProductionStopYear)<year:true).Select(z=>new BrandDto{Id=z.Id,Brand=z.Brand }).Distinct().ToList();
-            var cars = _context.AllCars.Select(c=>c).Where(c => c.Id.Equals(_context.Products.Select(t=>t).Where(a => a.ProductionStartYear >= year && a.ProductionStopYear <= year)));
-            cars.OrderBy(c => c.Brand);
+            //var cars = _context.AllCars.Where(c => c.Id.Equals(_context.Products.Where(a => a.ProductionStartYear >= year && a.ProductionStopYear <= year).Select(x=>x.CarId)));
+            var cars = _context.Products.Where(el => el.ProductionStartYear >= year && el.ProductionStopYear <= year).Select(el => el.Cars).ToList();
+            cars.ToList().Sort();
             var res = new CollectionResultDto<BrandDto>();
 
-            string y=null;
-            foreach(var el in cars)
-            {
-                if (el.Brand != y)
-                {
-                    if (res.Data.FirstOrDefault(c => c.Brand == y) == null)
-                    {
-                        res.Data.Add(new BrandDto { Brand = el.Brand, Id = new List<int>() {el.Id} });
-                    }
-                }
-                else
-                {
-                    res.Data.FirstOrDefault(c => c.Brand == el.Brand).Id.Add(el.Id);
-                }
-                y = el.Brand;
-            }
-            res.Count = res.Data.Count;
+            //string y = "";
+            //foreach (var el in cars)
+            //{
+            //    if (el.Brand != y)
+            //    {
+            //        if (res.Data.FirstOrDefault(c => c.Brand == y) == null)
+            //        {
+            //            res.Data.Add(new BrandDto { Brand = el.Brand, Id = new List<int>() { el.Id } });
+            //        }
+            //    }
+            //    else
+            //    {
+            //        res.Data.FirstOrDefault(c => c.Brand == el.Brand).Id.Add(el.Id);
+            //    }
+            //    y = el.Brand;
+            //}
             //res.Data = cat;
-            return res;
+            return new CollectionResultDto<BrandDto>
+            {
+                Data = res.Data,
+            };
         }
 
         public async Task<CollectionResultDto<ModelDto>> GetModel(List<int> id)
@@ -181,25 +184,14 @@ namespace CarParts.Domain.Services.Implementation
         public async Task<SingleResultDto<List<int>>> GetYear()
         {
             var yearList = new List<int>();
-            var product = _context.Products.Select(c => c.ProductionStartYear).ToList();
-            var productstop = _context.Products.Select(c => c.ProductionStopYear).ToList();
+            yearList.AddRange( _context.Products.Select(c => c.ProductionStartYear).ToList());
+            yearList.AddRange(_context.Products.Select(c => c.ProductionStopYear).ToList());
 
-            product.AddRange(productstop);
-            product.OrderBy(i=>i);
-            var y = 0;
-            foreach(var el in product)
-            {
-                if(el==y)
-                {
-                    product.Remove(el);
-                }
-                y = el;
-                
-            }
-            
+            yearList = yearList.Distinct().ToList();
+            yearList.Sort();
             return new SingleResultDto<List<int>>()
             {
-                Data = product
+                Data = yearList,
             };
         }
     }
