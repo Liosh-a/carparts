@@ -27,12 +27,6 @@ namespace CarParts.Controllers
             return Ok(res);
         }
 
-        [HttpGet("test")]
-        public async Task<IActionResult> GetXZCHO()
-        {
-            var res = 0;
-            return Ok(new { });
-        }
         [HttpPost("getFilterList")]
         public async Task<IActionResult> GetFilterList(int categoryId)
         {

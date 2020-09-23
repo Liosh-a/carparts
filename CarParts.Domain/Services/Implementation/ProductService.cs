@@ -226,15 +226,36 @@ namespace CarParts.Domain.Services.Implementation
                             Filter = f.FilterNameOf.Name,
                             ValueId = f.FilterValueId,
                             Value = f.FilterValueOf.Name
-                        })
+                        }).ToList()
 
-                }).Where(c => c.UniqueName == productUnickName);
-            var result = _mapper.Map<ProductDto>(res);
-
-
-            return new SingleResultDto<ProductDto>{
-                Data = result,
-                IsSuccessful=true,
+                }).Where(c => c.UniqueName == productUnickName).ToList();
+            var result =res.ToList();
+            var o = 0;
+            var list = new List<GetFilterDto>();
+            foreach(var el in result[0].Filter)
+            {
+                list.Add(new GetFilterDto
+                {
+                    Name=el.Value,
+                    Id=el.ValueId
+                });
+            }
+            o = 0;
+            var ress = new ProductDto();
+            ress.Id = result[0].Id;
+            ress.Name = result[0].Name;
+            ress.PurchasePrice = result[0].PurchasePrice;
+                    ress.SellingPrice = result[0].SellingPrice;
+                    ress.ProductionStartYear = result[0].ProductionStartYear;
+                    ress.ProductionStopYear = result[0].ProductionStopYear;
+                    ress.UniqueName = result[0].UniqueName;
+                    ress.CategoryId = result[0].CategoryId;
+                    ress.CarId = result[0].CarId;
+                    ress.Filter = list;
+            return new SingleResultDto<ProductDto> {
+                Data = ress,
+                        //_mapper.Map<ProductDto>(result[0]),
+                IsSuccessful =true,
             };
         }
 
