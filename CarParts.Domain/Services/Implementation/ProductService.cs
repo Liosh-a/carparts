@@ -1,5 +1,4 @@
-﻿ using AutoMapper.Configuration;
-using CarParts.DataAccess;
+﻿using CarParts.DataAccess;
 using CarParts.DataAccess.Entities;
 using CarParts.Domain.Services.Abstraction;
 using CarParts.Dto;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
 
 namespace CarParts.Domain.Services.Implementation
 {

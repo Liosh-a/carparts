@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarParts.Domain.Services.Abstraction;
 using CarParts.Dto.DtoModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,21 +10,34 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarParts.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    //[ApiController]
     public class ProductController : ControllerBase
     {
-        [HttpPost("getproductbyid")]
-        public async Task<IActionResult> GetProductById(int productId)
+        private readonly IProductService _productService;
+
+        public ProductController(IProductService productService)
         {
-            var res=new ProductDto();
-            return Ok(new{ });
+            _productService = productService;
         }
 
+        [HttpPost("getproductbyid")]
+        public async Task<IActionResult> GetProductById(string unickName)
+        {
+            var res = _productService.GetProductById(unickName);
+            return Ok(res);
+        }
+
+        [HttpGet("test")]
+        public async Task<IActionResult> GetXZCHO()
+        {
+            var res = 0;
+            return Ok(new { });
+        }
         [HttpPost("getFilterList")]
         public async Task<IActionResult> GetFilterList(int categoryId)
         {
-            var res = new ProductDto();
-            return Ok(new { });
+            var res = _productService.GetListFilter(categoryId);
+            return Ok(res);
         }
 
         [HttpPost("getProductbyCategoryId")]
