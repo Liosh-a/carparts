@@ -41,7 +41,7 @@ class HeaderBottom extends Component {
         return (
             <div className="header-bottom">
                 <div className="container">
-                    <div className="main-menu-w">
+                  
                         <div className="responsive so-megamenu megamenu-style-dev">
                             <nav className="navbar-default">
                                 <div className="container-megamenu horizontal-open">
@@ -63,7 +63,7 @@ class HeaderBottom extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            
         );
     }
 }
