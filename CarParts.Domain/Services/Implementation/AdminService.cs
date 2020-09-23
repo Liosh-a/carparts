@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Linq;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Bogus;
 
 namespace CarParts.Domain.Services.Implementation
 {
@@ -152,13 +153,19 @@ namespace CarParts.Domain.Services.Implementation
                 collectionResult = null,
             };
         }
-        public async Task<ResultDto> addFilterGroup()
+        public async Task<ResultDto> addFilterGroup(string filterName, string[] filteValue)
         {
+
             return new ResultDto
             {
                 IsSuccessful = true,
                 collectionResult = null,
             };
+        }
+        public string productSeeder()
+        {
+           
+            return "ok";
         }
 
     }
