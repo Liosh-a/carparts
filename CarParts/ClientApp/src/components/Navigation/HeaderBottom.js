@@ -25,7 +25,7 @@ class HeaderBottom extends Component {
 
     static getDerivedFromProps = (props, state) => {
         return {
-            categories: props.categories,
+            categories: props.categories
         }
     }
 
@@ -35,12 +35,13 @@ class HeaderBottom extends Component {
 
     render() {
         const { categories } = this.props;
-        console.log(categories);
-        const categoriesList = categories.map((category) => (<Category key={category.parentCategory.id} name={category.parentCategory.name} childCategories={category.childCategories}/>));
+        const categoriesList = categories.map((category) => (
+        <Category key={category.parentCategory.id} name={category.parentCategory.name} childCategories={category.childCategories}/>
+        ));
         return (
             <div className="header-bottom">
                 <div className="container">
-                    <div className="main-menu-w">
+                  
                         <div className="responsive so-megamenu megamenu-style-dev">
                             <nav className="navbar-default">
                                 <div className="container-megamenu horizontal-open">
@@ -62,7 +63,7 @@ class HeaderBottom extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            
         );
     }
 }
