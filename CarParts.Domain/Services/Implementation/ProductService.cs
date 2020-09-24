@@ -38,15 +38,15 @@ namespace CarParts.Domain.Services.Implementation
 
         public async Task<List<FNameViewModel>> GetListFilter(int categoryId)
         {
-            var queryName = from f in _context.FilterNames.Where(el=>el.FilterNameCategories.Where(e=>e.CategoryId==categoryId).Count()>0).AsQueryable()
+            var queryName = from f in _context.FilterNames.Where(el => el.FilterNameCategories.Where(e => e.CategoryId == categoryId).Count() > 0).AsQueryable()
                             select f;
-            var queryGroup = from g in  _context.FilterNameGroups.AsQueryable()
+            var queryGroup = from g in _context.FilterNameGroups.AsQueryable()
                              select g;
 
             //Отримуємо загальну множину значень
             var query = from u in queryName
-                        join g in queryGroup on u.Id equals g.FilterNameId  into ua
-                        from aEmp in ua.DefaultIfEmpty() 
+                        join g in queryGroup on u.Id equals g.FilterNameId into ua
+                        from aEmp in ua.DefaultIfEmpty()
                         select new
                         {
                             FNameId = u.Id,
@@ -134,8 +134,8 @@ namespace CarParts.Domain.Services.Implementation
                             Value = f.FilterValueOf.Name
                         })
 
-                }).Where(c=>c.CategoryId==categoryId && c.CarId==carId ).OrderBy(x => x.Name).Skip((pageIndex - 1) * 10).Take(10);
-            res.Data =  _mapper.Map<List<ProductDto>>(result);
+                }).Where(c => c.CategoryId == categoryId && c.CarId == carId).OrderBy(x => x.Name).Skip((pageIndex - 1) * 10).Take(10);
+            res.Data = _mapper.Map<List<ProductDto>>(result);
             res.Data.Count();
             return res;
         }
@@ -199,6 +199,20 @@ namespace CarParts.Domain.Services.Implementation
             return res;
         }
 
+        public async Task<CollectionResultDto<ProductDto>> GetProductbyCatId(int categoryId, int paginationinfo)
+        {
+            int page = paginationinfo > 0 ? paginationinfo - 1 : 0;
+            int productCount = 20;
+            var product = _context.Products.Where(el => el.CategoryId == categoryId).Skip(page * productCount).Take(productCount).ToList();
+
+            var res = new CollectionResultDto<ProductDto>();
+            res.IsSuccessful = true;
+            res.Data = _mapper.Map<List<ProductDto>>(product);
+
+            return res;
+
+        }
+
         public async Task<SingleResultDto<ProductDto>> GetProductById(string productUnickName)
         {
             var query = _context
@@ -208,37 +222,37 @@ namespace CarParts.Domain.Services.Implementation
                 .Include(c => c.CategoryId)
                 .AsQueryable();
 
-                var res = query
-                .Select(p => new
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    PurchasePrice = p.PurchasePrice,
-                    SellingPrice = p.SellingPrice,
-                    ProductionStartYear = p.ProductionStartYear,
-                    ProductionStopYear = p.ProductionStopYear,
-                    UniqueName = p.UniqueName,
-                    CategoryName = p.category.Name,
-                    CarBrand = p.allcar.Brand,
-                    CarModel = p.allcar.Model,
-                    Filter = p.Filtres
-                        .Select(f => new
-                        {
-                            Filter = f.FilterNameOf.Name,
-                            ValueId = f.FilterValueId,
-                            Value = f.FilterValueOf.Name
-                        }).ToList()
+            var res = query
+            .Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name,
+                PurchasePrice = p.PurchasePrice,
+                SellingPrice = p.SellingPrice,
+                ProductionStartYear = p.ProductionStartYear,
+                ProductionStopYear = p.ProductionStopYear,
+                UniqueName = p.UniqueName,
+                CategoryName = p.category.Name,
+                CarBrand = p.allcar.Brand,
+                CarModel = p.allcar.Model,
+                Filter = p.Filtres
+                    .Select(f => new
+                    {
+                        Filter = f.FilterNameOf.Name,
+                        ValueId = f.FilterValueId,
+                        Value = f.FilterValueOf.Name
+                    }).ToList()
 
-                }).Where(c => c.UniqueName == productUnickName).First();
+            }).Where(c => c.UniqueName == productUnickName).First();
             var result = res;
             var o = 0;
             var list = new List<GetFilterDto>();
-            foreach(var el in result.Filter)
+            foreach (var el in result.Filter)
             {
                 list.Add(new GetFilterDto
                 {
-                    Name=el.Value,
-                    Id=el.ValueId
+                    Name = el.Value,
+                    Id = el.ValueId
                 });
             }
             o = 0;
@@ -246,18 +260,19 @@ namespace CarParts.Domain.Services.Implementation
             ress.Id = result.Id;
             ress.Name = result.Name;
             ress.PurchasePrice = result.PurchasePrice;
-                    ress.SellingPrice = result.SellingPrice;
-                    ress.ProductionStartYear = result.ProductionStartYear;
-                    ress.ProductionStopYear = result.ProductionStopYear;
-                    ress.UniqueName = result.UniqueName;
-                    ress.CategoryName = result.CategoryName;
-                    ress.CarBrand = result.CarBrand;
-                    ress.CarModel = result.CarModel;
-                    ress.Filter = list;
-            return new SingleResultDto<ProductDto> {
+            ress.SellingPrice = result.SellingPrice;
+            ress.ProductionStartYear = result.ProductionStartYear;
+            ress.ProductionStopYear = result.ProductionStopYear;
+            ress.UniqueName = result.UniqueName;
+            ress.CategoryName = result.CategoryName;
+            ress.CarBrand = result.CarBrand;
+            ress.CarModel = result.CarModel;
+            ress.Filter = list;
+            return new SingleResultDto<ProductDto>
+            {
                 Data = ress,
-                        //_mapper.Map<ProductDto>(result[0]),
-                IsSuccessful =true,
+                //_mapper.Map<ProductDto>(result[0]),
+                IsSuccessful = true,
             };
         }
 

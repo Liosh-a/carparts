@@ -37,7 +37,7 @@ namespace CarParts.Controllers
         [HttpPost("getProductbyCategoryId")]
         public async Task<IActionResult> GetProductbyCatId(int categoryId, int paginationinfo)
         {
-            var res = new ProductDto();
+            var res = _productService.GetProductbyCatId(categoryId, paginationinfo);
             return Ok(new { });
         }
 
