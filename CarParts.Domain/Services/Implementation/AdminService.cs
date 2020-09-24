@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Linq;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Bogus;
 
 namespace CarParts.Domain.Services.Implementation
@@ -190,11 +191,125 @@ namespace CarParts.Domain.Services.Implementation
                 collectionResult = null,
             };
         }
+
+        public async Task<ResultDto> editFilterName(int id, string name)
+        {
+            var filter = _context.FilterNames.Find(id);
+            if (filter!=null&& !string.IsNullOrWhiteSpace(name))
+            {
+
+                filter.Name = name;
+                _context.SaveChanges();
+                return new ResultDto
+                {
+                    IsSuccessful = true,
+                    collectionResult = null,
+                };
+            }
+
+
+            return new ResultDto
+            {
+                IsSuccessful = false,
+                collectionResult = null,
+            };
+
+        }
+
+        public async Task<ResultDto> editFilterValue(int id, string value)
+        {
+            var filter = _context.FilterValues.Find(id);
+            if (filter != null && !string.IsNullOrWhiteSpace(value))
+            {
+
+                filter.Name = value;
+                _context.SaveChanges();
+                return new ResultDto
+                {
+                    IsSuccessful = true,
+                    collectionResult = null,
+                };
+            }
+            return new ResultDto
+            {
+                IsSuccessful = false,
+                collectionResult = null,
+            };
+
+        }
+
+
+        public async Task<ResultDto> removeFilterName(int id)
+        {
+            var filter = _context.FilterNames.Include(el => el.Filtres).Include(el => el.FilterNameGroups).FirstOrDefault(el => el.Id == id);
+            if (filter != null)
+            {
+                if (filter.Filtres.Count > 0)
+                {
+                    return new ResultDto
+                    {
+                        IsSuccessful = false,
+                        collectionResult = null,
+                    };
+                }
+                else
+                {
+                    _context.FilterNameGroups.RemoveRange(filter.FilterNameGroups);
+                    _context.FilterNames.Remove(filter);
+                    _context.SaveChanges();
+                }
+
+                return new ResultDto
+                {
+                    IsSuccessful = true,
+                    collectionResult = null,
+                };
+            }
+            return new ResultDto
+            {
+                IsSuccessful = false,
+                collectionResult = null,
+            };
+        }
+
+        public async Task<ResultDto> removeFilterValue(int id)
+        {
+            var filter = _context.FilterValues.Include(el=>el.Filtres).Include(el=>el.FilterNameGroups).FirstOrDefault(el=>el.Id==id);
+            if (filter != null)
+            {
+                if(filter.Filtres.Count>0)
+                {
+                    return new ResultDto
+                    {
+                        IsSuccessful = false,
+                        collectionResult = null,
+                    };
+                }
+                else
+                {
+                    _context.FilterNameGroups.RemoveRange(filter.FilterNameGroups);
+                    _context.FilterValues.Remove(filter);
+                    _context.SaveChanges();
+                }
+
+                return new ResultDto
+                {
+                    IsSuccessful = true,
+                    collectionResult = null,
+                };
+            }
+            return new ResultDto
+            {
+                IsSuccessful = false,
+                collectionResult = null,
+            };
+        }
+
+
         public string productSeeder()
         {
 
             return "ok";
         }
-
     }
 }
