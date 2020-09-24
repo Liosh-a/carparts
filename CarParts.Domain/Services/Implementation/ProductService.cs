@@ -208,7 +208,7 @@ namespace CarParts.Domain.Services.Implementation
                 .Include(c => c.CategoryId)
                 .AsQueryable();
 
-            var res = query
+                var res = query
                 .Select(p => new
                 {
                     Id = p.Id,
@@ -218,8 +218,9 @@ namespace CarParts.Domain.Services.Implementation
                     ProductionStartYear = p.ProductionStartYear,
                     ProductionStopYear = p.ProductionStopYear,
                     UniqueName = p.UniqueName,
-                    CategoryId = p.CategoryId,
-                    CarId = p.CarId,
+                    CategoryName = p.category.Name,
+                    CarBrand = p.allcar.Brand,
+                    CarModel = p.allcar.Model,
                     Filter = p.Filtres
                         .Select(f => new
                         {
@@ -228,11 +229,11 @@ namespace CarParts.Domain.Services.Implementation
                             Value = f.FilterValueOf.Name
                         }).ToList()
 
-                }).Where(c => c.UniqueName == productUnickName).ToList();
-            var result =res.ToList();
+                }).Where(c => c.UniqueName == productUnickName).First();
+            var result = res;
             var o = 0;
             var list = new List<GetFilterDto>();
-            foreach(var el in result[0].Filter)
+            foreach(var el in result.Filter)
             {
                 list.Add(new GetFilterDto
                 {
@@ -242,15 +243,16 @@ namespace CarParts.Domain.Services.Implementation
             }
             o = 0;
             var ress = new ProductDto();
-            ress.Id = result[0].Id;
-            ress.Name = result[0].Name;
-            ress.PurchasePrice = result[0].PurchasePrice;
-                    ress.SellingPrice = result[0].SellingPrice;
-                    ress.ProductionStartYear = result[0].ProductionStartYear;
-                    ress.ProductionStopYear = result[0].ProductionStopYear;
-                    ress.UniqueName = result[0].UniqueName;
-                    ress.CategoryId = result[0].CategoryId;
-                    ress.CarId = result[0].CarId;
+            ress.Id = result.Id;
+            ress.Name = result.Name;
+            ress.PurchasePrice = result.PurchasePrice;
+                    ress.SellingPrice = result.SellingPrice;
+                    ress.ProductionStartYear = result.ProductionStartYear;
+                    ress.ProductionStopYear = result.ProductionStopYear;
+                    ress.UniqueName = result.UniqueName;
+                    ress.CategoryName = result.CategoryName;
+                    ress.CarBrand = result.CarBrand;
+                    ress.CarModel = result.CarModel;
                     ress.Filter = list;
             return new SingleResultDto<ProductDto> {
                 Data = ress,
