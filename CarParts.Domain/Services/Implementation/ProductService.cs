@@ -85,7 +85,7 @@ namespace CarParts.Domain.Services.Implementation
         {
             int page = pageIndex > 0 ? pageIndex - 1 : 0;
             int productCount = 20;
-            var product = _context.Products.Where(el => el.CategoryId == categoryId && el.CarId==carId).Skip(page * productCount).Take(productCount).ToList();
+            var product = _context.Products.Where(el => el.CategoryId == categoryId && el.CarId == carId).Skip(page * productCount).Take(productCount).ToList();
 
             var res = new CollectionResultDto<ProductDto>();
             res.IsSuccessful = true;
@@ -129,7 +129,8 @@ namespace CarParts.Domain.Services.Implementation
             int count = query.Count();
             var res = new CollectionResultDto<ProductDto>();
             var result = query
-                .Select(p => new
+                .Where(c => c.CategoryId == categoryId && c.CarId == carId).OrderBy(x => x.Name).Skip(page * 10).Take(10)
+                .Select(p => new ProductDto
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -137,18 +138,9 @@ namespace CarParts.Domain.Services.Implementation
                     SellingPrice = p.SellingPrice,
                     ProductionStartYear = p.ProductionStartYear,
                     ProductionStopYear = p.ProductionStopYear,
-                    UniqueName = p.UniqueName,
-                    CategoryId = p.CategoryId,
-                    CarId = p.CarId,
-                    Filter = p.Filtres
-                        .Select(f => new
-                        {
-                            Filter = f.FilterNameOf.Name,
-                            ValueId = f.FilterValueId,
-                            Value = f.FilterValueOf.Name
-                        })
+                    UniqueName = p.UniqueName
 
-                }).Where(c => c.CategoryId == categoryId && c.CarId == carId).OrderBy(x => x.Name).Skip((page - 1) * 10).Take(10);
+                }).ToList();
             res.Data = _mapper.Map<List<ProductDto>>(result);
             res.Data.Count();
             return res;
@@ -188,27 +180,20 @@ namespace CarParts.Domain.Services.Implementation
             }
             int count = query.Count();
             var res = new CollectionResultDto<ProductDto>();
-            var result = query
-                .Select(p => new
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    PurchasePrice = p.PurchasePrice,
-                    SellingPrice = p.SellingPrice,
-                    ProductionStartYear = p.ProductionStartYear,
-                    ProductionStopYear = p.ProductionStopYear,
-                    UniqueName = p.UniqueName,
-                    CategoryId = p.CategoryId,
-                    CarId = p.CarId,
-                    Filter = p.Filtres
-                        .Select(f => new
-                        {
-                            Filter = f.FilterNameOf.Name,
-                            ValueId = f.FilterValueId,
-                            Value = f.FilterValueOf.Name
-                        })
+            var result = query.Where(c => c.CategoryId == categoryId).OrderBy(x => x.Name).Skip(page  * 10)
 
-                }).Where(c => c.CategoryId == categoryId).OrderBy(x => x.Name).Skip((page - 1) * 10).Take(10);
+                 .Select(p => new ProductDto
+                 {
+                     Id = p.Id,
+                     Name = p.Name,
+                     PurchasePrice = p.PurchasePrice,
+                     SellingPrice = p.SellingPrice,
+                     ProductionStartYear = p.ProductionStartYear,
+                     ProductionStopYear = p.ProductionStopYear,
+                     UniqueName = p.UniqueName
+
+                 })
+                .Take(10);
             res.Data = _mapper.Map<List<ProductDto>>(result);
             res.Data.Count();
             return res;
