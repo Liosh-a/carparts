@@ -96,14 +96,61 @@ namespace CarParts.Domain.Services.Implementation
 
         public async Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategoryandFilteres(int categoryId, int carId, FilterOnUse filterOnUse, int pageIndex)
         {
-            int page = pageIndex > 0 ? pageIndex - 1 : 0;
+            //var filtersList = GetListFilters(_context);
+            //        //    long[] filterValueSearchList = getCar.FilterList.ToArray(); //масив ID вибраних фільтрів
+            //        //    var query = _context
+            //        //        .Products
+            //        //        .Include(f => f.Filtres)
+            //        //        .AsQueryable();
+            //        //    foreach (var fName in filtersList)
+            //        //    {
+            //        //        int countFilter = 0; //Кількість співпадінь у даній групі фільрів
+            //        //        var predicate = PredicateBuilder.False<Product>();
+            //        //        foreach (var fValue in fName.Children)
+            //        //        {
+            //        //            for (int i = 0; i < filterValueSearchList.Length; i++)
+            //        //            {
+            //        //                var idV = fValue.Id;
+            //        //                if (filterValueSearchList[i] == idV)
+            //        //                {
+            //        //                    predicate = predicate
+            //        //                        .Or(p => p.Filtres
+            //        //                            .Any(f => f.FilterValueId == idV));
+            //        //                    countFilter++;
+            //        //                }
+            //        //            }
+            //        //        }
+            //        //        if (countFilter != 0)
+            //        //            query = query.Where(predicate);
+            //        //    }
+            //        //    int count = query.Count();
+
+            //        //    var res = query
+            //        //        .Select(p => new
+            //        //        {
+            //        //            Id = p.Id,
+            //        //            Name = p.Name,
+            //        //            PurchasePrice = p.PurchasePrice,
+            //        //            SellingPrice = p.SellingPrice,
+            //        //            Filters = p.Filtres
+            //        //                .Select(f => new
+            //        //                {
+            //        //                    Filter = f.FilterNameOf.Name,
+            //        //                    ValueId = f.FilterValueId,
+            //        //                    Value = f.FilterValueOf.Name
+            //        //                })
+
+            //        //        }).OrderBy(x=>x.Name).Skip((getCar.pageIndex-1)*10).Take(10).ToList();
+            //        //    return Ok(res);
+
+
+            //////////////////////
+           // int page = pageIndex > 0 ? pageIndex - 1 : 0;
             var filtersList = GetListFilters();
             long[] filterValueSearchList = filterOnUse.filters.ToArray(); //масив ID вибраних фільтрів
             var query = _context
                 .Products
                 .Include(f => f.Filtres)
-                .Include(y => y.CarId)
-                .Include(c => c.CategoryId)
                 .AsQueryable();
             foreach (var fName in filtersList)
             {
@@ -148,8 +195,8 @@ namespace CarParts.Domain.Services.Implementation
                             Value = f.FilterValueOf.Name
                         })
 
-                }).Where(c => c.CategoryId == categoryId && c.CarId == carId).OrderBy(x => x.Name).Skip((page - 1) * 10).Take(10);
-            res.Data = _mapper.Map<List<ProductDto>>(result);
+                })/*.Where(c => c.CategoryId == categoryId && c.CarId == carId)*/.OrderBy(x => x.Name).Skip((pageIndex - 1) * 10).Take(10);
+            var res1 = _mapper.Map<List<ProductDto>>(result.ToList());
             res.Data.Count();
             return res;
         }
