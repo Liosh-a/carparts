@@ -46,7 +46,7 @@ namespace CarParts.Domain.Services.Implementation
             //Отримуємо загальну множину значень
             var query = from u in queryName
                         join g in queryGroup on u.Id equals g.FilterNameId  into ua
-                        from aEmp in ua.DefaultIfEmpty()
+                        from aEmp in ua.DefaultIfEmpty() 
                         select new
                         {
                             FNameId = u.Id,

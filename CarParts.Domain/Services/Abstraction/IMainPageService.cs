@@ -12,6 +12,8 @@ namespace CarParts.Domain.Services.Abstraction
     public interface IMainPageService
     {
         Task<CollectionResultDto<GetCategoryDto>> GetCategory();
+        Task<CollectionResultDto<GetChildCategoryDto>> GetChildCategoryByCar(int catid,int carid);
+        Task<CollectionResultDto<GetChildCategoryDto>> GetChildCategory(int catid);
         //Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid);
         Task<CollectionResultDto<ModelDto>> GetModel(List<int> id);
         Task<CollectionResultDto<BrandDto>> GetMark(int year);
