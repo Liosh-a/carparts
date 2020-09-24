@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 import Category from '../Categories/Category';
 import * as categoriesAction from '../Categories/reducer';
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-
+import { NavbarToggler, Collapse } from 'reactstrap';
 
 const propTypes = {
     getCategories: PropTypes.func.isRequired,
@@ -14,6 +14,7 @@ const propTypes = {
 const defaultProps = {};
 
 class HeaderBottom extends Component {
+
     state = {}
 
     constructor(props) {
@@ -36,34 +37,19 @@ class HeaderBottom extends Component {
     render() {
         const { categories } = this.props;
         const categoriesList = categories.map((category) => (
-        <Category key={category.parentCategory.id} name={category.parentCategory.name} childCategories={category.childCategories}/>
+            <Category key={category.parentCategory.id} name={category.parentCategory.name} childCategories={category.childCategories} />
         ));
         return (
             <div className="header-bottom">
                 <div className="container">
-                  
-                        <div className="responsive so-megamenu megamenu-style-dev">
-                            <nav className="navbar-default">
-                                <div className="container-megamenu horizontal-open">
-                                    <div className="megamenu-wrapper">
-                                        {/* <span id="remove-megamenu" className="fa fa-times"></span> */}
-                                        <div className="megamenu-pattern">
-                                            <div className="container-mega">
-                                                <ul className="megamenu" data-transiton="slide" data-animationtime="250">
-                                                    <li className="home hover">
-                                                        <a className="link" href="/">Главная</a>
-                                                    </li>
-                                                    {categoriesList}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
+                    <ul className="megamenu" data-transiton="slide" data-animationtime="250">
+                        <li className="home hover">
+                            <a className="link" href="/">Главная</a>
+                        </li>
+                        {categoriesList}
+                    </ul>
                 </div>
-            
+            </div>
         );
     }
 }

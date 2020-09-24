@@ -8,7 +8,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import configureStore, {history} from './store/configureStore';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
+import './components/css/responsive.css';
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
 const initialState = window.initialReduxState;
