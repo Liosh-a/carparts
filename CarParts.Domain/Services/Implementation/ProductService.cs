@@ -38,7 +38,7 @@ namespace CarParts.Domain.Services.Implementation
 
         public async Task<List<FNameViewModel>> GetListFilter(int categoryId)
         {
-            var queryName = from f in _context.FilterNames.AsQueryable()
+            var queryName = from f in _context.FilterNames.Where(el=>el.FilterNameCategories.Where(e=>e.CategoryId==categoryId).Count()>0).AsQueryable()
                             select f;
             var queryGroup = from g in  _context.FilterNameGroups.AsQueryable()
                              select g;
