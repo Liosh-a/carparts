@@ -98,6 +98,60 @@ namespace CarParts.Domain.Services.Implementation
             };
         }
 
+        public async Task<CollectionResultDto<GetChildCategoryDto>> GetChildCategoryByCar(int catid, int carid)
+        {
+            var Categories = _context.Categories.Where(x => x.ParentId == catid).ToList();
+            var res = new List<GetChildCategoryDto>();
+
+
+            foreach (var el in Categories)
+            {
+                res.Add(new GetChildCategoryDto
+                {
+                    Name = el.Name,
+                    ParentId = el.ParentId ?? default(int),
+                    Description = el.Description,
+                    UrlSlug = el.UrlSlug,
+                    IsActive = true,
+                    ProductCount = _context.Products.Where(x => x.CategoryId == el.Id && x.CarId==carid).Count(),
+
+                });
+            }
+
+            return new CollectionResultDto<GetChildCategoryDto>
+            {
+                Data = res,
+                Count = res.Count()
+            };
+        }
+
+        public async Task<CollectionResultDto<GetChildCategoryDto>> GetChildCategory(int catid)
+        {
+            var Categories = _context.Categories.Where(x => x.ParentId == catid).ToList();
+            var res = new List<GetChildCategoryDto>();
+
+
+            foreach (var el in Categories)
+            {
+                res.Add( new GetChildCategoryDto
+                {
+                    Name=el.Name,
+                    ParentId=el.ParentId??default (int),
+                    Description=el.Description,
+                    UrlSlug=el.UrlSlug,
+                    IsActive=true,
+                    ProductCount= _context.Products.Where(x=>x.CategoryId==el.Id).Count(),
+
+                });
+            }
+
+            return new CollectionResultDto<GetChildCategoryDto>
+            {
+                Data = res,
+                Count = res.Count()
+            };
+        }
+
         //public async Task<CollectionResultDto<CategoryDto>> GetCategoryByCar(int carid)
         //{
         //    var cat = _context.Categories;
