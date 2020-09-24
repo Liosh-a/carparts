@@ -8,6 +8,7 @@ import {loginReducer} from '../components/Auth/LoginReducer';
 import {partsReducer} from '../components/Parts/reducer';
 import {cartReducer} from '../components/Cart/reducer';
 import {categoriesReducer} from '../components/Categories/reducer';
+import {selectReducer} from '../components/Home/Select/reducer';
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 export const history = createBrowserHistory({ basename: baseUrl });
@@ -19,7 +20,8 @@ export default function configureStore(history, initialState) {
     login: loginReducer,
     parts: partsReducer,
     cart: cartReducer,
-    categories: categoriesReducer
+    categories: categoriesReducer,
+    select: selectReducer
   };
 
   const middleware = [
