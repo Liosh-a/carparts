@@ -20,6 +20,8 @@ namespace CarParts.Domain.Services.Abstraction
 
         Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategoryandFilteres(int categoryId, int carId, FilterOnUse filterOnUse, int pageIndex);
 
+        Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategory(int categoryId, int carId, int pageIndex);
+
         Task<CollectionResultDto<ProductDto>> GetProductbyCatId(int categoryId, int paginationinfo);
     }
 }

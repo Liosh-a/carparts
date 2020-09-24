@@ -81,8 +81,22 @@ namespace CarParts.Domain.Services.Implementation
 
         }
 
+        public async Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategory(int categoryId, int carId, int pageIndex)
+        {
+            int page = pageIndex > 0 ? pageIndex - 1 : 0;
+            int productCount = 20;
+            var product = _context.Products.Where(el => el.CategoryId == categoryId && el.CarId==carId).Skip(page * productCount).Take(productCount).ToList();
+
+            var res = new CollectionResultDto<ProductDto>();
+            res.IsSuccessful = true;
+            res.Data = _mapper.Map<List<ProductDto>>(product.ToList());
+
+            return res;
+        }
+
         public async Task<CollectionResultDto<ProductDto>> GetProductbyCarIdCategoryandFilteres(int categoryId, int carId, FilterOnUse filterOnUse, int pageIndex)
         {
+            int page = pageIndex > 0 ? pageIndex - 1 : 0;
             var filtersList = GetListFilters();
             long[] filterValueSearchList = filterOnUse.filters.ToArray(); //масив ID вибраних фільтрів
             var query = _context
@@ -134,7 +148,7 @@ namespace CarParts.Domain.Services.Implementation
                             Value = f.FilterValueOf.Name
                         })
 
-                }).Where(c => c.CategoryId == categoryId && c.CarId == carId).OrderBy(x => x.Name).Skip((pageIndex - 1) * 10).Take(10);
+                }).Where(c => c.CategoryId == categoryId && c.CarId == carId).OrderBy(x => x.Name).Skip((page - 1) * 10).Take(10);
             res.Data = _mapper.Map<List<ProductDto>>(result);
             res.Data.Count();
             return res;
@@ -142,6 +156,7 @@ namespace CarParts.Domain.Services.Implementation
 
         public async Task<CollectionResultDto<ProductDto>> GetProductbyCategoryandFilters(int categoryId, FilterOnUse filterOnUse, int pageIndex)
         {
+            int page = pageIndex > 0 ? pageIndex - 1 : 0;
             var filtersList = GetListFilters();
             long[] filterValueSearchList = filterOnUse.filters.ToArray(); //масив ID вибраних фільтрів
             var query = _context
@@ -193,7 +208,7 @@ namespace CarParts.Domain.Services.Implementation
                             Value = f.FilterValueOf.Name
                         })
 
-                }).Where(c => c.CategoryId == categoryId).OrderBy(x => x.Name).Skip((pageIndex - 1) * 10).Take(10);
+                }).Where(c => c.CategoryId == categoryId).OrderBy(x => x.Name).Skip((page - 1) * 10).Take(10);
             res.Data = _mapper.Map<List<ProductDto>>(result);
             res.Data.Count();
             return res;
@@ -207,7 +222,7 @@ namespace CarParts.Domain.Services.Implementation
 
             var res = new CollectionResultDto<ProductDto>();
             res.IsSuccessful = true;
-            res.Data = _mapper.Map<List<ProductDto>>(product);
+            res.Data = _mapper.Map<List<ProductDto>>(product.ToList());
 
             return res;
 
