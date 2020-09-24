@@ -38,21 +38,28 @@ namespace CarParts.Controllers
         public async Task<IActionResult> GetProductbyCatId(int categoryId, int paginationinfo)
         {
             var res = _productService.GetProductbyCatId(categoryId, paginationinfo);
-            return Ok(new { });
+            return Ok(res);
         }
 
         [HttpPost("getProductbyCategoryIdandCar")]
-        public async Task<IActionResult> GetProductbyCatIdandCar(int categoryId, int paginationinfo, int carId)
+        public async Task<IActionResult> GetProductbyCatIdandCar(int categoryId, int carId, int paginationinfo)
         {
-            var res = new ProductDto();
-            return Ok(new { });
+            var res = _productService.GetProductbyCarIdCategory(categoryId, carId, paginationinfo);
+            return Ok(res);
         }
 
         [HttpPost("getProductbyCategoryIdandCarandFilter")]
-        public async Task<IActionResult> GetProductbyCatIdandCarandFilter(int categoryId, int paginationinfo, int carId)
+        public async Task<IActionResult> GetProductbyCatIdandCarandFilter(int categoryId, int carId, FilterOnUse filterOnUse, int pageIndex)
         {
-            var res = new ProductDto();
-            return Ok(new { });
+            var res = _productService.GetProductbyCarIdCategoryandFilteres(categoryId,carId,filterOnUse,pageIndex);
+            return Ok(res);
+        }
+
+        [HttpPost("getProductbyCategoryIdandFilter")]
+        public async Task<IActionResult> GetProductbyCatIdandFilter(int categoryId, FilterOnUse filterOnUse, int pageIndex)
+        {
+            var res = _productService.GetProductbyCategoryandFilters(categoryId, filterOnUse, pageIndex);
+            return Ok(res);
         }
 
     }

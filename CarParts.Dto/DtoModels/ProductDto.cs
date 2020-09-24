@@ -20,6 +20,7 @@ namespace CarParts.Dto.DtoModels
         public string UniqueName { get; set; }
 
         public string CarBrand { get; set; }
+
         public string CarModel { get; set; }
 
         public string CategoryName { get; set; }
