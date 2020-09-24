@@ -14,6 +14,7 @@ namespace CarParts.Domain.Mapping
             CreateMap<DbUser, UserDto>();
             CreateMap<Product, ProductDto>();
             CreateMap<Category, CategoryDto>();
+            CreateMap<List<Product>,List<ProductDto>>();
             //.AfterMap((s, d) => {
             //     foreach (var c in d.Children)
             //         c.Parent = d;
