@@ -20,7 +20,11 @@ namespace CarParts.Domain.Services.Abstraction
         Task<CollectionResultDto<UserDto>> listUsers(int page);
         Task<ResultDto> addCategory(CreateCategoryDto category);
         Task<ResultDto> removeCategory(int id);
-        Task<ResultDto> addFilterGroup(string filterName,string[] filteValue);
+        Task<ResultDto> addFilterGroup(string filterName,string[] filterValue);
+        Task<ResultDto> editFilterName(int id, string name);
+        Task<ResultDto> editFilterValue(int id,string value);
+        Task<ResultDto> removeFilterName(int id);
+        Task<ResultDto> removeFilterValue(int id);
         string productSeeder();
 
         //addCategory
