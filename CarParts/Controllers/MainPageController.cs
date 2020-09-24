@@ -27,6 +27,14 @@ namespace CarParts.Controllers
             return Ok(category);
         }
 
+        [HttpPost("getchildcategory")]
+        public async Task<IActionResult> getChildCategory(int catid)
+        {
+            var category = await _productService.GetChildCategory(catid);
+
+            return Ok(category);
+        }
+
         [HttpGet("getyears")]
         public async Task<IActionResult> getYears()
         {
@@ -50,11 +58,11 @@ namespace CarParts.Controllers
             return Ok(model);
         }
 
-        //[HttpPost("getcategorybycar")]
-        //public async Task<IActionResult> getCategoryByCar(int carid)
-        //{
-        //    var category = await _productService.GetCategoryByCar(carid);
-        //    return Ok(category);
-        //}
+        [HttpPost("getchildcategorybycar")]
+        public async Task<IActionResult> getchildCategoryByCar(int catid, int carid)
+        {
+            var category = await _productService.GetChildCategoryByCar(catid, carid);
+            return Ok(category);
+        }
     }
 }

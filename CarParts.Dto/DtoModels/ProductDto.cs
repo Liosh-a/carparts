@@ -19,9 +19,11 @@ namespace CarParts.Dto.DtoModels
 
         public string UniqueName { get; set; }
 
-        public int CarId { get; set; }
+        public string CarBrand { get; set; }
 
-        public int CategoryId { get; set; }
+        public string CarModel { get; set; }
+
+        public string CategoryName { get; set; }
 
         public List<GetFilterDto> Filter { get; set; }
     }

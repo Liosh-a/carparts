@@ -106,10 +106,10 @@ namespace CarParts.Controllers
             return Ok();
 
         }
-        [HttpPost("edit/filter")]
-        public async Task<IActionResult> editFilter(string filterName, string[] filterValue)
+        [HttpPost("edit/filter/value")]
+        public async Task<IActionResult> editFilterValue(int id, string value)
         {
-            var result = await _adminService.addFilterGroup(filterName, filterValue);
+            var result = await _adminService.editFilterValue(id, value);
             if (result.IsSuccessful == false)
             {
                 return BadRequest();
@@ -118,6 +118,41 @@ namespace CarParts.Controllers
 
         }
 
+        [HttpPost("edit/filter/name")]
+        public async Task<IActionResult> editFilterName(int id, string value)
+        {
+            var result = await _adminService.editFilterName(id, value);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+
+        }
+
+        [HttpPost("remove/filter/value")]
+        public async Task<IActionResult> removeFilterValue(int id)
+        {
+            var result = await _adminService.removeFilterValue(id);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+
+        }
+
+        [HttpPost("remove/filter/name")]
+        public async Task<IActionResult> removeFilterName(int id)
+        {
+            var result = await _adminService.removeFilterName(id);
+            if (result.IsSuccessful == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+
+        }
 
         //[HttpPost("test/seeder")]
         //public string productSeeder()
