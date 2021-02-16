@@ -5,7 +5,6 @@
   "dependencies": {
     "@allpro/react-fluid-grid": "^0.5.7",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
-    "axios": "^0.19.0",
     "babel-eslint": "^10.1.0",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
